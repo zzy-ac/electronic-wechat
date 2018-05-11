@@ -8,15 +8,19 @@
 
 ## 该分支针对使用Dock的ubuntu进行改造
 
+### 测试环境 ubuntu 18.04 gnome 3.28.1
+
 改造记录如下
 
 > 1、更新所有依赖到最新版本(180511),其中Electronic@2.0.0
 
 > 2、主窗体关闭按钮改为直接退出程序，不再是隐藏窗体
 
+> 3、取消多实例检查，托管图标能正常使用了
+
 新增的BUG QAQ
 
->1、 只能使用sudo进行调试，消息通知不能显示了
+> ～～只能使用sudo进行调试，调试的时候不能显示消息通知～～
 
 
 **Important:** 如果你希望在自己的电脑上构建 Electronic WeChat，请使用 [production branch](https://github.com/geeeeeeeeek/electronic-wechat/tree/production)，master branch 包含正在开发的部分，并且不能保证是稳定的版本——尽管 production 版本也有bug ：D

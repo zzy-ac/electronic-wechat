@@ -2,7 +2,7 @@
 /dist
 npm-debug.log*
 .idea
-
+install
 # Dependency directories
 node_modules
 
