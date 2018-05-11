@@ -94,6 +94,10 @@ class WeChatWindow {
     this.isShown = false;
   }
 
+  close(){
+    app.exit(0)
+  }
+
   connectWeChat() {
     Object.keys(this.inervals).forEach((key, index) => {
       clearInterval(key);
@@ -146,11 +150,12 @@ class WeChatWindow {
 
   initWindowEvents() {
     this.wechatWindow.on('close', (e) => {
-      if (this.wechatWindow.isVisible()) {
-        e.preventDefault();
-        this.hide();
-      }
-      this.unregisterLocalShortCut();
+      // if (this.wechatWindow.isVisible()) {
+      //   this.unregisterLocalShortCut();
+      //   e.preventDefault();
+      //   this.close();
+      // }
+      this.close();
     });
 
     this.wechatWindow.on('page-title-updated', (ev) => {
@@ -163,15 +168,23 @@ class WeChatWindow {
     this.wechatWindow.on('show', () => {
       this.registerLocalShortcut();
     });
-  }
 
-  registerLocalShortcut() {
-    electronLocalShortcut.register(this.wechatWindow, 'CommandOrControl + H', () => {
-      this.wechatWindow.hide();
+    this.wechatWindow.on('minimize', () => {
+      this.unregisterLocalShortCut();
+    });
+
+    this.wechatWindow.on('restore', () => {
+      this.registerLocalShortcut();
     });
   }
 
-  unregisterLocalShortCut() {
+  registerLocalShortcut() {
+    electronLocalShortcut.register(this.wechatWindow, 'CommandOrControl+H', () => {
+      this.wechatWindow.minimize();
+    });
+  }
+
+  unregisterLocalShortCut() {//注销快捷键
     electronLocalShortcut.unregisterAll(this.wechatWindow);
   }
 
