@@ -16,11 +16,17 @@
 
 > 2、主窗体关闭按钮改为直接退出程序，不再是隐藏窗体
 
-> 3、取消多实例检查，托管图标能正常使用了
+> 3、取消多实例检查，托管图标能正常使用了(偶然不能出来，关掉再开就好了。。)
+
+> 4、修复菜单栏不能正常显示的BUG
+
+> 5、删除偏好设置中是否使用多实例的设置选项(多实例可以通过右键dock图标新建窗口实现)
 
 新增的BUG QAQ
 
 > ~~只能使用sudo进行调试，调试的时候不能显示消息通知~~
+
+> 偏好设置窗口现在不能自由放大与缩小
 
 
 **Important:** 如果你希望在自己的电脑上构建 Electronic WeChat，请使用 [production branch](https://github.com/geeeeeeeeek/electronic-wechat/tree/production)，master branch 包含正在开发的部分，并且不能保证是稳定的版本——尽管 production 版本也有bug ：D

@@ -170,6 +170,7 @@ class WeChatWindow {
     });
 
     this.wechatWindow.on('minimize', () => {
+      this.isShown = false;
       this.unregisterLocalShortCut();
     });
 
@@ -181,6 +182,7 @@ class WeChatWindow {
   registerLocalShortcut() {
     electronLocalShortcut.register(this.wechatWindow, 'CommandOrControl+H', () => {
       this.wechatWindow.minimize();
+      this.isShown = false;
     });
   }
 

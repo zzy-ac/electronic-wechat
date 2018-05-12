@@ -20,8 +20,8 @@ class Injector {
     this.initAngularInjection();
     this.lastUser = null;
     this.initIPC();
-    webFrame.setZoomLevelLimits(1, 1);
-
+    //webFrame.setZoomLevelLimits(1, 1);
+    //不知道为什么webFrame.setZoomLevelLimits未定义
     new MenuHandler().create();
   }
 
