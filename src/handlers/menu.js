@@ -293,7 +293,8 @@ class MenuHandler {
   }
 
   static _update() {
-    ipcRenderer.send('update');
+    //ipcRenderer.send('update');
+    shell.openExternal(Common.FORKER_GITHUB_RELEASES);
   }
 
   static _preference() {
