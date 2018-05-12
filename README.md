@@ -26,11 +26,15 @@
 
 > 7、添加全局快捷键CommandOrControl+Alt+W 显示微信
 
+> 8、点击消息通知会打开微信
+
 新增的BUG QAQ
 
 > ~~只能使用sudo进行调试，调试的时候不能显示消息通知~~
 
 > 偏好设置窗口现在不能自由放大与缩小
+
+> 消息通知不能显示对方头像
 
 
 **Important:** 如果你希望在自己的电脑上构建 Electronic WeChat，请使用 [production branch](https://github.com/geeeeeeeeek/electronic-wechat/tree/production)，master branch 包含正在开发的部分，并且不能保证是稳定的版本——尽管 production 版本也有bug ：D

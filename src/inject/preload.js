@@ -22,6 +22,7 @@ class Injector {
     this.initIPC();
     //webFrame.setZoomLevelLimits(1, 1);
     //不知道为什么webFrame.setZoomLevelLimits未定义
+    this.initNotification()
     new MenuHandler().create();
   }
 
@@ -131,6 +132,46 @@ class Injector {
       value = value.replace(messageBoxKeydownReg, 'editAreaKeydown($event);mentionMenu($event);');
     }
     return value;
+  }
+
+  setNotificationCallback(callback){
+    const OldNotify = window.Notification;
+    const newNotify = function(title,opt){
+      callback(title, opt);
+      return false
+      //return OldNotify(title, opt)
+    }
+    newNotify.requestPermission = OldNotify.requestPermission.bind(OldNotify);
+    Object.defineProperty(newNotify, 'permission', {
+        get: () => {
+            return OldNotify.permission;
+        }
+    });
+    window.Notification = newNotify;
+  }
+
+  // function getBase64Image(img) {
+  //   let canvas = document.createElement("canvas");
+  //   canvas.width = img.width;
+  //   canvas.height = img.height;
+  //   let ctx = canvas.getContext("2d");
+  //   ctx.drawImage(img, 0, 0, img.width, img.height);
+  //   let dataURL = canvas.toDataURL("image/png");
+  //   return dataURL
+  //   // return dataURL.replace("data:image/png;base64,", "");
+  // }
+
+  initNotification(){
+    this.setNotificationCallback(function(title,opt){
+      // let tmp = new Image()
+      // tmp.src = 'https://wx2.qq.com'+opt.icon
+      // console.log('https://wx2.qq.com'+opt.icon)
+      // tmp.onload=function(){
+      //   console.log(this.getBase64Image(tmp))
+      //   ipcRenderer.send('new-message', {title,opt});
+      // }
+      ipcRenderer.send('new-message', {title,opt});
+    })
   }
 
   initIPC() {

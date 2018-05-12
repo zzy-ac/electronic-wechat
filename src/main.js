@@ -1,7 +1,8 @@
 'use strict';
 
 const path = require('path');
-const {app, ipcMain} = require('electron');
+const {app, ipcMain ,Notification} = require('electron');
+
 
 const UpdateHandler = require('./handlers/update');
 const Common = require('./common');
@@ -121,6 +122,18 @@ class ElectronicWeChat {
     ipcMain.on('close-settings-window', (event, messgae) => {
       this.settingsWindow.close();
       this.settingsWindow = null;
+    })
+
+    ipcMain.on('new-message', (event, messgae) => {
+        let osNotification = new Notification({
+          title:messgae.title,
+          body:messgae.opt.body//,
+          //icon:messgae.opt.icon
+        })
+        osNotification.on('click',()=>{
+          this.wechatWindow.show()
+        })
+        osNotification.show()
     })
   };
 
