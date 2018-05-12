@@ -239,10 +239,17 @@ class MenuHandler {
             click: MenuHandler._github,
           },
           {
+            label: Common.MENU.repo_fork,
+            click: MenuHandler._forkerGithub,
+          },
+          {
             type: 'separator',
           }, {
             label: Common.MENU.feedback,
             click: MenuHandler._githubIssues,
+          }, {
+            label: Common.MENU.feedback_forker,
+            click: MenuHandler._forkerGithubIssues,
           }, {
             label: Common.MENU.checkRelease,
             click: MenuHandler._update,
@@ -273,8 +280,16 @@ class MenuHandler {
     shell.openExternal(Common.GITHUB);
   }
 
+  static _forkerGithub() {
+    shell.openExternal(Common.FORKER_GITHUB);
+  }
+
   static _githubIssues() {
     shell.openExternal(Common.GITHUB_ISSUES);
+  }
+
+  static _forkerGithubIssues() {
+    shell.openExternal(Common.FORKER_GITHUB_ISSUES);
   }
 
   static _update() {

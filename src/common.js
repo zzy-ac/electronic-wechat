@@ -37,8 +37,11 @@ Common.USER_AGENT = {
 
 Common.WEB_WECHAT = 'https://wx.qq.com/?lang=en_US';
 Common.GITHUB = 'https://github.com/geeeeeeeeek/electronic-wechat';
+Common.FORKER_GITHUB = 'https://github.com/kooritea/electronic-wechat'
 Common.GITHUB_RELEASES = 'https://github.com/geeeeeeeeek/electronic-wechat/releases';
+Common.FORKER_GITHUB_RELEASES = 'https://github.com/kooritea/electronic-wechat/releases';
 Common.GITHUB_ISSUES = 'https://github.com/geeeeeeeeek/electronic-wechat/issues';
+Common.FORKER_GITHUB_ISSUES = 'https://github.com/kooritea/electronic-wechat/issues'
 Common.GITHUB_API_HOST = 'api.github.com';
 Common.GITHUB_API_RELEASE_LATEST_PATH = '/repos/geeeeeeeeek/electronic-wechat/releases/latest';
 
@@ -103,7 +106,9 @@ Common.MENU = {
   allFront: 'Bring All to Front',
   help: 'Help',
   repo: 'GitHub Repository',
+  repo_fork: 'The  Branch GitHub Repository',
   feedback: 'Report Issue',
+  feedback_forker: 'Report Issue To This Branch',
   checkRelease: 'Check for New Release',
 };
 
