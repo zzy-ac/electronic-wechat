@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path');
-const {app, ipcMain , Notification} = require('electron');
+const {app, shell , ipcMain , Notification} = require('electron');
 
 
 const UpdateHandler = require('./handlers/update');
@@ -115,8 +115,9 @@ class ElectronicWeChat {
     });
 
     ipcMain.on('update', (event, message) => {
-      let updateHandler = new UpdateHandler();
-      updateHandler.checkForUpdate(`v${app.getVersion()}`, false);
+      // let updateHandler = new UpdateHandler();
+      // updateHandler.checkForUpdate(`v${app.getVersion()}`, false);
+      shell.openExternal(Common.FORKER_GITHUB_RELEASES);
     });
 
     ipcMain.on('open-settings-window', (event, message) => {
