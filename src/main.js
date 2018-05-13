@@ -143,6 +143,7 @@ class ElectronicWeChat {
         })
         if(AppConfig.readSettings('click-notification') === 'on'){
           osNotification.on('click',()=>{
+            event.sender.send(messgae.ename)
             this.wechatWindow.show()
           })
         }

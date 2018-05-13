@@ -23,6 +23,7 @@ class Injector {
     //webFrame.setZoomLevelLimits(1, 1);
     //不知道为什么webFrame.setZoomLevelLimits未定义
     this.initNotification()
+    //因为无法监听H5的Notification的点击事件，改成使用系统级别的Notification
     new MenuHandler().create();
   }
 
@@ -150,28 +151,19 @@ class Injector {
     window.Notification = newNotify;
   }
 
-  // function getBase64Image(img) {
-  //   let canvas = document.createElement("canvas");
-  //   canvas.width = img.width;
-  //   canvas.height = img.height;
-  //   let ctx = canvas.getContext("2d");
-  //   ctx.drawImage(img, 0, 0, img.width, img.height);
-  //   let dataURL = canvas.toDataURL("image/png");
-  //   return dataURL
-  //   // return dataURL.replace("data:image/png;base64,", "");
-  // }
-
   initNotification(){
     this.setNotificationCallback(function(title,opt){
-      // let tmp = document.createElement('img');
-      // tmp.src = 'https://wx2.qq.com'+opt.icon
-      // console.log('https://wx2.qq.com'+opt.icon)
-      // tmp.onload=function(){
-      //   console.log(this.getBase64Image(tmp))
-      //   opt.icon = this.getBase64Image(tmp)
-      //   ipcRenderer.send('new-message', {title,opt});
-      // }
-      ipcRenderer.send('new-message', {title,opt});
+      let ename = 'msg'+ new Date().getTime()
+      ipcRenderer.on(ename,function(){
+        //渲染层捕捉到通知的点击事件
+        document.querySelectorAll('.nickname_text').forEach(function(item,index){
+          if(item.innerHTML === title){
+            item.parentNode.parentNode.parentNode.click()
+          }
+        })
+        ipcRenderer.removeAllListeners(ename)
+      })
+      ipcRenderer.send('new-message', {title,opt,ename});
     })
   }
 
