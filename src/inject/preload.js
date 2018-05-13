@@ -157,11 +157,13 @@ class Injector {
       if(AppConfig.readSettings('click-notification') === 'on'){
         ipcRenderer.on(ename,function(){
           //渲染层捕捉到通知的点击事件
-          document.querySelectorAll('.nickname_text').forEach(function(item,index){
+          for(let i=0;i<document.querySelectorAll('.nickname_text').length;i++){
+            let item = document.querySelectorAll('.nickname_text')[i]
             if(item.innerHTML === title){
               item.parentNode.parentNode.parentNode.click()
+              break;
             }
-          })
+          }
           ipcRenderer.removeAllListeners(ename)
         })
       }
