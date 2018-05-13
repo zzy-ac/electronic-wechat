@@ -154,15 +154,17 @@ class Injector {
   initNotification(){
     this.setNotificationCallback(function(title,opt){
       let ename = 'msg'+ new Date().getTime()
-      ipcRenderer.on(ename,function(){
-        //渲染层捕捉到通知的点击事件
-        document.querySelectorAll('.nickname_text').forEach(function(item,index){
-          if(item.innerHTML === title){
-            item.parentNode.parentNode.parentNode.click()
-          }
+      if(AppConfig.readSettings('click-notification') === 'on'){
+        ipcRenderer.on(ename,function(){
+          //渲染层捕捉到通知的点击事件
+          document.querySelectorAll('.nickname_text').forEach(function(item,index){
+            if(item.innerHTML === title){
+              item.parentNode.parentNode.parentNode.click()
+            }
+          })
+          ipcRenderer.removeAllListeners(ename)
         })
-        ipcRenderer.removeAllListeners(ename)
-      })
+      }
       ipcRenderer.send('new-message', {title,opt,ename});
     })
   }
