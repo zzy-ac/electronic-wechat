@@ -13,6 +13,7 @@ const WeChatWindow = require('./windows/controllers/wechat');
 const SettingsWindow = require('./windows/controllers/settings')
 const AppTray = require('./windows/controllers/app_tray');
 
+
 class ElectronicWeChat {
   constructor() {
     this.wechatWindow = null;
@@ -57,6 +58,7 @@ class ElectronicWeChat {
         AppConfig.saveSettings('prevent-recall', 'on');
         AppConfig.saveSettings('icon', 'black');
         AppConfig.saveSettings('multi-instance','on');
+        AppConfig.saveSettings('click-notification','on')
       }
       let osNotification = new Notification({
         title:'Electronic WeChat',
@@ -138,9 +140,11 @@ class ElectronicWeChat {
           //icon:messgae.opt.icon
           icon:path.join(__dirname, '../assets/icon.png')
         })
-        osNotification.on('click',()=>{
-          this.wechatWindow.show()
-        })
+        if(AppConfig.readSettings('click-notification') === 'on'){
+          osNotification.on('click',()=>{
+            this.wechatWindow.show()
+          })
+        }
         osNotification.show()
     })
   };

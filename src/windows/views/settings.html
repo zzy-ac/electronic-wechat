@@ -35,7 +35,7 @@
           <h4 id="app-language-desc">选择你希望使用的默认语言</h4>
         </li>
         <li class="menu-button">
-          <select class="" id="app-language-select" required>
+          <select class="" id="app-language-select" onchange="changefun('language')" required>
             <option value="en">English</option>
             <option value="zh-CN">简体中文</option>
           </select>
@@ -51,7 +51,23 @@
           <h4 id="app-recall-desc">选择是否阻止微信的消息撤回功能</h4>
         </li>
         <li class="menu-button">
-          <select class="" id="app-recall-select">
+          <select class="" id="app-recall-select" onchange="changefun('recall')">
+            <option value="on">On</option>
+            <option value="off">Off</option>
+          </select>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <ul>
+        <li class="menu-title">
+          <h3 id="app-notification-title">点击通知打开微信</h3>
+        </li>
+        <li class="menu-desc">
+          <h4 id="app-notification-desc">选择是否允许通过点击消息通知打开微信</h4>
+        </li>
+        <li class="menu-button">
+          <select class="" id="app-notification-select" onchange="changefun('notification')">
             <option value="on">On</option>
             <option value="off">Off</option>
           </select>
@@ -96,7 +112,7 @@
           <h4 id="app-tray-desc">选择一个适合当前主题的颜色</h4>
         </li>
         <li class="menu-button">
-          <select id="app-tray-select">
+          <select id="app-tray-select" onchange="changefun('tray')">
             <option value="black">◆</option>
             <option value="white">◇</option>
           </select>
@@ -115,12 +131,14 @@
 
     const lan = AppConfig.readSettings('language');
     const recall = AppConfig.readSettings('prevent-recall');
-    const instance = AppConfig.readSettings('multi-instance');
+    const notification = AppConfig.readSettings('click-notification');
+    //const instance = AppConfig.readSettings('multi-instance');
     const trayColor = AppConfig.readSettings('tray-color');
 
     const lanSelect = $('app-language-select');
     const recallSelect = $('app-recall-select');
-    const instanceSelect = $('app-instance-select');
+    const notificationSelect = $('app-notification-select');
+    //const instanceSelect = $('app-instance-select');
     const trayColorSelect = $('app-tray-select');
 
     function $(id) {
@@ -133,7 +151,7 @@
 
     $('top-title-electron-ver').innerText = process.versions.electron;
     setConfig();
-    setListeners()
+    //setListeners()
 
     let Common;
     if (lan === 'zh-CN') {
@@ -143,26 +161,49 @@
       setLocale();
     }
 
-    function setListeners() {
-      lanSelect.addEventListener('change', function() {
-        AppConfig.saveSettings('language', lanSelect.value)
-      })
-      recallSelect.addEventListener('change', function() {
-        AppConfig.saveSettings('prevent-recall', recallSelect.value)
-      })
-      instanceSelect.addEventListener('change', function() {
-        AppConfig.saveSettings('multi-instance', instanceSelect.value)
-      })
-      trayColorSelect.addEventListener('change', function() {
-        AppConfig.saveSettings('tray-color', trayColorSelect.value)
-        ipcRenderer.send('refreshIcon')
-      })
+    // function setListeners() {
+    //   lanSelect.addEventListener('change', function() {
+    //     $('app-language-title').innerHTML = 2233
+    //     AppConfig.saveSettings('language', lanSelect.value)
+    //   })
+    //   recallSelect.addEventListener('change', function() {
+    //     AppConfig.saveSettings('prevent-recall', recallSelect.value)
+    //   })
+    //   notificationSelect.addEventListener('change', function() {
+    //     AppConfig.saveSettings('click-notification', notificationSelect.value)
+    //   })
+    //   instanceSelect.addEventListener('change', function() {
+    //     AppConfig.saveSettings('multi-instance', instanceSelect.value)
+    //   })
+    //   trayColorSelect.addEventListener('change', function() {
+    //     AppConfig.saveSettings('tray-color', trayColorSelect.value)
+    //     ipcRenderer.send('refreshIcon')
+    //   })
+    // }
+
+    function changefun(name){
+      switch(name){
+        case 'language':
+          AppConfig.saveSettings('language', lanSelect.value)
+          break
+        case 'recall':
+          AppConfig.saveSettings('prevent-recall', recallSelect.value)
+          break
+        case 'notification':
+          AppConfig.saveSettings('click-notification', notificationSelect.value)
+          break
+        case 'tray':
+          AppConfig.saveSettings('tray-color', trayColorSelect.value)
+          ipcRenderer.send('refreshIcon')
+          break
+      }
     }
 
     function setConfig() {
       $('app-language-select').value = lan;
       $('app-recall-select').value = recall;
-      $('app-instance-select').value = instance;
+      $('app-notification-select').value = notification;
+      //$('app-instance-select').value = instance;
       $('app-tray-select').value = trayColor;
     }
 
@@ -171,8 +212,8 @@
       $('app-language-desc').innerHTML = Common.languageDesc;
       $('app-recall-title').innerHTML = Common.recallTitle;
       $('app-recall-desc').innerHTML = Common.recallDesc;
-      $('app-instance-title').innerHTML = Common.instanceTitle;
-      $('app-instance-desc').innerHTML = Common.instanceDesc;
+      //$('app-instance-title').innerHTML = Common.instanceTitle;
+      //$('app-instance-desc').innerHTML = Common.instanceDesc;
       $('app-icon-title').innerHTML = Common.iconTitle;
       $('app-icon-desc').innerHTML = Common.iconDesc;
       $('app-tray-title').innerHTML = Common.trayTitle;
