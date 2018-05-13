@@ -22,7 +22,7 @@
 
 > 5、删除偏好设置中是否使用多实例的设置选项(多实例可以通过右键dock图标新建窗口实现)
 
-> 6、检查更新选项不在调用更新脚本，而是打开浏览器到Github发布页
+> 6、检查更新选项不再调用更新脚本，而是打开浏览器到Github发布页
 
 > 7、添加全局快捷键CommandOrControl+Alt+W 显示微信
 
@@ -34,7 +34,7 @@
 
 > 偏好设置窗口现在不能自由放大与缩小
 
-> 消息通知不能显示对方头像
+> 消息通知不能显示对方头像(暂时用微信icon代替)
 
 
 **Important:** 如果你希望在自己的电脑上构建 Electronic WeChat，请使用 [production branch](https://github.com/geeeeeeeeek/electronic-wechat/tree/production)，master branch 包含正在开发的部分，并且不能保证是稳定的版本——尽管 production 版本也有bug ：D

@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path');
-const {app, ipcMain ,Notification} = require('electron');
+const {app, ipcMain , Notification} = require('electron');
 
 
 const UpdateHandler = require('./handlers/update');
@@ -58,6 +58,13 @@ class ElectronicWeChat {
         AppConfig.saveSettings('icon', 'black');
         AppConfig.saveSettings('multi-instance','on');
       }
+      let osNotification = new Notification({
+        title:'Electronic WeChat',
+        body:'已经准备就绪',
+        icon:path.join(__dirname, '../assets/icon.png')
+      })
+      osNotification.show()
+
     });
 
     app.on('activate', () => {
@@ -127,8 +134,9 @@ class ElectronicWeChat {
     ipcMain.on('new-message', (event, messgae) => {
         let osNotification = new Notification({
           title:messgae.title,
-          body:messgae.opt.body//,
+          body:messgae.opt.body,
           //icon:messgae.opt.icon
+          icon:path.join(__dirname, '../assets/icon.png')
         })
         osNotification.on('click',()=>{
           this.wechatWindow.show()

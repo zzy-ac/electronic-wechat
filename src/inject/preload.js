@@ -163,11 +163,12 @@ class Injector {
 
   initNotification(){
     this.setNotificationCallback(function(title,opt){
-      // let tmp = new Image()
+      // let tmp = document.createElement('img');
       // tmp.src = 'https://wx2.qq.com'+opt.icon
       // console.log('https://wx2.qq.com'+opt.icon)
       // tmp.onload=function(){
       //   console.log(this.getBase64Image(tmp))
+      //   opt.icon = this.getBase64Image(tmp)
       //   ipcRenderer.send('new-message', {title,opt});
       // }
       ipcRenderer.send('new-message', {title,opt});
