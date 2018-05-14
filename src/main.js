@@ -60,13 +60,11 @@ class ElectronicWeChat {
         AppConfig.saveSettings('multi-instance','on');
         AppConfig.saveSettings('click-notification','on')
       }
-      let osNotification = new Notification({
+      new Notification({
         title:'Electronic WeChat',
         body:'已经准备就绪',
         icon:path.join(__dirname, '../assets/icon.png')
-      })
-      osNotification.show()
-
+      }).show()
     });
 
     app.on('activate', () => {

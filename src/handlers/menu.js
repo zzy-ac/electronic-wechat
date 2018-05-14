@@ -5,13 +5,7 @@ const AppConfig = require('../configuration');
 
 const { Menu, app } = remote;
 
-const lan = AppConfig.readSettings('language');
-let Common;
-if (lan === 'zh-CN') {
-  Common = require('../common_cn');
-} else {
-  Common = require('../common');
-}
+const Common = require('../common');;
 
 class MenuHandler {
   create() {

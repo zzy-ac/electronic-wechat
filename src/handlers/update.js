@@ -9,13 +9,7 @@ const AppConfig = require('../configuration');
 const https = require('https');
 const path = require('path');
 
-const lan = AppConfig.readSettings('language');
-let Common;
-if (lan === 'zh-CN') {
-  Common = require('../common_cn');
-} else {
-  Common = require('../common');
-}
+const Common = require('../common');;
 
 class UpdateHandler {
   checkForUpdate(version, silent) {

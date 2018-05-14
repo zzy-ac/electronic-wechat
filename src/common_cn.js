@@ -2,6 +2,7 @@
  * Created by Zhongyi on 3/26/16.
  */
 'use strict';
+
 class Common {
 
 }
