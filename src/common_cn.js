@@ -43,6 +43,7 @@ Common.GITHUB_ISSUES = 'https://github.com/geeeeeeeeek/electronic-wechat/issues'
 Common.FORKER_GITHUB_ISSUES = 'https://github.com/kooritea/electronic-wechat/issues'
 Common.GITHUB_API_HOST = 'api.github.com';
 Common.GITHUB_API_RELEASE_LATEST_PATH = '/repos/geeeeeeeeek/electronic-wechat/releases/latest';
+Common.FORKER_GITHUB_API_RELEASE_LATEST_PATH = '/repos/kooritea/electronic-wechat/releases/latest';
 
 Common.UPDATE_ERROR_ELECTRON = 'Failed to get the local version. If you are using debug mode(by `npm start`), this error would happen. Use packed app instead or manually check for updates.\n\n' + Common.GITHUB_RELEASES;
 Common.UPDATE_ERROR_EMPTY_RESPONSE = '没能获取最新的更新信息';
@@ -98,5 +99,12 @@ Common.MENU = {
   feedback_forker: '联系该分支开发者',
   checkRelease: '检查更新',
 };
+
+Common.TRAY = {
+  show:'显示微信',
+  pref:'偏好',
+  exit:'退出'
+}
+
 
 module.exports = Common;

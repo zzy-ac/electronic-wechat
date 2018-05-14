@@ -21,7 +21,7 @@ class UpdateHandler {
       const req = https.get({
         host: Common.GITHUB_API_HOST,
         headers: { 'user-agent': Common.USER_AGENT },
-        path: Common.GITHUB_API_RELEASE_LATEST_PATH,
+        path: Common.FORKER_GITHUB_API_RELEASE_LATEST_PATH,
       }, (response) => {
         let body = '';
         response.on('data', (d) => {
@@ -50,8 +50,7 @@ class UpdateHandler {
   }
 
   showDialog(message, detail, positiveButton, callback) {
-    const iconImage = nativeImage.createFromPath(path.join(__dirname, '../assets/icon.png'));
-
+    const iconImage = nativeImage.createFromPath(path.join(__dirname, '../../assets/icon.png'));
     dialog.showMessageBox({
       type: 'info',
       buttons: ['Cancel', positiveButton],
@@ -70,12 +69,11 @@ class UpdateHandler {
     const fetched = {
       version: data.tag_name,
       is_prerelease: data.prerelease,
-      name: data.name,
+      name: data.name||'有可用更新',
       url: data.html_url,
       description: data.body,
     };
-
-    const versionRegex = /^v[0-9]+\.[0-9]+\.*[0-9]*$/;
+    const versionRegex = /^(v|V)[0-9]+\.[0-9]+\.*[0-9]*$/;
     if (versionRegex.test(fetched.version) && fetched.version > version && !fetched.is_prerelease) {
       res(fetched);
     } else {

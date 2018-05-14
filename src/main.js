@@ -33,24 +33,25 @@ class ElectronicWeChat {
   checkInstance() {
     //不检查是否多实例
     return true
-    if (AppConfig.readSettings('multi-instance') === 'on') return true;
-    return !app.makeSingleInstance((commandLine, workingDirectory) => {
-      if(this.splashWindow && this.splashWindow.isShown){
-        this.splashWindow.show();
-        return
-      }
-      if(this.wechatWindow){
-        this.wechatWindow.show();
-      }
-      if(this.settingsWindow && this.settingsWindow.isShown){
-        this.settingsWindow.show();
-      }
-    });
+    // if (AppConfig.readSettings('multi-instance') === 'on') return true;
+    // return !app.makeSingleInstance((commandLine, workingDirectory) => {
+    //   if(this.splashWindow && this.splashWindow.isShown){
+    //     this.splashWindow.show();
+    //     return
+    //   }
+    //   if(this.wechatWindow){
+    //     this.wechatWindow.show();
+    //   }
+    //   if(this.settingsWindow && this.settingsWindow.isShown){
+    //     this.settingsWindow.show();
+    //   }
+    // });
   }
   initApp() {
     app.on('ready', ()=> {
       this.createSplashWindow();
       this.createWeChatWindow();
+      this.createSettingsWindow()
       this.createTray();
 
       if (!AppConfig.readSettings('language')) {
@@ -113,23 +114,25 @@ class ElectronicWeChat {
     });
 
     ipcMain.on('update', (event, message) => {
-      // let updateHandler = new UpdateHandler();
-      // updateHandler.checkForUpdate(`v${app.getVersion()}`, false);
-      shell.openExternal(Common.FORKER_GITHUB_RELEASES);
+      let updateHandler = new UpdateHandler();
+      updateHandler.checkForUpdate(`v${app.getVersion()}`, false);
+      // shell.openExternal(Common.FORKER_GITHUB_RELEASES);
     });
 
     ipcMain.on('open-settings-window', (event, message) => {
-      if (this.settingsWindow) {
-        this.settingsWindow.show();
-      } else {
-        this.createSettingsWindow();
-        this.settingsWindow.show();
-      }
+      // if (this.settingsWindow) {
+      //   this.settingsWindow.show();
+      // } else {
+      //   this.createSettingsWindow();
+      //   this.settingsWindow.show();
+      // }
+      this.settingsWindow.show()
     });
 
     ipcMain.on('close-settings-window', (event, messgae) => {
-      this.settingsWindow.close();
-      this.settingsWindow = null;
+      // this.settingsWindow.close();
+      // this.settingsWindow = null;
+      this.settingsWindow.hide();
     })
 
     ipcMain.on('new-message', (event, messgae) => {
@@ -150,7 +153,7 @@ class ElectronicWeChat {
   };
 
   createTray() {
-    this.tray = new AppTray(this.splashWindow, this.wechatWindow);
+    this.tray = new AppTray(this.splashWindow, this.wechatWindow ,this.settingsWindow);
   }
 
   createSplashWindow() {

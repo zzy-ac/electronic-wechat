@@ -14,9 +14,10 @@ const assetsPath = path.join(__dirname, '../../../assets');
 const Common = require('../../common');;
 
 class AppTray {
-  constructor(splashWindow, wechatWindow) {
+  constructor(splashWindow, wechatWindow, settingsWindow) {
     this.splashWindow = splashWindow;
     this.wechatWindow = wechatWindow;
+    this.settingsWindow = settingsWindow;
     this.lastUnreadStat = 0;
     const trayColor = AppConfig.readSettings('tray-color');
     if (trayColor === 'white' || trayColor === 'black') {
@@ -46,8 +47,9 @@ class AppTray {
 
     if (process.platform === 'linux' || process.platform === 'win32') {
       const contextMenu = Menu.buildFromTemplate([
-        { label: 'Show', click: () => this.hideSplashAndShowWeChat() },
-        { label: 'Exit', click: () => app.exit(0) },
+        { label: Common.TRAY.show, click: () => this.hideSplashAndShowWeChat() },
+        { label: Common.TRAY.pref, click: () => this.showSettings()},
+        { label: Common.TRAY.exit, click: () => app.exit(0) },
       ]);
       this.tray.setContextMenu(contextMenu);
     }
@@ -62,7 +64,9 @@ class AppTray {
     if (this.splashWindow.isShown) return;
     this.wechatWindow.show();
   }
-
+  showSettings() {
+    this.settingsWindow.show()
+  }
   refreshIcon() {
     this.trayColor = AppConfig.readSettings('tray-color');
     this.trayIcon = nativeImage.createFromPath(path.join(assetsPath, `tray_${this.trayColor}.png`));

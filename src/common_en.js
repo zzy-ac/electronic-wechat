@@ -111,4 +111,10 @@ Common.MENU = {
   checkRelease: 'Check for New Release',
 };
 
+Common.TRAY = {
+  show:'show',
+  pref: 'Preference',
+  exit:'exit'
+}
+
 module.exports = Common;

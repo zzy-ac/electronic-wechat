@@ -19,7 +19,7 @@
     <div class="top-bar-middle">
       <ul class="title-list">
         <li>
-          <h1>Electronic Wechat V2.0.1</h1></li>
+          <h1>Electronic Wechat V2.0.4</h1></li>
         <li>
           <h1 style="font-size:95%;">Powered by Electron V<span id="top-title-electron-ver">process.versions.electron</span></h1></li>
       </ul>
@@ -153,11 +153,8 @@
     setConfig();
     //setListeners()
 
-    let Common;
-    if (lan === 'zh-CN') {
-      Common = require('../../common_cn');
-    } else {
-      Common = require('../../common');
+    let Common = require('../../common');
+    if (lan !== 'zh-CN') {
       setLocale();
     }
 

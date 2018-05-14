@@ -43,9 +43,9 @@ class SettingsWindow {
       this.settingsWindow = null;
       this.isShown = false;
     });
-    this.settingsWindow.once('ready-to-show', () => {
-      this.settingsWindow.show();
-    });
+    // this.settingsWindow.once('ready-to-show', () => {
+    //   this.settingsWindow.show();
+    // });
   }
 
   show() {
