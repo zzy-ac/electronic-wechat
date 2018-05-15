@@ -53,6 +53,8 @@
 
 > 消息通知不能显示对方头像(暂时用微信icon代替)
 
+> 当聊天列表中有两个除去颜文字完全相同的昵称或者备注，点击消息通知打开微信会无法定位到有新消息的对话框
+
 
 #### [下载构建好的应用](https://github.com/kooritea/electronic-wechat/releases)
 
