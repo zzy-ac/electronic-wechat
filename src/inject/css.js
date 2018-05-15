@@ -21,6 +21,7 @@ CSSInjector.commonCSS = `
       height:30px;
       display: inline-block;
       -webkit-app-region: no-drag;
+      position: absolute;
     }
     div .header #miniFrame:hover>div{
       top:0;
@@ -58,6 +59,7 @@ CSSInjector.commonCSS = `
     }
     div.header .avatar, div.header .info {
         -webkit-app-region: no-drag;
+        padding-top:30px;
     }
     div.main {
       height: 100% !important;
