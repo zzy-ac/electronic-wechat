@@ -38,6 +38,8 @@
 
 > 13、炫酷无边框，鼠标移到左上角显示菜单按钮(审美设计有点菜，等一个设计师)，设置页可以选择是否无边框(感谢[@waffiet-张](http://www.iconfont.cn/user/detail?spm=a313x.7781069.0.d214f71f6&uid=4435557)和[@竹尔](http://www.iconfont.cn/user/detail?spm=a313x.7781069.0.d214f71f6&uid=51853)的漂亮图标！！)
 
+> 14、托盘菜单栏加上漂亮的icon
+
 
 已知BUG
 
