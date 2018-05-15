@@ -74,6 +74,22 @@
         </li>
       </ul>
     </section>
+    <section>
+      <ul>
+        <li class="menu-title">
+          <h3 id="app-frame-title">无边框（重启生效）</h3>
+        </li>
+        <li class="menu-desc">
+          <h4 id="app-frame-desc">选择是否隐藏边框</h4>
+        </li>
+        <li class="menu-button">
+          <select class="" id="app-frame-select" onchange="changefun('frame')">
+            <option value="on">On</option>
+            <option value="off">Off</option>
+          </select>
+        </li>
+      </ul>
+    </section>
     <!-- <section>
       <ul>
         <li class="menu-title">
@@ -134,12 +150,14 @@
     const notification = AppConfig.readSettings('click-notification');
     //const instance = AppConfig.readSettings('multi-instance');
     const trayColor = AppConfig.readSettings('tray-color');
+    const frame = AppConfig.readSettings('frame');
 
     const lanSelect = $('app-language-select');
     const recallSelect = $('app-recall-select');
     const notificationSelect = $('app-notification-select');
     //const instanceSelect = $('app-instance-select');
     const trayColorSelect = $('app-tray-select');
+    const frameSelect = $('app-frame-select');
 
     function $(id) {
       return document.getElementById(id);
@@ -193,6 +211,9 @@
           AppConfig.saveSettings('tray-color', trayColorSelect.value)
           ipcRenderer.send('refreshIcon')
           break
+        case 'frame':
+          AppConfig.saveSettings('frame', frameSelect.value)
+          break
       }
     }
 
@@ -202,6 +223,7 @@
       $('app-notification-select').value = notification;
       //$('app-instance-select').value = instance;
       $('app-tray-select').value = trayColor;
+      $('app-frame-select').value = frame;
     }
 
     function setLocale() {
@@ -209,6 +231,10 @@
       $('app-language-desc').innerHTML = Common.languageDesc;
       $('app-recall-title').innerHTML = Common.recallTitle;
       $('app-recall-desc').innerHTML = Common.recallDesc;
+      $('app-notification-title').innerHTML = Common.notificationTitle;
+      $('app-notification-desc').innerHTML = Common.notificationDesc;
+      $('app-frame-title').innerHTML = Common.frameTitle;
+      $('app-frame-desc').innerHTML = Common.frameDesc;
       //$('app-instance-title').innerHTML = Common.instanceTitle;
       //$('app-instance-desc').innerHTML = Common.instanceDesc;
       $('app-icon-title').innerHTML = Common.iconTitle;

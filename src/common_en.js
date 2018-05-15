@@ -65,10 +65,14 @@ Common.MENTION_MENU_HINT_TEXT = 'Mention:';
 Common.MESSAGE_PREVENT_RECALL = 'Blocked a message recall.';
 Common.EMOJI_MAXIUM_SIZE = 120;
 
-Common.languageTitle = 'Language（Need to Restart）';
+Common.languageTitle = 'Language(Need to Restart)';
 Common.languageDesc = 'Select a default language for WeChat!';
 Common.recallTitle = 'Prevent Message Recall';
 Common.recallDesc = 'Message recall feature might be annoying';
+Common.notificationTitle = 'Open WeChat from the notification';
+Common.notificationDesc = 'Select whether you can open WeChat by clicking on the message notification'
+Common.frameTitle = 'No border(Need to Restart)';
+Common.frameDesc = 'Select whether to hide the border.'
 Common.instanceTitle = 'Allow Multiple Instance';
 Common.instanceDesc = 'Multiple instance can login with different accounts';
 Common.iconTitle = 'File Path (In Development)';

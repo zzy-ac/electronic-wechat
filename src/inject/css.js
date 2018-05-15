@@ -8,8 +8,50 @@ class CSSInjector {
 }
 
 CSSInjector.commonCSS = `
+    .login{
+      -webkit-app-region: drag;
+    }
+    .action{
+      -webkit-app-region: no-drag;
+    }
+    div.header{
+      padding:0px 18px 18px 18px;
+    }
+    div .header #miniFrame{
+      height:30px;
+      display: inline-block;
+      -webkit-app-region: no-drag;
+    }
+    div .header #miniFrame:hover>div{
+      top:0;
+    }
+    div .header #miniFrame div{
+      position:relative;
+      height:30px;
+      top:-30px;
+      transition:top 0.5s;
+      display:inline-block;
+    }
+    div .header #miniFrame img{
+      float:left;
+      width:20px;
+      height:20px;
+      margin:5px 5px 0 0;
+      -webkit-app-region: no-drag;
+    }
+    div .header #miniFrame img:hover{
+      background-color: rgba(255,255,255,0.1);
+      box-shadow: 0px 0px 10px #888888;
+      -webkit-app-region: no-drag;
+    }
+    div.title_wrap{
+      z-index:1024!important;
+    }
     div.header, div.title_wrap {
         -webkit-app-region: drag;
+    }
+    .nav_view{
+      top:166px!important;
     }
     div.title.poi {
         -webkit-app-region: no-drag;
@@ -25,6 +67,7 @@ CSSInjector.commonCSS = `
     div.main_inner {
       max-width: none !important;
       min-width: 0 !important;
+      border-radius:0;
     }
     div.message_empty {
       margin-top: 50px;

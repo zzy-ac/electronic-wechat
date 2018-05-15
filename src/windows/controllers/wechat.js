@@ -48,7 +48,7 @@ class WeChatWindow {
       resizable: true,
       center: true,
       show: false,
-      frame: true,
+      frame: AppConfig.readSettings('frame') !== 'on',
       autoHideMenuBar: true,
       icon: path.join(__dirname, '../../../assets/icon.png'),
       titleBarStyle: 'hidden-inset',
@@ -60,7 +60,6 @@ class WeChatWindow {
         preload: path.join(__dirname, '../../inject/preload.js'),
       },
     });
-
     /* menu is always visible on xfce session */
     isXfce().then(data => {
       if(data) {
@@ -85,6 +84,15 @@ class WeChatWindow {
     this.wechatWindow.hide();
     this.wechatWindow.webContents.send('hide-wechat-window');
     this.isShown = false;
+  }
+
+  minimize(){
+    this.wechatWindow.minimize();
+    this.isShown = false;
+  }
+
+  setFullScreen(flag){
+    this.wechatWindow.setFullScreen(flag);
   }
 
   close(){
@@ -164,6 +172,7 @@ class WeChatWindow {
 
     this.wechatWindow.on('minimize', () => {
       this.isShown = false;
+      this.wechatWindow.webContents.send('hide-wechat-window');
       this.unregisterLocalShortCut();
     });
 

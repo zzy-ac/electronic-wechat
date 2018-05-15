@@ -34,6 +34,10 @@
 
 > 11、优化多语言的实现方式，系统托盘的菜单汉化以及添加偏好的选项
 
+> 12、修复了当对方昵称或备注中有emoji时不能定位到该聊天框的bug
+
+> 13、炫酷无边框，鼠标移到左上角显示菜单按钮(审美设计有点菜，等一个设计师)，设置页可以选择是否无边框
+
 
 已知BUG
 
@@ -48,6 +52,12 @@
 > 偏好设置窗口现在不能自由放大与缩小
 
 > 消息通知不能显示对方头像(暂时用微信icon代替)
+
+
+#### [下载构建好的应用](https://github.com/kooritea/electronic-wechat/releases)
+
+以下是原文
+
 
 
 **Important:** 如果你希望在自己的电脑上构建 Electronic WeChat，请使用 [production branch](https://github.com/geeeeeeeeek/electronic-wechat/tree/production)，master branch 包含正在开发的部分，并且不能保证是稳定的版本——尽管 production 版本也有bug ：D

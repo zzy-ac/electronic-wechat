@@ -4,6 +4,7 @@ const { ipcRenderer, webFrame } = require('electron');
 const MenuHandler = require('../handlers/menu');
 const ShareMenu = require('./share_menu');
 const MentionMenu = require('./mention_menu');
+const MiniFrame = require('./mini_frame')
 const BadgeCount = require('./badge_count');
 const Common = require('../common');
 // const EmojiParser = require('./emoji_parser');
@@ -60,9 +61,11 @@ class Injector {
   initInjectBundle() {
     const initModules = () => {
       if (!window.$) {
-        return setTimeout(initModules, 3000);
+        return setTimeout(initModules, 1000);
       }
-
+      if(AppConfig.readSettings('frame') === 'on'){
+        MiniFrame.init();
+      }
       MentionMenu.init();
       BadgeCount.init();
     };
@@ -158,8 +161,9 @@ class Injector {
         ipcRenderer.on(ename,function(){
           //渲染层捕捉到通知的点击事件
           for(let i=0;i<document.querySelectorAll('.nickname_text').length;i++){
+            //从上到下遍历聊天列表寻找发送者
             let item = document.querySelectorAll('.nickname_text')[i]
-            if(item.innerHTML === title){
+            if(item.innerHTML.replace(/<img(.*?)>/,'') === title&&/<i class="icon web_wechat_reddot_middle ng-binding ng-scope"(.*?)>/.test(item.parentNode.parentNode.previousElementSibling.innerHTML)){
               item.parentNode.parentNode.parentNode.click()
               break;
             }

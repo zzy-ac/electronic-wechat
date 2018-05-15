@@ -54,12 +54,13 @@ class ElectronicWeChat {
       this.createSettingsWindow()
       this.createTray();
 
-      if (!AppConfig.readSettings('language')) {
-        AppConfig.saveSettings('language', 'en');
+      if (!AppConfig.readSettings('frame')) {
+        AppConfig.saveSettings('language', 'zh-CN');
         AppConfig.saveSettings('prevent-recall', 'on');
         AppConfig.saveSettings('icon', 'black');
         AppConfig.saveSettings('multi-instance','on');
         AppConfig.saveSettings('click-notification','on')
+        AppConfig.saveSettings('frame','on')
       }
       new Notification({
         title:'Electronic WeChat',
@@ -149,6 +150,16 @@ class ElectronicWeChat {
           })
         }
         osNotification.show()
+    })
+
+    ipcMain.on('miniFrame-close',()=>{
+      this.wechatWindow.close();
+    })
+    ipcMain.on('miniFrame-minimize',()=>{
+      this.wechatWindow.minimize();
+    })
+    ipcMain.on('miniFrame-setFullScreen',(event,flag)=>{
+      this.wechatWindow.setFullScreen(flag);
     })
   };
 
