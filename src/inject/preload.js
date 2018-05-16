@@ -21,7 +21,7 @@ class Injector {
     this.initAngularInjection();
     this.lastUser = null;
     this.initIPC();
-    //webFrame.setZoomLevelLimits(1, 1);
+    webFrame.setZoomLevelLimits(1, 1);
     //不知道为什么webFrame.setZoomLevelLimits未定义
     this.initNotification()
     //因为无法监听H5的Notification的点击事件，改成使用系统级别的Notification

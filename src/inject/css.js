@@ -43,10 +43,9 @@ CSSInjector.commonCSS = `
     div .header #miniFrame img:hover{
       background-color: rgba(255,255,255,0.1);
       box-shadow: 0px 0px 10px #888888;
-      -webkit-app-region: no-drag;
     }
     div.title_wrap{
-      z-index:1024!important;
+      z-index:1000!important;
     }
     div.header, div.title_wrap {
         -webkit-app-region: drag;
@@ -69,7 +68,6 @@ CSSInjector.commonCSS = `
     div.main_inner {
       max-width: none !important;
       min-width: 0 !important;
-      border-radius:0;
     }
     div.message_empty {
       margin-top: 50px;
@@ -153,6 +151,20 @@ CSSInjector.commonCSS = `
     img.emojione {
       width: 20px;
       height: 20px;
+    }
+    div.jp-jplayer{
+      overflow-y:hidden;
+    }
+    div.jp-jplayer video{
+      background-color: #2e3238;
+    }
+    div.ngdialog-close{
+      -webkit-app-region: no-drag;
+      cursor: pointer!important;
+    }
+    div.ngdialog-close:hover{
+      background-color: rgba(255,255,255,0.1);
+      box-shadow: 0px 0px 10px #888888;
     }
     @media (max-width: 512px) {
       .panel {
