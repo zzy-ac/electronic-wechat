@@ -30,7 +30,7 @@ CSSInjector.commonCSS = `
       position:relative;
       height:30px;
       top:-30px;
-      transition:top 0.5s;
+      transition:top 0.1s;
       display:inline-block;
     }
     div .header #miniFrame img{
