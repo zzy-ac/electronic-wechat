@@ -13,6 +13,7 @@ CSSInjector.commonCSS = `
     }
     .action{
       -webkit-app-region: no-drag;
+      cursor: pointer!important;
     }
     div.header{
       padding:0px 18px 18px 18px;
@@ -47,8 +48,11 @@ CSSInjector.commonCSS = `
     div.title_wrap{
       z-index:1000!important;
     }
-    div.header, div.title_wrap {
+    div.box_hd {
         -webkit-app-region: drag;
+    }
+    div.box_hd .ext{
+      -webkit-app-region: no-drag;
     }
     .nav_view{
       top:166px!important;
@@ -156,7 +160,7 @@ CSSInjector.commonCSS = `
       overflow-y:hidden;
     }
     div.jp-jplayer video{
-      background-color: #2e3238;
+      background-color: #eee;
     }
     div.ngdialog-close{
       -webkit-app-region: no-drag;
@@ -165,6 +169,12 @@ CSSInjector.commonCSS = `
     div.ngdialog-close:hover{
       background-color: rgba(255,255,255,0.1);
       box-shadow: 0px 0px 10px #888888;
+    }
+    .dropdown_menu{
+      -webkit-app-region: no-drag;
+    }
+    .box_hd .ext{
+      -webkit-app-region: no-drag;
     }
     @media (max-width: 512px) {
       .panel {

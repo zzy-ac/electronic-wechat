@@ -160,6 +160,8 @@ class Injector {
       if(AppConfig.readSettings('click-notification') === 'on'){
         ipcRenderer.on(ename,function(){
           //渲染层捕捉到通知的点击事件
+          document.querySelectorAll('.tab_item')[0].children[0].click()
+          //主界面移动到聊天页
           for(let i=0;i<document.querySelectorAll('.nickname_text').length;i++){
             //从上到下遍历聊天列表寻找发送者
             let item = document.querySelectorAll('.nickname_text')[i]
