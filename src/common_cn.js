@@ -8,6 +8,7 @@ class Common {
 }
 Common.ELECTRON = 'Electron';
 Common.ELECTRONIC_WECHAT = 'Electronic WeChat';
+Common.ELECTRONIC_SETINGS = '偏好设置';
 Common.DEBUG_MODE = false;
 Common.WINDOW_SIZE = {
   width: 800,

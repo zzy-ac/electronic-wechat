@@ -72,6 +72,7 @@ CSSInjector.commonCSS = `
     div.main_inner {
       max-width: none !important;
       min-width: 0 !important;
+      border-radius:0!important;
     }
     div.message_empty {
       margin-top: 50px;

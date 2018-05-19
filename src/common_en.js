@@ -8,6 +8,7 @@ class Common {
 }
 Common.ELECTRON = 'Electron';
 Common.ELECTRONIC_WECHAT = 'Electronic WeChat';
+Common.ELECTRONIC_SETINGS = 'Setings';
 Common.DEBUG_MODE = false;
 Common.WINDOW_SIZE = {
   width: 800,
@@ -69,7 +70,7 @@ Common.languageTitle = 'Language(Need to Restart)';
 Common.languageDesc = 'Select a default language for WeChat!';
 Common.recallTitle = 'Prevent Message Recall';
 Common.recallDesc = 'Message recall feature might be annoying';
-Common.notificationTitle = 'Open WeChat from the notification';
+Common.notificationTitle = 'Open WeChat from the notification(Need to Restart)';
 Common.notificationDesc = 'Select whether you can open WeChat by clicking on the message notification'
 Common.frameTitle = 'No border(Need to Restart)';
 Common.frameDesc = 'Select whether to hide the border.'
