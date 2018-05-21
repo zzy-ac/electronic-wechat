@@ -54,13 +54,15 @@ class ElectronicWeChat {
       this.createSettingsWindow()
       this.createTray();
 
-      if (!AppConfig.readSettings('frame')) {
-        AppConfig.saveSettings('language', 'zh-CN');
-        AppConfig.saveSettings('prevent-recall', 'on');
-        AppConfig.saveSettings('icon', 'black');
-        AppConfig.saveSettings('multi-instance','on');
-        AppConfig.saveSettings('click-notification','on')
-        AppConfig.saveSettings('frame','on')
+      if (!AppConfig.readSettings('update')) {
+        AppConfig.saveSettings('language', AppConfig.readSettings('language')||'zh-CN');
+        AppConfig.saveSettings('prevent-recall', AppConfig.readSettings('prevent-recall')||'on');
+        AppConfig.saveSettings('icon', AppConfig.readSettings('icon')||'black');
+        AppConfig.saveSettings('multi-instance',AppConfig.readSettings('multi-instance')||'on');
+        AppConfig.saveSettings('click-notification',AppConfig.readSettings('click-notification')||'on')
+        AppConfig.saveSettings('frame',AppConfig.readSettings('frame')||'on')
+        AppConfig.saveSettings('close',AppConfig.readSettings('close')||'on')
+        AppConfig.saveSettings('update',AppConfig.readSettings('update')||'on')
       }
       new Notification({
         title:'Electronic WeChat',

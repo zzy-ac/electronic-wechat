@@ -96,7 +96,13 @@ class WeChatWindow {
   }
 
   close(){
-    app.exit(0)
+    if(AppConfig.readSettings('close') === 'on'){
+      this.isShown = false
+      this.hide()
+    }
+    else{
+      app.exit(0)
+    }
   }
 
   connectWeChat() {
@@ -134,7 +140,7 @@ class WeChatWindow {
         this.wechatWindow.webContents.insertCSS(CSSInjector.osxCSS);
       }
 
-      if (!UpdateHandler.CHECKED) {
+      if (AppConfig.readSettings('update') === 'on') {
         new UpdateHandler().checkForUpdate(`v${app.getVersion()}`, true);
       }
     });
@@ -156,7 +162,9 @@ class WeChatWindow {
       //   e.preventDefault();
       //   this.close();
       // }
-      this.close();
+      if(this.isShown){
+        this.close();
+      }
     });
 
     this.wechatWindow.on('page-title-updated', (ev) => {
@@ -167,6 +175,7 @@ class WeChatWindow {
     });
 
     this.wechatWindow.on('show', () => {
+      this.isShown = true;
       this.registerLocalShortcut();
     });
 

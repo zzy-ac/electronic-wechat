@@ -89,6 +89,38 @@
         </li>
       </ul>
     </section>
+    <section>
+      <ul>
+        <li class="menu-title">
+          <h3 id="app-close-title">关闭主面板</h3>
+        </li>
+        <li class="menu-desc">
+          <h4 id="app-close-desc">选择关闭主面板是最小化到系统托盘还是退出程序</h4>
+        </li>
+        <li class="menu-button">
+          <select class="" id="app-close-select" onchange="changefun('close')">
+            <option value="on">最小化到系统托盘(close)</option>
+            <option value="off">退出程序(exit)</option>
+          </select>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <ul>
+        <li class="menu-title">
+          <h3 id="app-update-title">自动检查更新</h3>
+        </li>
+        <li class="menu-desc">
+          <h4 id="app-update-desc">打开程序时是否自动检查更新</h4>
+        </li>
+        <li class="menu-button">
+          <select class="" id="app-update-select" onchange="changefun('update')">
+            <option value="on">On</option>
+            <option value="off">Off</option>
+          </select>
+        </li>
+      </ul>
+    </section>
     <!-- <section>
       <ul>
         <li class="menu-title">
@@ -150,6 +182,8 @@
     //const instance = AppConfig.readSettings('multi-instance');
     const trayColor = AppConfig.readSettings('tray-color');
     const frame = AppConfig.readSettings('frame');
+    const close = AppConfig.readSettings('close');
+    const update = AppConfig.readSettings('update');
 
     const lanSelect = $('app-language-select');
     const recallSelect = $('app-recall-select');
@@ -157,6 +191,8 @@
     //const instanceSelect = $('app-instance-select');
     const trayColorSelect = $('app-tray-select');
     const frameSelect = $('app-frame-select');
+    const closeSelect = $('app-close-select');
+    const updateSelect = $('app-update-select');
 
     function $(id) {
       return document.getElementById(id);
@@ -206,12 +242,18 @@
         case 'notification':
           AppConfig.saveSettings('click-notification', notificationSelect.value)
           break
+        case 'frame':
+          AppConfig.saveSettings('frame', frameSelect.value)
+          break
+        case 'close':
+          AppConfig.saveSettings('close', closeSelect.value)
+          break
+        case 'update':
+          AppConfig.saveSettings('update', updateSelect.value)
+          break
         case 'tray':
           AppConfig.saveSettings('tray-color', trayColorSelect.value)
           ipcRenderer.send('refreshIcon')
-          break
-        case 'frame':
-          AppConfig.saveSettings('frame', frameSelect.value)
           break
       }
     }
@@ -223,6 +265,8 @@
       //$('app-instance-select').value = instance;
       $('app-tray-select').value = trayColor;
       $('app-frame-select').value = frame;
+      $('app-close-select').value = close;
+      $('app-update-select').value = update;
     }
 
     function setLocale() {
@@ -234,6 +278,10 @@
       $('app-notification-desc').innerHTML = Common.notificationDesc;
       $('app-frame-title').innerHTML = Common.frameTitle;
       $('app-frame-desc').innerHTML = Common.frameDesc;
+      $('app-close-title').innerHTML = Common.closeTitle;
+      $('app-close-desc').innerHTML = Common.closeDesc;
+      $('app-update-title').innerHTML = Common.updateTitle;
+      $('app-update-desc').innerHTML = Common.updateDesc;
       //$('app-instance-title').innerHTML = Common.instanceTitle;
       //$('app-instance-desc').innerHTML = Common.instanceDesc;
       $('app-icon-title').innerHTML = Common.iconTitle;
