@@ -47,9 +47,9 @@ class AppTray {
 
     if (process.platform === 'linux' || process.platform === 'win32') {
       const contextMenu = Menu.buildFromTemplate([
-        { label: Common.TRAY.show, icon:path.join(__dirname, '../../../assets/icon.png'), click: () => this.hideSplashAndShowWeChat() },
-        { label: Common.TRAY.pref, icon:path.join(__dirname, '../../../assets/setting_white.png'), click: () => this.showSettings()},
-        { label: Common.TRAY.exit, icon:path.join(__dirname, '../../../assets/exit.png'), click: () => app.exit(0) },
+        { label: Common.TRAY.show, icon:path.join(__dirname, `../../../assets/icon.png`), click: () => this.hideSplashAndShowWeChat() },
+        { label: Common.TRAY.pref, icon:path.join(__dirname, `../../../assets/settings_${this.trayColor}.png`), click: () => this.showSettings()},
+        { label: Common.TRAY.exit, icon:path.join(__dirname, `../../../assets/exit_${this.trayColor}.png`), click: () => app.exit(0) },
       ]);
       this.tray.setContextMenu(contextMenu);
     }
@@ -76,6 +76,12 @@ class AppTray {
     } else {
       this.tray.setImage(this.trayIconUnread);
     }
+    const contextMenu = Menu.buildFromTemplate([
+      { label: Common.TRAY.show, icon:path.join(__dirname, `../../../assets/icon.png`), click: () => this.hideSplashAndShowWeChat() },
+      { label: Common.TRAY.pref, icon:path.join(__dirname, `../../../assets/settings_${this.trayColor}.png`), click: () => this.showSettings()},
+      { label: Common.TRAY.exit, icon:path.join(__dirname, `../../../assets/exit_${this.trayColor}.png`), click: () => app.exit(0) },
+    ]);
+    this.tray.setContextMenu(contextMenu);
   }
 
   setUnreadStat(stat) {
