@@ -13,7 +13,6 @@ const WeChatWindow = require('./windows/controllers/wechat');
 const SettingsWindow = require('./windows/controllers/settings')
 const AppTray = require('./windows/controllers/app_tray');
 
-const clickNotification = AppConfig.readSettings('click-notification')
 
 class ElectronicWeChat {
   constructor() {
@@ -144,7 +143,7 @@ class ElectronicWeChat {
           //icon:messgae.opt.icon
           icon:path.join(__dirname, '../assets/icon.png')
         })
-        if(clickNotification === 'on'){
+        if(AppConfig.readSettings('click-notification') === 'on'){
           osNotification.on('click',()=>{
             event.sender.send(messgae.ename)
             this.wechatWindow.show()
