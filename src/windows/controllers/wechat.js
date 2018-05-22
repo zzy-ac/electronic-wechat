@@ -19,6 +19,7 @@ const Common = require('../../common');;
 
 class WeChatWindow {
   constructor() {
+    this.isLogged = false;
     this.isShown = false;
     this.loginState = { NULL: -2, WAITING: -1, YES: 1, NO: 0 };
     this.loginState.current = this.loginState.NULL;
@@ -30,16 +31,19 @@ class WeChatWindow {
   }
 
   resizeWindow(isLogged, splashWindow) {
-    const size = isLogged ? Common.WINDOW_SIZE : Common.WINDOW_SIZE_LOGIN;
-
-    this.wechatWindow.setResizable(isLogged);
+    const WECHAT_SIZE = {
+      width:AppConfig.readSettings('width'),
+      height:AppConfig.readSettings('height'),
+    }
+    const size = isLogged ? WECHAT_SIZE : Common.WINDOW_SIZE_LOGIN;
+    this.isLogged = isLogged
     this.wechatWindow.setSize(size.width, size.height);
     if (this.loginState.current === 1 - isLogged || this.loginState.current === this.loginState.WAITING) {
       splashWindow.hide();
       this.show();
-      this.wechatWindow.center();
       this.loginState.current = isLogged;
     }
+    this.wechatWindow.center();
   }
 
   createWindow() {
@@ -89,6 +93,11 @@ class WeChatWindow {
   minimize(){
     this.wechatWindow.minimize();
     this.isShown = false;
+  }
+
+  restore(){
+    this.isShown = true;
+    this.registerLocalShortcut();
   }
 
   setFullScreen(flag){
@@ -162,9 +171,7 @@ class WeChatWindow {
       //   e.preventDefault();
       //   this.close();
       // }
-      if(this.isShown){
-        this.close();
-      }
+      this.close();
     });
 
     this.wechatWindow.on('page-title-updated', (ev) => {
@@ -186,8 +193,20 @@ class WeChatWindow {
     });
 
     this.wechatWindow.on('restore', () => {
-      this.registerLocalShortcut();
+      this.restore()
     });
+
+    this.wechatWindow.on('resize',(event) => {
+      if(this.isLogged){
+        this.debounce(
+          () => {
+            let size = this.wechatWindow.getSize()
+            AppConfig.saveSettings('width',size[0])
+            AppConfig.saveSettings('height',size[1])
+          }
+        )
+      }
+    })
   }
 
   registerLocalShortcut() {
@@ -206,6 +225,13 @@ class WeChatWindow {
     globalShortcut.register('CommandOrControl+Alt+W', () => {
       this.show()
     })
+  }
+
+  debounce(func){//防抖
+    clearTimeout(this.timer)
+    this.timer = setTimeout(()=>{
+      func()
+    },300)
   }
 }
 

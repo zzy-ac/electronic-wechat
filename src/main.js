@@ -33,6 +33,7 @@ class ElectronicWeChat {
   checkInstance() {
     //不检查是否多实例
     return true
+    // app.makeSingleInstance这个方法有问题，暂时不会打开多实例检查功能
     // if (AppConfig.readSettings('multi-instance') === 'on') return true;
     // return !app.makeSingleInstance((commandLine, workingDirectory) => {
     //   if(this.splashWindow && this.splashWindow.isShown){
@@ -54,7 +55,7 @@ class ElectronicWeChat {
       this.createSettingsWindow()
       this.createTray();
 
-      if (!AppConfig.readSettings('update')) {
+      if (!AppConfig.readSettings('height')) {
         AppConfig.saveSettings('language', AppConfig.readSettings('language')||'zh-CN');
         AppConfig.saveSettings('prevent-recall', AppConfig.readSettings('prevent-recall')||'on');
         AppConfig.saveSettings('icon', AppConfig.readSettings('icon')||'black');
@@ -63,6 +64,8 @@ class ElectronicWeChat {
         AppConfig.saveSettings('frame',AppConfig.readSettings('frame')||'on')
         AppConfig.saveSettings('close',AppConfig.readSettings('close')||'on')
         AppConfig.saveSettings('update',AppConfig.readSettings('update')||'on')
+        AppConfig.saveSettings('width',AppConfig.readSettings('width')||800)
+        AppConfig.saveSettings('height',AppConfig.readSettings('height')||600)
       }
       new Notification({
         title:'Electronic WeChat',
