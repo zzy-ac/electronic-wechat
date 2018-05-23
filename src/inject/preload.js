@@ -124,7 +124,9 @@ class Injector {
               Injector.lock(msg, 'MMDigest', Common.MESSAGE_PREVENT_RECALL(name));
             }
             catch(e){
-              //自己的撤回不阻止
+              Injector.lock(msg, 'MsgType', constants.MSGTYPE_SYS);
+              Injector.lock(msg, 'MMActualContent', msg.Content.match(/\!\[CDATA\[(.*)?]\]/)[1]);
+              Injector.lock(msg, 'MMDigest', msg.Content.match(/\!\[CDATA\[(.*)?]\]/)[1]);
             }
           }
           break;
