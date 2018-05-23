@@ -66,7 +66,7 @@ Common.MENTION_MENU_OPTION_DEFAULT_NUM = 4;
 Common.MENTION_MENU_HINT_TEXT = '选择回复的人:';
 
 Common.MESSAGE_PREVENT_RECALL = (name) => {
-  return `阻止了 "${name}" 的一次撤回`
+  return `阻止了 \"${name}\" 的一次撤回`
 }
 Common.EMOJI_MAXIUM_SIZE = 120;
 

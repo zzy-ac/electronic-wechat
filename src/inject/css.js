@@ -8,6 +8,9 @@ class CSSInjector {
 }
 
 CSSInjector.commonCSS = `
+    .emoji{
+      margin:0 2px;
+    }
     .login{
       -webkit-app-region: drag;
     }
