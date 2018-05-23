@@ -63,7 +63,9 @@ Common.MENTION_MENU_OPTION_HEIGHT = 30;
 Common.MENTION_MENU_OPTION_DEFAULT_NUM = 4;
 Common.MENTION_MENU_HINT_TEXT = 'Mention:';
 
-Common.MESSAGE_PREVENT_RECALL = 'Blocked a message recall.';
+Common.MESSAGE_PREVENT_RECALL = (name) => {
+  return `Blocked ${name} a message recall.`
+}
 Common.EMOJI_MAXIUM_SIZE = 120;
 
 Common.languageTitle = 'Language(Need to Restart)';

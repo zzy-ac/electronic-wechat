@@ -117,9 +117,10 @@ class Injector {
           break;
         case constants.MSGTYPE_RECALLED:
           if (AppConfig.readSettings('prevent-recall') === 'on') {
+            let name = msg.Content.match(/\!\[CDATA\["(.*)?"(.*?)]]/)[1]
             Injector.lock(msg, 'MsgType', constants.MSGTYPE_SYS);
-            Injector.lock(msg, 'MMActualContent', Common.MESSAGE_PREVENT_RECALL);
-            Injector.lock(msg, 'MMDigest', Common.MESSAGE_PREVENT_RECALL);
+            Injector.lock(msg, 'MMActualContent', Common.MESSAGE_PREVENT_RECALL(name));
+            Injector.lock(msg, 'MMDigest', Common.MESSAGE_PREVENT_RECALL(name));
           }
           break;
       }
