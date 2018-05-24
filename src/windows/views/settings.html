@@ -187,7 +187,7 @@
 
     const lanSelect = $('app-language-select');
     const recallSelect = $('app-recall-select');
-    const notificationSelect = $('app-notification-select');
+    //const notificationSelect = $('app-notification-select');
     //const instanceSelect = $('app-instance-select');
     const trayColorSelect = $('app-tray-select');
     const frameSelect = $('app-frame-select');
@@ -239,9 +239,9 @@
         case 'recall':
           AppConfig.saveSettings('prevent-recall', recallSelect.value)
           break
-        case 'notification':
-          AppConfig.saveSettings('click-notification', notificationSelect.value)
-          break
+        // case 'notification':
+        //   AppConfig.saveSettings('click-notification', notificationSelect.value)
+        //   break
         case 'frame':
           AppConfig.saveSettings('frame', frameSelect.value)
           break
@@ -261,7 +261,7 @@
     function setConfig() {
       $('app-language-select').value = lan;
       $('app-recall-select').value = recall;
-      $('app-notification-select').value = notification;
+      //$('app-notification-select').value = notification;
       //$('app-instance-select').value = instance;
       $('app-tray-select').value = trayColor;
       $('app-frame-select').value = frame;
@@ -274,8 +274,8 @@
       $('app-language-desc').innerHTML = Common.languageDesc;
       $('app-recall-title').innerHTML = Common.recallTitle;
       $('app-recall-desc').innerHTML = Common.recallDesc;
-      $('app-notification-title').innerHTML = Common.notificationTitle;
-      $('app-notification-desc').innerHTML = Common.notificationDesc;
+      //$('app-notification-title').innerHTML = Common.notificationTitle;
+      //$('app-notification-desc').innerHTML = Common.notificationDesc;
       $('app-frame-title').innerHTML = Common.frameTitle;
       $('app-frame-desc').innerHTML = Common.frameDesc;
       $('app-close-title').innerHTML = Common.closeTitle;
