@@ -187,18 +187,17 @@ class Injector {
   }
 
   initIPC() {
-    // clear currentUser to receive reddot of new messages from the current chat user
-    // ipcRenderer.on('hide-wechat-window', () => {
-      // this.lastUser = angular.element('#chatArea').scope().currentUser;
-      // angular.element('.chat_list').scope().itemClick("");
-      //这个怀疑是以前微信的bug，现在已经不需要了
-    // });
+    //clear currentUser to receive reddot of new messages from the current chat user
+    ipcRenderer.on('hide-wechat-window', () => {
+      this.lastUser = angular.element('#chatArea').scope().currentUser;
+      angular.element('.chat_list').scope().itemClick("");
+    });
     // recover to the last chat user
-    // ipcRenderer.on('show-wechat-window', () => {
-    //   if (this.lastUser != null) {
-    //     angular.element('.chat_list').scope().itemClick(this.lastUser);
-    //   }
-    // });
+    ipcRenderer.on('show-wechat-window', () => {
+      if (this.lastUser != null) {
+        angular.element('.chat_list').scope().itemClick(this.lastUser);
+      }
+    });
   }
 }
 
