@@ -78,9 +78,11 @@ class WeChatWindow {
   }
 
   show() {
+    if(!this.wechatWindow.isVisible()){
+      this.wechatWindow.webContents.send('show-wechat-window');
+    }
     this.wechatWindow.show();
     this.wechatWindow.focus();
-    this.wechatWindow.webContents.send('show-wechat-window');
     this.isShown = true;
   }
 
@@ -213,8 +215,7 @@ class WeChatWindow {
 
   registerLocalShortcut() {
     electronLocalShortcut.register(this.wechatWindow, 'CommandOrControl+H', () => {
-      this.wechatWindow.minimize();
-      this.isShown = false;
+      this.minimize();
     });
   }
 
