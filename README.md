@@ -148,6 +148,10 @@
 
 #### [下载构建好的应用](https://github.com/kooritea/electronic-wechat/releases)
 
+
+如果要在启动器添加图标 参考[issues19](https://github.com/kooritea/electronic-wechat/issues/19)
+
+
 以下是原文
 
 
