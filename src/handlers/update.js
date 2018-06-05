@@ -69,7 +69,7 @@ class UpdateHandler {
     const fetched = {
       version: data.tag_name,
       is_prerelease: data.prerelease,
-      name: data.name||'有可用更新',
+      name: data.name||`有可用更新 当前版本(${version} > ${data.tag_name})`,
       url: data.html_url,
       description: data.body,
     };
