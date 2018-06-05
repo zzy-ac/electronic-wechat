@@ -48,6 +48,9 @@ CSSInjector.commonCSS = `
       background-color: rgba(255,255,255,0.1);
       box-shadow: 0px 0px 10px #888888;
     }
+    div.download_entry{
+      display:none;
+    }
     div.title_wrap{
       z-index:1000!important;
     }
