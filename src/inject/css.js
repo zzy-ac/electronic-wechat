@@ -183,6 +183,12 @@ CSSInjector.commonCSS = `
     .box_hd .ext{
       -webkit-app-region: no-drag;
     }
+    .login_box .association .button.button_primary{
+      -webkit-app-region: no-drag;
+    }
+    .login_box .association .button.button_default{
+      -webkit-app-region: no-drag;
+    }
     @media (max-width: 512px) {
       .panel {
         width: 75px !important;
