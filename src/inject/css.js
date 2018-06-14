@@ -189,6 +189,9 @@ CSSInjector.commonCSS = `
     .login_box .association .button.button_default{
       -webkit-app-region: no-drag;
     }
+    .bubble_cont a{
+          user-select: all;
+    }
     @media (max-width: 512px) {
       .panel {
         width: 75px !important;
