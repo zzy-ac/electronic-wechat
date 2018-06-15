@@ -162,8 +162,12 @@
 
 #### [下载构建好的应用](https://github.com/kooritea/electronic-wechat/releases)
 
+### 创建快捷方式
+修改electronic-wechat.desktop中的路径
+复制到/usr/share/applications/或者~/.local/share/applications/
+即可在应用程序中找到electronic-wechat的图标
 
-如果要在启动器添加图标 参考[issues19](https://github.com/kooritea/electronic-wechat/issues/19)
+或者参考[issues19](https://github.com/kooritea/electronic-wechat/issues/19)
 
 
 以下是原文
