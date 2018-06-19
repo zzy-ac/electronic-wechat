@@ -24,12 +24,15 @@ class ElectronicWeChat {
 
   init() {
     if(this.checkInstance()) {
+      this.initSetting();
+      this.initProxy();
       this.initApp();
       this.initIPC();
     } else {
       app.quit();
     }
   }
+
   checkInstance() {
     //不检查是否多实例
     return true
@@ -48,6 +51,33 @@ class ElectronicWeChat {
     //   }
     // });
   }
+
+  initSetting(){
+    if (!AppConfig.readSettings('proxy-url')) {
+      AppConfig.saveSettings('language', AppConfig.readSettings('language')||'zh-CN');
+      AppConfig.saveSettings('prevent-recall', AppConfig.readSettings('prevent-recall')||'on');
+      AppConfig.saveSettings('icon', AppConfig.readSettings('icon')||'black');
+      AppConfig.saveSettings('multi-instance',AppConfig.readSettings('multi-instance')||'on');
+      AppConfig.saveSettings('click-notification',AppConfig.readSettings('click-notification')||'on')
+      AppConfig.saveSettings('frame',AppConfig.readSettings('frame')||'on')
+      AppConfig.saveSettings('close',AppConfig.readSettings('close')||'on')
+      AppConfig.saveSettings('update',AppConfig.readSettings('update')||'on')
+      AppConfig.saveSettings('width',AppConfig.readSettings('width')||800)
+      AppConfig.saveSettings('height',AppConfig.readSettings('height')||600)
+      AppConfig.saveSettings('proxy',AppConfig.readSettings('proxy')||'on')
+      AppConfig.saveSettings('proxy-url',AppConfig.readSettings('proxy-url')||'socks5://127.0.0.1:1080')
+    }
+  }
+
+  initProxy(){
+    if(AppConfig.readSettings('proxy') === 'off'){
+      app.commandLine.appendSwitch('no-proxy-server');
+    }
+    if(AppConfig.readSettings('proxy') === 'setProxy'){
+      app.commandLine.appendSwitch('proxy-server',AppConfig.readSettings('proxy-url'));
+    }
+  }
+
   initApp() {
     app.on('ready', ()=> {
       this.createSplashWindow();
@@ -55,18 +85,6 @@ class ElectronicWeChat {
       this.createSettingsWindow()
       this.createTray();
 
-      if (!AppConfig.readSettings('height')) {
-        AppConfig.saveSettings('language', AppConfig.readSettings('language')||'zh-CN');
-        AppConfig.saveSettings('prevent-recall', AppConfig.readSettings('prevent-recall')||'on');
-        AppConfig.saveSettings('icon', AppConfig.readSettings('icon')||'black');
-        AppConfig.saveSettings('multi-instance',AppConfig.readSettings('multi-instance')||'on');
-        AppConfig.saveSettings('click-notification',AppConfig.readSettings('click-notification')||'on')
-        AppConfig.saveSettings('frame',AppConfig.readSettings('frame')||'on')
-        AppConfig.saveSettings('close',AppConfig.readSettings('close')||'on')
-        AppConfig.saveSettings('update',AppConfig.readSettings('update')||'on')
-        AppConfig.saveSettings('width',AppConfig.readSettings('width')||800)
-        AppConfig.saveSettings('height',AppConfig.readSettings('height')||600)
-      }
       new Notification({
         title:'Electronic WeChat',
         body:'已经准备就绪',

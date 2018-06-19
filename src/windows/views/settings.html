@@ -18,7 +18,7 @@
     <div class="top-bar-middle">
       <ul class="title-list">
         <li>
-          <h1>Electronic Wechat V2.1.1</h1></li>
+          <h1>Electronic Wechat V2.1.2</h1></li>
         <li>
           <h1 style="font-size:95%;">Powered by Electron V<span id="top-title-electron-ver">process.versions.electron</span></h1></li>
       </ul>
@@ -121,6 +121,24 @@
         </li>
       </ul>
     </section>
+    <section>
+      <ul>
+        <li class="menu-title">
+          <h3 id="app-proxy-title">代理设置（重启生效）</h3>
+        </li>
+        <li class="menu-desc">
+          <h4 id="app-proxy-desc">选择代理模式</h4>
+        </li>
+        <li class="menu-button">
+          <select class="" id="app-proxy-select" onchange="changefun('proxy')">
+            <option value="on">跟随系统(Follow the system)</option>
+            <option value="off">直接连接(no proxy)</option>
+            <option value="setProxy">指定代理(set proxy)</option>
+          </select>
+          <input oninput="setProxy()" id="app-proxy-input" type="text">
+        </li>
+      </ul>
+    </section>
     <!-- <section>
       <ul>
         <li class="menu-title">
@@ -140,7 +158,7 @@
     <section>
       <ul>
         <li class="menu-title">
-          <h3 id="app-icon-title">Flash 路径 (即将上线)</h3>
+          <h3 id="app-icon-title">Flash 路径[不知道是啥，可能不会上线了]</h3>
         </li>
         <li class="menu-desc">
           <h4 id="app-icon-desc">默认路径</h4>
@@ -184,6 +202,8 @@
     const frame = AppConfig.readSettings('frame');
     const close = AppConfig.readSettings('close');
     const update = AppConfig.readSettings('update');
+    const proxy = AppConfig.readSettings('proxy');
+    const proxyURl = AppConfig.readSettings('proxy-url');
 
     const lanSelect = $('app-language-select');
     const recallSelect = $('app-recall-select');
@@ -193,6 +213,8 @@
     const frameSelect = $('app-frame-select');
     const closeSelect = $('app-close-select');
     const updateSelect = $('app-update-select');
+    const proxySelect = $('app-proxy-select');
+    const proxyInput = $('app-proxy-input');
 
     function $(id) {
       return document.getElementById(id);
@@ -255,6 +277,15 @@
           AppConfig.saveSettings('tray-color', trayColorSelect.value)
           ipcRenderer.send('refreshIcon')
           break
+        case 'proxy':
+          AppConfig.saveSettings('proxy', proxySelect.value)
+          if(proxySelect.value=='setProxy'){
+            $('app-proxy-input').style.display='block'
+          }
+          else{
+            $('app-proxy-input').style.display='none'
+          }
+          break
       }
     }
 
@@ -267,6 +298,9 @@
       $('app-frame-select').value = frame;
       $('app-close-select').value = close;
       $('app-update-select').value = update;
+      $('app-proxy-select').value = proxy;
+      $('app-proxy-input').value = proxyURl;
+      $('app-proxy-input').style.display = (proxy==='setProxy')?'block':'none'
     }
 
     function setLocale() {
@@ -282,6 +316,8 @@
       $('app-close-desc').innerHTML = Common.closeDesc;
       $('app-update-title').innerHTML = Common.updateTitle;
       $('app-update-desc').innerHTML = Common.updateDesc;
+      $('app-proxy-title').innerHTML = Common.proxyTitle;
+      $('app-proxy-desc').innerHTML = Common.proxyDesc;
       //$('app-instance-title').innerHTML = Common.instanceTitle;
       //$('app-instance-desc').innerHTML = Common.instanceDesc;
       $('app-icon-title').innerHTML = Common.iconTitle;
@@ -290,6 +326,12 @@
       $('app-tray-desc').innerHTML = Common.trayDesc;
       $('upgrade-btn').innerHTML = Common.UPGRADE;
       $('feedback-btn').innerHTML = Common.FEEDBACK;
+    }
+
+    function setProxy(){
+      debounce(()=>{
+        AppConfig.saveSettings('proxy-url', $('app-proxy-input').value)
+      },500)
     }
 
     function feedback() {
@@ -302,6 +344,13 @@
 
     function KeyDownFn(evt) {
       if (evt.keyCode == 73 && evt.ctrlKey && evt.shiftKey) evt.preventDefault();
+    }
+
+    function debounce(func){//防抖
+      clearTimeout(this.timer)
+      this.timer = setTimeout(()=>{
+        func()
+      },300)
     }
 
   </script>

@@ -86,6 +86,8 @@ Common.iconTitle = 'File Path (In Development)';
 Common.iconDesc = 'Set a default file path';
 Common.trayTitle = 'Tray Icon color (Black/White)';
 Common.trayDesc = 'Select a color to match your desktop theme';
+Common.proxyTitle = 'Set Proxy'
+Common.proxyDesc = 'Select Proxy Mode'
 
 Common.UPGRADE = 'UPGRADE';
 Common.FEEDBACK = 'FEEDBACK';
