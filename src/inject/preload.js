@@ -69,6 +69,7 @@ class Injector {
       if(AppConfig.readSettings('frame') === 'on'){
         MiniFrame.init();
       }
+      this.initSeteditArea();
       MentionMenu.init();
       BadgeCount.init();
     };
@@ -183,6 +184,38 @@ class Injector {
         ipcRenderer.removeAllListeners(ename)
       })
       ipcRenderer.send('new-message', {title,opt,ename});
+    })
+  }
+
+
+  initSeteditArea(){//初始化缩放输入文本域事件
+    let startY;
+    let startBox_ftY
+    let startChat_bd
+    let mousedown=false
+    let $chatArea = angular.element('#chatArea')[0]
+    angular.element('#chatArea>.box_ft')[0].style.height=180+parseInt(AppConfig.readSettings('chat-area-offset-y'))+'px'//赋初值方便计算
+    angular.element('#chatArea>.chat_bd')[0].style.marginBottom = parseInt(AppConfig.readSettings('chat-area-offset-y'))+'px'
+    $chatArea.addEventListener('mousedown',(event)=>{
+      if(event.target.id === 'tool_bar' ){
+        startY = event.clientY;
+        startBox_ftY = parseInt(angular.element('#chatArea>.box_ft')[0].style.height)
+        startChat_bd = parseInt(angular.element('#chatArea>.chat_bd')[0].style.marginBottom)
+        mousedown=true
+      }
+    })
+    $chatArea.addEventListener('mousemove',(event)=>{
+      if(mousedown){
+        let offsetY = startY - event.clientY
+        angular.element('#chatArea>.chat_bd')[0].style.marginBottom=startChat_bd+offsetY+'px'        //聊天区
+        angular.element('#chatArea>.box_ft')[0].style.height=startBox_ftY+offsetY+'px'   //输入域
+      }
+    })
+    $chatArea.addEventListener('mouseup',(event)=>{
+      if(mousedown){
+        mousedown=false
+        AppConfig.saveSettings('chat-area-offset-y',parseInt(angular.element('#chatArea>.chat_bd')[0].style.marginBottom))
+      }
     })
   }
 

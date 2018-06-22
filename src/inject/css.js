@@ -190,7 +190,13 @@ CSSInjector.commonCSS = `
       -webkit-app-region: no-drag;
     }
     .bubble_cont a{
-          user-select: all;
+      user-select: all;
+    }
+    .box_ft>.content{
+      height: calc(100% - 90px);
+    }
+    .box_ft>.content>.edit_area{
+      height:100%!important;
     }
     @media (max-width: 512px) {
       .panel {
