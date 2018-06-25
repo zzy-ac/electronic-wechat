@@ -185,6 +185,9 @@ class ElectronicWeChat {
     ipcMain.on('miniFrame-setFullScreen',(event,flag)=>{
       this.wechatWindow.setFullScreen(flag);
     })
+    ipcMain.on('console',(event,data)=>{
+      console.log(data)
+    })
   };
 
   createTray() {

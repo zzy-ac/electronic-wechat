@@ -31,6 +31,7 @@ class AppTray {
 
   createTray() {
     let image;
+    let tray=null
     if (process.platform === 'linux' || process.platform === 'win32') {
       image = nativeImage.createFromPath(path.join(assetsPath, `tray_${this.trayColor}.png`));
       this.trayIcon = image;
@@ -40,7 +41,8 @@ class AppTray {
     }
     image.setTemplateImage(true);
 
-    this.tray = new Tray(image);
+    tray = new Tray(image);
+    this.tray=tray;
     this.tray.setToolTip(Common.ELECTRONIC_WECHAT);
 
     ipcMain.on('refreshIcon', () => this.refreshIcon());

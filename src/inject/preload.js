@@ -7,6 +7,7 @@ const MentionMenu = require('./mention_menu');
 const MiniFrame = require('./mini_frame')
 const BadgeCount = require('./badge_count');
 const Common = require('../common');
+var easyIDB = require('../lib/easyIDB.js')
 // const EmojiParser = require('./emoji_parser');
 // const emojione = require('emojione');
 
@@ -14,12 +15,17 @@ const AppConfig = require('../configuration');
 
 class Injector {
   init() {
-    if (Common.DEBUG_MODE) {
-      Injector.lock(window, 'console', window.console);
-    }
+    //Common.DEBUG_MODE
+    // if (true) {
+    //   let wcl = window.console.log
+    //   window.console.log = (content)=>{
+    //     ipcRenderer.send('console', content);
+    //     wcl(content)
+    //   }
+    // }
     this.initInjectBundle();
     this.initAngularInjection();
-    this.lastUser = null;
+    this.lastUser = null
     this.initIPC();
     //webFrame.setZoomLevelLimits(1, 1);
     //不知道为什么webFrame.setZoomLevelLimits未定义
@@ -69,6 +75,7 @@ class Injector {
       if(AppConfig.readSettings('frame') === 'on'){
         MiniFrame.init();
       }
+      this.initIndexDB()
       this.initSeteditArea();
       MentionMenu.init();
       BadgeCount.init();
@@ -135,6 +142,7 @@ class Injector {
           }
           break;
       }
+      this.saveHistory(msg);
     });
     return value;
   }
@@ -217,6 +225,117 @@ class Injector {
         AppConfig.saveSettings('chat-area-offset-y',parseInt(angular.element('#chatArea>.chat_bd')[0].style.marginBottom))
       }
     })
+  }
+
+  async initIndexDB(){
+    //angular.element('.header').scope().account.Uin
+    //1660201781
+    //3171634678
+    // console.log(angular.element('.header').scope().account.UserName)
+    if (!angular.element('.header').scope().account) {
+      setTimeout(()=>{
+        this.initIndexDB()
+      }, 2000);
+      return
+    }
+    this.storeName = 'Uin'+angular.element('.header').scope().account.Uin
+    this.myIDB = await easyIDB('electronwechathistory',[
+      {
+        name:this.storeName,
+        indexs:[
+          {
+            name:'PYQuanPin',
+            unique:false
+          },
+          {
+            name:'RemarkPYQuanPin',
+            unique:false
+          }
+        ],
+        option:{
+          keyPath:'id',//主键,默认 'id'
+          autoIncrement:true//是否自增,默认 true
+        }
+      }
+    ])
+    angular.element('#chatArea').scope().$watch('currentUser',this.restoreChatContent.bind(this));
+    // angular.element('#chatArea').scope().$watch('chatContent',this.saveSelfChat.bind(this),true);
+  }
+
+  saveHistory(msg){//保存聊天记录到indexDB
+    if(!msg.Content){
+      return
+    }
+    try{
+      this.myIDB.DB.tmp=false
+    }
+    catch(e){
+      console.log(e)
+      console.log('indexDB未初始化完成，1s后重试(1)')
+      setTimeout(()=>{
+        saveHistory(msg)
+      },1000)
+      return
+    }
+    msg.NickName = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].NickName
+    msg.PYQuanPin = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].PYQuanPin
+    msg.RemarkPYQuanPin = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].RemarkPYQuanPin
+
+    //不知为何重字开头的属性不可读
+    msg['MMActualContent']=msg.Content
+    msg['MMActualSender']=msg.FromUserName
+    msg['MMDigest']=msg.Content
+    msg['MMDigestTime']=new Date().getHours()+':'+new Date().getMinutes()
+    msg['MMDisplayTime']=undefined
+    msg['MMIsChatRoom']=false
+    msg['MMIsSend']=false
+    msg['MMPeerUserName']=msg.FromUserName
+    msg['MMTime']=""
+    msg['MMUnread']=false
+
+    this.myIDB.push(this.storeName,msg)
+  }
+
+  async restoreChatContent(user) {
+    const scope = angular.element('#chatArea').scope();
+    if (!scope.chatContent || scope.chatContent.length === 0) {
+      const his = await this.getHistory(user);
+      for (let i in his) {
+        his[i].MMUnread = false;
+        his[i].MMActualSender = user;
+        his[i].MMPeerUserName = user;
+        his[i].FromUserName = user
+        his[i].StatusNotifyUserName = angular.element('.header').scope().account.UserName;
+        his[i].ToUserName = angular.element('.header').scope().account.UserName;
+        scope.chatContent.push(his[i]);
+      }
+    }
+  }
+
+  getHistory(user){//PYQuanPin,RemarkPYQuanPin
+    try{
+      if(!user){
+        return
+      }
+      this.myIDB.DB.tmp=false
+    }
+    catch(e){
+      console.log(e)
+      console.log('indexDB未初始化完成，1s后重试(2)')
+      setTimeout(()=>{
+        this.getHistory(user)
+      },1000)
+      return
+    }
+    let NickName = user==='filehelper'?'filehelper':window._contacts[user].NickName
+    let PYQuanPin = user==='filehelper'?'filehelper':window._contacts[user].PYQuanPin
+    let RemarkPYQuanPin = user==='filehelper'?'filehelper':window._contacts[user].RemarkPYQuanPin
+    if(RemarkPYQuanPin){
+      return this.myIDB.get(this.storeName,'RemarkPYQuanPin',RemarkPYQuanPin)
+    }
+    else{
+      return this.myIDB.get(this.storeName,'PYQuanPin',PYQuanPin)
+    }
   }
 
   initIPC() {
