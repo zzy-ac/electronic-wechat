@@ -229,8 +229,6 @@ class Injector {
 
   async initIndexDB(){
     //angular.element('.header').scope().account.Uin
-    //1660201781
-    //3171634678
     // console.log(angular.element('.header').scope().account.UserName)
     if (!angular.element('.header').scope().account) {
       setTimeout(()=>{
@@ -239,7 +237,7 @@ class Injector {
       return
     }
     this.DBName = 'Uin'+angular.element('.header').scope().account.Uin
-    this.myIDB = await easyIDB(this.DBName,[
+    this.myIDB = await easyIDB({name:this.DBName,ver:1},[
       {
         name:'history',
         indexs:[
@@ -289,37 +287,19 @@ class Injector {
     msg.RemarkPYQuanPin = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].RemarkPYQuanPin
     if(/@@/.test(msg.FromUserName)){
       //群聊需要记录发送者的信息
+      //在群的memberlist里查找
       let info = msg.Content.match(/@(.*)?:<br\/>(.*)?/)
-      msg.MMActualSenderNickName = window._contacts['@'+info[1]].NickName
-      msg.MMActualSenderPYQuanPin = window._contacts['@'+info[1]].PYQuanPin
-      msg.MMActualSenderRemarkPYQuanPin = window._contacts['@'+info[1]].RemarkPYQuanPin
-    }
-    else{
+      let members= window._contacts[msg.FromUserName].MemberList
+      for(let member of members){
+        if(member.UserName === '@'+info[1]){
+          msg.MMActualSenderNickName = member.NickName
+          msg.MMActualSenderPYQuanPin = member.PYQuanPin
+          msg.MMActualSenderRemarkPYQuanPin = member.RemarkPYQuanPin
+          break
+        }
+      }
 
     }
-
-    //不知为何重字开头的属性不可读
-    // if(/@@/.test(msg.FromUserName)){
-    //   //群聊
-    //   let info = msg.Content.match(/@(.*)?:<br\/>(.*)?/)
-    //   msg['MMActualContent']=info[2]
-    //   msg['MMActualSender']='@'+info[1]
-    // }
-    // else{
-    //   //私聊
-    //   msg['MMActualContent']=msg.Content
-    //   msg['MMActualSender']=msg.FromUserName
-    // }
-    // msg['MMDigest']=msg.Content
-    // msg['MMDigestTime']=new Date().getHours()+':'+new Date().getMinutes()
-    // msg['MMDisplayTime']=undefined
-    // msg['MMIsChatRoom']=false
-    // msg['MMIsSend']=false
-    // // msg['MMPeerUserName']=/@@/.test(msg.FromUserName)?msg.FromUserName:msg.ToUserName
-    // msg['MMPeerUserName']=msg.FromUserName
-    // msg['MMTime']=""
-    // msg['MMUnread']=false
-    // msg['StatusNotifyUserName']=''
     setTimeout(()=>{
       this.myIDB.push('history',msg)
     })
@@ -332,10 +312,10 @@ class Injector {
       for (let i in his) {
         if(/@@/.test(user)){
           //群聊
-          //根据NickName查找MMActualSender
-          for(let key in window._contacts){
-            if(window._contacts[key].NickName === his[i].MMActualSenderNickName){
-              his[i].MMActualSender=window._contacts[key].UserName
+          //根据NickName在群成员中查找MMActualSender
+          for(let member of window._contacts[user].MemberList){
+            if(member.NickName === his[i].MMActualSenderNickName){
+              his[i].MMActualSender = member.UserName
               break
             }
           }
@@ -374,14 +354,26 @@ class Injector {
     let NickName = user==='filehelper'?'filehelper':window._contacts[user].NickName
     let PYQuanPin = user==='filehelper'?'filehelper':window._contacts[user].PYQuanPin
     let RemarkPYQuanPin = user==='filehelper'?'filehelper':window._contacts[user].RemarkPYQuanPin
-    if(RemarkPYQuanPin){
-      return this.myIDB.get('history','RemarkPYQuanPin',RemarkPYQuanPin)
+    if(/@@/.test(user)){
+      //群聊优先匹配NickName
+      if(NickName){
+        return this.myIDB.get('history','NickName',NickName)
+      }else if(PYQuanPin){
+        return this.myIDB.get('history','PYQuanPin',PYQuanPin)
+      }else if(RemarkPYQuanPin){
+        return this.myIDB.get('history','RemarkPYQuanPin',RemarkPYQuanPin)
+      }
     }
-    else if(PYQuanPin){
-      return this.myIDB.get('history','PYQuanPin',PYQuanPin)
-    }
-    else if(NickName){
-      return this.myIDB.get('history','NickName',NickName)
+    else{
+      if(RemarkPYQuanPin){
+        return this.myIDB.get('history','RemarkPYQuanPin',RemarkPYQuanPin)
+      }
+      else if(PYQuanPin){
+        return this.myIDB.get('history','PYQuanPin',PYQuanPin)
+      }
+      else if(NickName){
+        return this.myIDB.get('history','NickName',NickName)
+      }
     }
   }
 

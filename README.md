@@ -108,6 +108,10 @@
 
 >27、可自由改变文字输入区域的大小
 
+--- v2.1.4 ---
+
+>28、历史消息记录,主要参考了@iamcc的[思路](https://github.com/geeeeeeeeek/electronic-wechat/pull/159/commits/9abbe6e177d4f02aae6529136e4d48b3ef6a2c36)
+
 <br>
 <br>
 <br>
