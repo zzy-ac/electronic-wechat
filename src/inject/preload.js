@@ -235,13 +235,13 @@ class Injector {
     if (!angular.element('.header').scope().account) {
       setTimeout(()=>{
         this.initIndexDB()
-      }, 2000);
+      }, 1000);
       return
     }
-    this.storeName = 'Uin'+angular.element('.header').scope().account.Uin
-    this.myIDB = await easyIDB('electronwechathistory',[
+    this.DBName = 'Uin'+angular.element('.header').scope().account.Uin
+    this.myIDB = await easyIDB(this.DBName,[
       {
-        name:this.storeName,
+        name:'history',
         indexs:[
           {
             name:'PYQuanPin',
@@ -249,6 +249,10 @@ class Injector {
           },
           {
             name:'RemarkPYQuanPin',
+            unique:false
+          },
+          {
+            name:'NickName',
             unique:false
           }
         ],
@@ -268,6 +272,9 @@ class Injector {
     }
     try{
       this.myIDB.DB.tmp=false
+      if(!this.myIDB.DB.name){
+        throw 'error'
+      }
     }
     catch(e){
       console.log(e)
@@ -280,20 +287,42 @@ class Injector {
     msg.NickName = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].NickName
     msg.PYQuanPin = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].PYQuanPin
     msg.RemarkPYQuanPin = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].RemarkPYQuanPin
+    if(/@@/.test(msg.FromUserName)){
+      //群聊需要记录发送者的信息
+      let info = msg.Content.match(/@(.*)?:<br\/>(.*)?/)
+      msg.MMActualSenderNickName = window._contacts['@'+info[1]].NickName
+      msg.MMActualSenderPYQuanPin = window._contacts['@'+info[1]].PYQuanPin
+      msg.MMActualSenderRemarkPYQuanPin = window._contacts['@'+info[1]].RemarkPYQuanPin
+    }
+    else{
+
+    }
 
     //不知为何重字开头的属性不可读
-    msg['MMActualContent']=msg.Content
-    msg['MMActualSender']=msg.FromUserName
-    msg['MMDigest']=msg.Content
-    msg['MMDigestTime']=new Date().getHours()+':'+new Date().getMinutes()
-    msg['MMDisplayTime']=undefined
-    msg['MMIsChatRoom']=false
-    msg['MMIsSend']=false
-    msg['MMPeerUserName']=msg.FromUserName
-    msg['MMTime']=""
-    msg['MMUnread']=false
-
-    this.myIDB.push(this.storeName,msg)
+    // if(/@@/.test(msg.FromUserName)){
+    //   //群聊
+    //   let info = msg.Content.match(/@(.*)?:<br\/>(.*)?/)
+    //   msg['MMActualContent']=info[2]
+    //   msg['MMActualSender']='@'+info[1]
+    // }
+    // else{
+    //   //私聊
+    //   msg['MMActualContent']=msg.Content
+    //   msg['MMActualSender']=msg.FromUserName
+    // }
+    // msg['MMDigest']=msg.Content
+    // msg['MMDigestTime']=new Date().getHours()+':'+new Date().getMinutes()
+    // msg['MMDisplayTime']=undefined
+    // msg['MMIsChatRoom']=false
+    // msg['MMIsSend']=false
+    // // msg['MMPeerUserName']=/@@/.test(msg.FromUserName)?msg.FromUserName:msg.ToUserName
+    // msg['MMPeerUserName']=msg.FromUserName
+    // msg['MMTime']=""
+    // msg['MMUnread']=false
+    // msg['StatusNotifyUserName']=''
+    setTimeout(()=>{
+      this.myIDB.push('history',msg)
+    })
   }
 
   async restoreChatContent(user) {
@@ -301,11 +330,23 @@ class Injector {
     if (!scope.chatContent || scope.chatContent.length === 0) {
       const his = await this.getHistory(user);
       for (let i in his) {
-        his[i].MMUnread = false;
-        his[i].MMActualSender = user;
+        if(/@@/.test(user)){
+          //群聊
+          //根据NickName查找MMActualSender
+          for(let key in window._contacts){
+            if(window._contacts[key].NickName === his[i].MMActualSenderNickName){
+              his[i].MMActualSender=window._contacts[key].UserName
+              break
+            }
+          }
+        }
+        else{
+          //私聊
+          his[i].MMActualSender=user
+        }
         his[i].MMPeerUserName = user;
         his[i].FromUserName = user
-        his[i].StatusNotifyUserName = angular.element('.header').scope().account.UserName;
+        his[i].MMUnread = false;
         his[i].ToUserName = angular.element('.header').scope().account.UserName;
         scope.chatContent.push(his[i]);
       }
@@ -318,6 +359,9 @@ class Injector {
         return
       }
       this.myIDB.DB.tmp=false
+      if(!this.myIDB.DB.name){
+        throw 'error'
+      }
     }
     catch(e){
       console.log(e)
@@ -331,10 +375,13 @@ class Injector {
     let PYQuanPin = user==='filehelper'?'filehelper':window._contacts[user].PYQuanPin
     let RemarkPYQuanPin = user==='filehelper'?'filehelper':window._contacts[user].RemarkPYQuanPin
     if(RemarkPYQuanPin){
-      return this.myIDB.get(this.storeName,'RemarkPYQuanPin',RemarkPYQuanPin)
+      return this.myIDB.get('history','RemarkPYQuanPin',RemarkPYQuanPin)
     }
-    else{
-      return this.myIDB.get(this.storeName,'PYQuanPin',PYQuanPin)
+    else if(PYQuanPin){
+      return this.myIDB.get('history','PYQuanPin',PYQuanPin)
+    }
+    else if(NickName){
+      return this.myIDB.get('history','NickName',NickName)
     }
   }
 
