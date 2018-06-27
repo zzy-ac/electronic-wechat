@@ -70,10 +70,28 @@ class ChatHistorys{
   initEvent(){
     let target = angular.element('#chatArea .scroll-wrapper>.scroll-content')[0]
     target.addEventListener('scroll',()=>{
-      if(target.scrollTop===0){
-        this.getHistory(angular.element('#chatArea').scope().currentUser)
-      }
+      this.debounce(()=>{
+        if(target.scrollTop===0){
+          if(!this.lockScroll){
+            this.lockscroll=true
+            this.getHistory(angular.element('#chatArea').scope().currentUser)
+          }
+        }
+      },500)
     })
+    window.onmousewheel = (event)=>{
+      this.debounce(()=>{
+        if(angular.element('#chatArea .scroll-wrapper>.scroll-content')[0].scrollHeight>angular.element('#chatArea .scroll-wrapper>.scroll-content')[0].clientHeight){
+          return
+        }
+        if(event.clientX>angular.element('.panel')[0].scrollWidth&&event.clientY<angular.element('.box_hd')[0].scrollHeight+angular.element('#chatArea>.box_bd')[0].scrollHeight&&event.deltaY<0){
+            if(!this.lockScroll){
+              this.lockscroll=true
+              this.getHistory(angular.element('#chatArea').scope().currentUser)
+            }
+        }
+      },500)
+    };
   }
 
   saveHistory(msg){//保存聊天记录到indexDB
@@ -162,26 +180,34 @@ class ChatHistorys{
         his = this.AllChatHistorys[window._contacts[user].NickName].chats
       }
       let start = his.length - this.AllChatHistorys[window._contacts[user].NickName].get - 1
-      let end = start-10>=0?start-10:0;
-      console.log(start)
+      let end = start-4>=0?start-4:0;
       for (let i=start;i>=end;i--) {
         if(his[i].MsgType === 10000){
           //撤回消息的提示
           //暂时没找到复原方法
+          this.AllChatHistorys[window._contacts[user].NickName].get++
           continue
         }
         if(/@@/.test(user)){
           //群聊
           //根据NickName在群成员中查找MMActualSender
-          for(let member of window._contacts[user].MemberList){
-            if(member.NickName === his[i].MMActualSenderNickName){
-              his[i].MMActualSender = member.UserName
-              break
-            }
-          }
           his[i].MMPeerUserName = user;
-          his[i].FromUserName = user
-          his[i].ToUserName = this.selfUserName;
+          if(his[i].sendByLocal){
+            his[i].FromUserName = this.selfUserName;
+            his[i].ToUserName = user
+            his[i].MMActualSender = this.selfUserName
+          }
+          else{
+            for(let member of window._contacts[user].MemberList){
+              if(member.NickName == his[i].MMActualSenderNickName){
+                his[i].MMActualSender = member.UserName
+                break
+              }
+            }
+            his[i].FromUserName =  user
+            his[i].ToUserName = this.selfUserName;
+          }
+
         }
         else{
           //私聊
@@ -202,6 +228,9 @@ class ChatHistorys{
         scope.chatContent.unshift(his[i]);
         this.AllChatHistorys[window._contacts[user].NickName].get++
       }
+      setTimeout(()=>{
+        this.lockscroll=true
+      },1000)
     }
     catch(e){
       console.error(e)
@@ -252,5 +281,11 @@ class ChatHistorys{
   //     }
   //   }
   // }
+  debounce(func){//防抖
+    clearTimeout(this.timer)
+    this.timer = setTimeout(()=>{
+      func()
+    },300)
+  }
 }
 module.exports = ChatHistorys;
