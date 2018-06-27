@@ -58,6 +58,9 @@ class Injector {
           $rootScope.$on('newLoginPage', () => {
             ipcRenderer.send('user-logged', '');
           });
+          $rootScope.$on("message:add:success", function(e, msg){
+            self.ChatHistorys.saveHistory(msg);
+          });
           $rootScope.shareMenu = ShareMenu.inject;
           $rootScope.mentionMenu = MentionMenu.inject;
         }]);
@@ -143,7 +146,6 @@ class Injector {
           }
           break;
       }
-      this.ChatHistorys.saveHistory(msg);
     });
     return value;
   }

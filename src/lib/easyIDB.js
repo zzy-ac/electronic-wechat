@@ -42,6 +42,7 @@ function get(storeName,key,value){
   }
   return new Promise(async function(reslove){
     let isRegExp = value instanceof RegExp
+    let valueIsArray = Array.isArray(value)
     objectStore.openCursor().onsuccess = function(event){
       let cursor = event.target.result;
       if(cursor){
@@ -52,8 +53,15 @@ function get(storeName,key,value){
             }
           }
           else{
-            if(cursor.value[key] === value){
-              data.push(cursor.value)
+            if(valueIsArray){
+              if(value.indexOf(cursor.value[key])>-1){
+                data.push(cursor.value)
+              }
+            }
+            else{
+              if(cursor.value[key] === value){
+                data.push(cursor.value)
+              }
             }
           }
         }

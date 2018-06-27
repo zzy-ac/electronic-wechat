@@ -20,6 +20,7 @@ class ChatHistorys{
       }, 1000);
       return
     }
+    this.selfUserName = angular.element('.header').scope().account.UserName
     this.DBName = 'Uin'+angular.element('.header').scope().account.Uin
     this.myIDB = await easyIDB({name:this.DBName,ver:1},[
       {
@@ -62,29 +63,37 @@ class ChatHistorys{
       console.log(e)
       console.log('indexDB未初始化完成，1s后重试(1)')
       setTimeout(()=>{
-        saveHistory(msg)
+        this.saveHistory(msg)
       },1000)
       return
     }
-    msg.NickName = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].NickName
-    msg.PYQuanPin = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].PYQuanPin
-    msg.RemarkPYQuanPin = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].RemarkPYQuanPin
-    if(/@@/.test(msg.FromUserName)){
-      //群聊需要记录发送者的信息
-      //在群的memberlist里查找
-      let info = msg.Content.match(/@(.*)?:<br\/>(.*)?/)
-      let members= window._contacts[msg.FromUserName].MemberList
-      for(let member of members){
-        if(member.UserName === '@'+info[1]){
-          msg.MMActualSenderNickName = member.NickName
-          msg.MMActualSenderPYQuanPin = member.PYQuanPin
-          msg.MMActualSenderRemarkPYQuanPin = member.RemarkPYQuanPin
-          break
-        }
+    setTimeout(()=>{
+      msg.MMStatus=2
+      if(msg.sendByLocal){
+        msg.NickName = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].NickName
+        msg.PYQuanPin = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].PYQuanPin
+        msg.RemarkPYQuanPin = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].RemarkPYQuanPin
+      }
+      else{
+        msg.NickName = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].NickName
+        msg.PYQuanPin = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].PYQuanPin
+        msg.RemarkPYQuanPin = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].RemarkPYQuanPin
       }
 
-    }
-    setTimeout(()=>{
+      if(/@@/.test(msg.FromUserName)){
+        //群聊需要记录发送者的信息
+        //在群的memberlist里查找
+        let info = msg.Content.match(/@(.*)?:<br\/>(.*)?/)
+        let members= window._contacts[msg.FromUserName].MemberList
+        for(let member of members){
+          if(member.UserName === '@'+info[1]){
+            msg.MMActualSenderNickName = member.NickName
+            msg.MMActualSenderPYQuanPin = member.PYQuanPin
+            msg.MMActualSenderRemarkPYQuanPin = member.RemarkPYQuanPin
+            break
+          }
+        }
+      }
       this.myIDB.push('history',msg)
     })
   }
@@ -94,6 +103,7 @@ class ChatHistorys{
     if (!scope.chatContent || scope.chatContent.length === 0) {
       const his = await this.getHistory(user);
       for (let i in his) {
+
         if(/@@/.test(user)){
           //群聊
           //根据NickName在群成员中查找MMActualSender
@@ -103,15 +113,26 @@ class ChatHistorys{
               break
             }
           }
+          his[i].MMPeerUserName = user;
+          his[i].FromUserName = user
+          his[i].ToUserName = this.selfUserName;
         }
         else{
           //私聊
-          his[i].MMActualSender=user
+          if(his[i].sendByLocal){
+            //自己发的消息
+            his[i].MMActualSender=this.selfUserName
+            his[i].FromUserName = this.selfUserName
+            his[i].ToUserName = user;
+          }
+          else{
+            his[i].MMActualSender=user
+            his[i].FromUserName = user
+            his[i].ToUserName = this.selfUserName;
+          }
+          his[i].MMPeerUserName = user;
         }
-        his[i].MMPeerUserName = user;
-        his[i].FromUserName = user
         his[i].MMUnread = false;
-        his[i].ToUserName = angular.element('.header').scope().account.UserName;
         scope.chatContent.push(his[i]);
       }
     }
