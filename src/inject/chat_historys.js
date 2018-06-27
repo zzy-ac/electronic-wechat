@@ -9,11 +9,11 @@ class ChatHistorys{
 
   init(){
     this.initIndexDB()
+    this.initEvent()
   }
 
   async initIndexDB(){
-    //angular.element('.header').scope().account.Uin
-    // console.log(angular.element('.header').scope().account.UserName)
+    let self = this
     if (!angular.element('.header').scope().account) {
       setTimeout(()=>{
         this.initIndexDB()
@@ -46,7 +46,34 @@ class ChatHistorys{
       }
     ])
     angular.element('#chatArea').scope().$watch('currentUser',this.restoreChatContent.bind(this));
-    // angular.element('#chatArea').scope().$watch('chatContent',this.saveSelfChat.bind(this),true);
+    this.initData()
+  }
+
+  initData(){
+    //把所有历史信息读取到内存中
+    this.AllChatHistorys={}
+    window.AllChatHistorys = this.AllChatHistorys
+    this.myIDB.get('history').then((data)=>{
+      for(let item of data){
+        if(!this.AllChatHistorys[item.NickName]){
+          this.AllChatHistorys[item.NickName]={
+            chats:[],
+            get:0//已读取到聊天对象的条数
+          }
+        }
+        this.AllChatHistorys[item.NickName].chats.push(item)
+      }
+      this.readAllChats=true
+    })
+  }
+
+  initEvent(){
+    let target = angular.element('#chatArea .scroll-wrapper>.scroll-content')[0]
+    target.addEventListener('scroll',()=>{
+      if(target.scrollTop===0){
+        this.getHistory(angular.element('#chatArea').scope().currentUser)
+      }
+    })
   }
 
   saveHistory(msg){//保存聊天记录到indexDB
@@ -94,16 +121,55 @@ class ChatHistorys{
           }
         }
       }
+      if(msg.$$hashKey){
+        delete msg.$$hashKey
+      }
       this.myIDB.push('history',msg)
     })
   }
 
-  async restoreChatContent(user) {
+  restoreChatContent(user) {
     const scope = angular.element('#chatArea').scope();
     if (!scope.chatContent || scope.chatContent.length === 0) {
-      const his = await this.getHistory(user);
-      for (let i in his) {
+      this.getHistory(user)
+    }
+  }
 
+  getHistory(user){
+    try{
+      const scope = angular.element('#chatArea').scope();
+      if(!this.readAllChats){
+        setTimeout(()=>{
+          this.restoreChatContent(user)
+        },500)
+        return
+      }
+      if(!user){
+        return
+      }
+      let his
+      if(user === 'filehelper'){
+        if(!this.AllChatHistorys.filehelper){
+          return
+        }
+        his = this.AllChatHistorys.filehelper.chats
+      }
+      else{
+        if(!this.AllChatHistorys[window._contacts[user].NickName]){
+          //没有聊天记录自然AllChatHistorys里没有对应的键
+          return
+        }
+        his = this.AllChatHistorys[window._contacts[user].NickName].chats
+      }
+      let start = his.length - this.AllChatHistorys[window._contacts[user].NickName].get - 1
+      let end = start-10>=0?start-10:0;
+      console.log(start)
+      for (let i=start;i>=end;i--) {
+        if(his[i].MsgType === 10000){
+          //撤回消息的提示
+          //暂时没找到复原方法
+          continue
+        }
         if(/@@/.test(user)){
           //群聊
           //根据NickName在群成员中查找MMActualSender
@@ -133,53 +199,58 @@ class ChatHistorys{
           his[i].MMPeerUserName = user;
         }
         his[i].MMUnread = false;
-        scope.chatContent.push(his[i]);
-      }
-    }
-  }
-
-  getHistory(user){//PYQuanPin,RemarkPYQuanPin
-    try{
-      if(!user){
-        return
-      }
-      this.myIDB.DB.tmp=false
-      if(!this.myIDB.DB.name){
-        throw 'error'
+        scope.chatContent.unshift(his[i]);
+        this.AllChatHistorys[window._contacts[user].NickName].get++
       }
     }
     catch(e){
-      console.log(e)
-      console.log('indexDB未初始化完成，1s后重试(2)')
-      setTimeout(()=>{
-        this.getHistory(user)
-      },1000)
-      return
-    }
-    let NickName = user==='filehelper'?'filehelper':window._contacts[user].NickName
-    let PYQuanPin = user==='filehelper'?'filehelper':window._contacts[user].PYQuanPin
-    let RemarkPYQuanPin = user==='filehelper'?'filehelper':window._contacts[user].RemarkPYQuanPin
-    if(/@@/.test(user)){
-      //群聊优先匹配NickName
-      if(NickName){
-        return this.myIDB.get('history','NickName',NickName)
-      }else if(PYQuanPin){
-        return this.myIDB.get('history','PYQuanPin',PYQuanPin)
-      }else if(RemarkPYQuanPin){
-        return this.myIDB.get('history','RemarkPYQuanPin',RemarkPYQuanPin)
-      }
-    }
-    else{
-      if(RemarkPYQuanPin){
-        return this.myIDB.get('history','RemarkPYQuanPin',RemarkPYQuanPin)
-      }
-      else if(PYQuanPin){
-        return this.myIDB.get('history','PYQuanPin',PYQuanPin)
-      }
-      else if(NickName){
-        return this.myIDB.get('history','NickName',NickName)
-      }
+      console.error(e)
+      console.error(user)
     }
   }
+
+  // getHistory(user){//PYQuanPin,RemarkPYQuanPin
+  //   try{
+  //     if(!user){
+  //       return
+  //     }
+  //     this.myIDB.DB.tmp=false
+  //     if(!this.myIDB.DB.name){
+  //       throw 'error'
+  //     }
+  //   }
+  //   catch(e){
+  //     console.log(e)
+  //     console.log('indexDB未初始化完成，1s后重试(2)')
+  //     setTimeout(()=>{
+  //       this.getHistory(user)
+  //     },1000)
+  //     return
+  //   }
+  //   let NickName = user==='filehelper'?'filehelper':window._contacts[user].NickName
+  //   let PYQuanPin = user==='filehelper'?'filehelper':window._contacts[user].PYQuanPin
+  //   let RemarkPYQuanPin = user==='filehelper'?'filehelper':window._contacts[user].RemarkPYQuanPin
+  //   if(/@@/.test(user)){
+  //     //群聊优先匹配NickName
+  //     if(NickName){
+  //       return this.myIDB.get('history','NickName',NickName)
+  //     }else if(PYQuanPin){
+  //       return this.myIDB.get('history','PYQuanPin',PYQuanPin)
+  //     }else if(RemarkPYQuanPin){
+  //       return this.myIDB.get('history','RemarkPYQuanPin',RemarkPYQuanPin)
+  //     }
+  //   }
+  //   else{
+  //     if(RemarkPYQuanPin){
+  //       return this.myIDB.get('history','RemarkPYQuanPin',RemarkPYQuanPin)
+  //     }
+  //     else if(PYQuanPin){
+  //       return this.myIDB.get('history','PYQuanPin',PYQuanPin)
+  //     }
+  //     else if(NickName){
+  //       return this.myIDB.get('history','NickName',NickName)
+  //     }
+  //   }
+  // }
 }
 module.exports = ChatHistorys;
