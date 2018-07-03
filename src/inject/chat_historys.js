@@ -143,7 +143,7 @@ class ChatHistorys{
     }
     setTimeout(()=>{
       msg.MMStatus=2
-      if(msg.sendByLocal){
+      if(msg.sendByLocal||msg.FromUserName===this.selfUserName){
         msg.NickName = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].NickName
         msg.PYQuanPin = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].PYQuanPin
         msg.RemarkPYQuanPin = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].RemarkPYQuanPin
@@ -153,7 +153,6 @@ class ChatHistorys{
         msg.PYQuanPin = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].PYQuanPin
         msg.RemarkPYQuanPin = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].RemarkPYQuanPin
       }
-
       if(/@@/.test(msg.FromUserName)){
         //群聊需要记录发送者的信息
         //在群的memberlist里查找
