@@ -99,7 +99,9 @@ class Injector {
     switch (typeof value) {
       case 'object':
         /* Inject emoji stickers and prevent recalling. */
-        return this.checkEmojiContent(value, constants);
+        //return this.checkEmojiContent(value, constants);
+        //这个api已经被关闭，无法获取表情商店的表情了
+        return value
       case 'string':
         /* Inject share sites to menu. */
         return this.checkTemplateContent(value);

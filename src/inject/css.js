@@ -140,7 +140,6 @@ CSSInjector.commonCSS = `
       background: #eeeeee;
     }
     div#userSelectionBox select {
-      width: 120px;
       border: none;
       outline: none;
       height: inherit;

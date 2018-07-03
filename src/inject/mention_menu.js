@@ -49,7 +49,7 @@ class MentionMenu {
       const $select = $box.children('select');
       $select.html('');
       $scope.currentContact.MemberList.map(m => {
-        if (!MentionMenu.isValidNameHint(name, m.NickName)) return;
+        if (!MentionMenu.isValidNameHint(name, m.NickName)&&!MentionMenu.isValidNameHint(name, m.DisplayName)) return;
 
         const $option = MentionMenu.generateOptionFromMember($scope, m);
         if ($option) $select.append($option);
@@ -110,7 +110,7 @@ class MentionMenu {
   }
 
   static generateOptionFromMember($scope, member) {
-    const displayName = `${member.NickName}`;
+    const displayName = member.NickName
     let actualName = displayName;
 
     if (member.DisplayName.length > 0) {
@@ -125,7 +125,7 @@ class MentionMenu {
 
     const $option = $('<option/>');
     $option.val(actualName);
-    $option.html(displayName);
+    $option.html(displayName+(member.DisplayName.length?`<${member.DisplayName}>`:''));
 
     return $option;
   }
