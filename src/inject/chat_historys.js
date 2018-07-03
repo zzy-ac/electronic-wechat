@@ -4,6 +4,7 @@
 'use strict';
 const { ipcRenderer } = require('electron');
 var easyIDB = require('../lib/easyIDB.js')
+const Common = require('../common');
 
 class ChatHistorys{
 
@@ -194,11 +195,11 @@ class ChatHistorys{
         return
       }
       let chatsObj
-      let $loadHisStatus = document.getElementById('loadHisStatus')
+      let loadHisStatus = document.getElementById('loadHisStatus')
       if(user === 'filehelper'){
         if(!this.AllChatHistorys.filehelper){
-          $loadHisStatus.innerHTML="已经没有了"
-          $loadHisStatus.style.top='-20px'
+          loadHisStatus.innerHTML="已经没有了"
+          loadHisStatus.style.top='-20px'
           return
         }
         chatsObj = this.AllChatHistorys.filehelper
@@ -207,8 +208,8 @@ class ChatHistorys{
         if(!this.AllChatHistorys[window._contacts[user].NickName]){
           //没有聊天记录自然AllChatHistorys里没有对应的键
           this.lockscroll=true
-          $loadHisStatus.innerHTML="已经没有了"
-          $loadHisStatus.style.top='-20px'
+          loadHisStatus.innerHTML="已经没有了"
+          loadHisStatus.style.top='-20px'
           return
         }
         chatsObj = this.AllChatHistorys[window._contacts[user].NickName]
@@ -260,18 +261,27 @@ class ChatHistorys{
           his[i].MMPeerUserName = user;
         }
         his[i].MMUnread = false;
+        if(/&lt;msg&gt;&lt;emoji fromusername =/.test(his[i].Content)){
+          //非商店表情
+          ChatHistorys.lock(his[i], 'MMDigest', '[Emoticon]');
+          if (his[i].ImgHeight >= Common.EMOJI_MAXIUM_SIZE) {
+            ChatHistorys.lock(his[i], 'MMImgStyle', { height: `${Common.EMOJI_MAXIUM_SIZE}px`, width: 'initial' });
+          } else if (his[i].ImgWidth >= Common.EMOJI_MAXIUM_SIZE) {
+            ChatHistorys.lock(his[i], 'MMImgStyle', { width: `${Common.EMOJI_MAXIUM_SIZE}px`, height: 'initial' });
+          }
+        }
         scope.chatContent.unshift(his[i]);
         chatsObj.get++
       }
       if(chatsObj.chats.length!==chatsObj.get+1){
-        $loadHisStatus.innerHTML="获取成功"
+        loadHisStatus.innerHTML="获取成功"
       }
       else{
-        $loadHisStatus.innerHTML="已经没有了"
+        loadHisStatus.innerHTML="已经没有了"
       }
     }
     catch(e){
-      $loadHisStatus.innerHTML="获取失败"
+      loadHisStatus.innerHTML="获取失败"
       console.error(e)
       console.error(user)
     }
@@ -324,6 +334,14 @@ class ChatHistorys{
   //     }
   //   }
   // }
+
+  static lock(object, key, value) {
+    return Object.defineProperty(object, key, {
+      get: () => value,
+      set: () => {},
+    });
+  }
+
   debounce(func){//防抖
     clearTimeout(this.timer)
     this.timer = setTimeout(()=>{
