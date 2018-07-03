@@ -99,9 +99,7 @@ class Injector {
     switch (typeof value) {
       case 'object':
         /* Inject emoji stickers and prevent recalling. */
-        //return this.checkEmojiContent(value, constants);
-        //这个api已经被关闭，无法获取表情商店的表情了
-        return value
+        return this.checkEmojiContent(value, constants);
       case 'string':
         /* Inject share sites to menu. */
         return this.checkTemplateContent(value);
@@ -124,12 +122,15 @@ class Injector {
         //   msg.Content = EmojiParser.emojiToImage(msg.Content);
         //   break;
         case constants.MSGTYPE_EMOTICON:
-          Injector.lock(msg, 'MMDigest', '[Emoticon]');
-          Injector.lock(msg, 'MsgType', constants.MSGTYPE_EMOTICON);
-          if (msg.ImgHeight >= Common.EMOJI_MAXIUM_SIZE) {
-            Injector.lock(msg, 'MMImgStyle', { height: `${Common.EMOJI_MAXIUM_SIZE}px`, width: 'initial' });
-          } else if (msg.ImgWidth >= Common.EMOJI_MAXIUM_SIZE) {
-            Injector.lock(msg, 'MMImgStyle', { width: `${Common.EMOJI_MAXIUM_SIZE}px`, height: 'initial' });
+          if(/&lt;msg&gt;&lt;emoji fromusername =/.test(msg.Content)){
+            //非商店表情
+            Injector.lock(msg, 'MMDigest', '[Emoticon]');
+            Injector.lock(msg, 'MsgType', constants.MSGTYPE_EMOTICON);
+            if (msg.ImgHeight >= Common.EMOJI_MAXIUM_SIZE) {
+              Injector.lock(msg, 'MMImgStyle', { height: `${Common.EMOJI_MAXIUM_SIZE}px`, width: 'initial' });
+            } else if (msg.ImgWidth >= Common.EMOJI_MAXIUM_SIZE) {
+              Injector.lock(msg, 'MMImgStyle', { width: `${Common.EMOJI_MAXIUM_SIZE}px`, height: 'initial' });
+            }
           }
           break;
         case constants.MSGTYPE_RECALLED:

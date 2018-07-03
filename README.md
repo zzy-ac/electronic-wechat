@@ -211,7 +211,9 @@
 
 > snap
 
-虽然想做保留本地聊天记录，可是我不会angular(摊手)，给各位前端丢脸了！
+~~虽然想做保留本地聊天记录，可是我不会angular(摊手)，给各位前端丢脸了！~~
+
+虽然做了保存历史记录，可我还不会angular
 
 #### [下载构建好的应用](https://github.com/kooritea/electronic-wechat/releases)
 
