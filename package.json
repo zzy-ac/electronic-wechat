@@ -17,7 +17,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/geeeeeeeeek/wechat-electron.git"
+    "url": "https://github.com/kooritea/wechat-electron.git",
+    "originalurl": "https://github.com/geeeeeeeeek/wechat-electron.git"
   },
   "keywords": [
     "Electron",
@@ -25,14 +26,19 @@
     "微信",
     "Web"
   ],
-  "author": "Zhongyi Tong",
+  "author": {
+    "name":"kooritea",
+    "originalauthor":"Zhongyi Tong",
+    "email":"e@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/geeeeeeeeek/wechat-electron/issues"
+    "url": "https://github.com/kooritea/wechat-electron/issues",
+    "originalurl": "https://github.com/geeeeeeeeek/wechat-electron/issues"
   },
-  "homepage": "https://github.com/geeeeeeeeek/wechat-electron/",
+  "homepage": "https://github.com/kooritea/wechat-electron/",
+  "originalhomepage": "https://github.com/geeeeeeeeek/wechat-electron/",
   "dependencies": {
-    "electron": "^2.0.0",
     "electron-localshortcut": "^3.1.0",
     "electron-packager": "^12.0.2",
     "emojione": "^3.1.4",
@@ -41,6 +47,7 @@
     "pinyin": "^2.8.0"
   },
   "devDependencies": {
+    "electron": "^2.0.0",
     "babel-eslint": "^8.2.3",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",

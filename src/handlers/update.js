@@ -64,20 +64,25 @@ class UpdateHandler {
   }
 
   _parseUpdateData(body, version, res, rej) {
-    const data = JSON.parse(body);
-    if (!data || !data.tag_name) rej(Common.UPDATE_ERROR_EMPTY_RESPONSE);
-    const fetched = {
-      version: data.tag_name,
-      is_prerelease: data.prerelease,
-      name: data.name||`有可用更新 当前版本(${version} > ${data.tag_name})`,
-      url: data.html_url,
-      description: data.body,
-    };
-    const versionRegex = /^(v|V)[0-9]+\.[0-9]+\.*[0-9]*$/;
-    if (versionRegex.test(fetched.version) && fetched.version > version && !fetched.is_prerelease) {
-      res(fetched);
-    } else {
-      rej(Common.UPDATE_ERROR_LATEST(version));
+    try{
+      const data = JSON.parse(body);
+      if (!data || !data.tag_name) rej(Common.UPDATE_ERROR_EMPTY_RESPONSE);
+      const fetched = {
+        version: data.tag_name,
+        is_prerelease: data.prerelease,
+        name: data.name||`有可用更新 当前版本(${version} > ${data.tag_name})`,
+        url: data.html_url,
+        description: data.body,
+      };
+      const versionRegex = /^(v|V)[0-9]+\.[0-9]+\.*[0-9]*$/;
+      if (versionRegex.test(fetched.version) && fetched.version > version && !fetched.is_prerelease) {
+        res(fetched);
+      } else {
+        rej(Common.UPDATE_ERROR_LATEST(version));
+      }
+    }
+    catch(e){
+      rej(Common.UPDATE_ERROR_UNKNOWN);
     }
   }
 }

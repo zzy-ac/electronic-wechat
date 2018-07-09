@@ -160,20 +160,21 @@ class ElectronicWeChat {
       this.settingsWindow.hide();
     })
 
-    ipcMain.on('new-message', (event, messgae) => {
-        let osNotification = new Notification({
-          title:messgae.title,
-          body:messgae.opt.body,
-          //icon:messgae.opt.icon
-          icon:path.join(__dirname, '../assets/icon.png')
-        })
-        if(AppConfig.readSettings('click-notification') === 'on'){
-          osNotification.on('click',()=>{
-            event.sender.send(messgae.ename)
-            this.wechatWindow.show()
-          })
-        }
-        osNotification.show()
+    ipcMain.on('click-notification', (event, messgae) => {
+        // let osNotification = new Notification({
+        //   title:messgae.title,
+        //   body:messgae.opt.body,
+        //   //icon:messgae.opt.icon
+        //   icon:path.join(__dirname, '../assets/icon.png')
+        // })
+        // if(AppConfig.readSettings('click-notification') === 'on'){
+        //   osNotification.on('click',()=>{
+        //     event.sender.send(messgae.ename)
+        //     this.wechatWindow.show()
+        //   })
+        // }
+        // osNotification.show()
+        this.wechatWindow.show()
     })
 
     ipcMain.on('miniFrame-close',()=>{

@@ -29,9 +29,9 @@ class Injector {
     this.initIPC();
     //webFrame.setZoomLevelLimits(1, 1);
     //不知道为什么webFrame.setZoomLevelLimits未定义
-    //if(AppConfig.readSettings('click-notification') === 'on'){
-        // this.initNotification()
-    //}
+    if(AppConfig.readSettings('click-notification') === 'on'){
+      this.initNotification()
+    }
     // 重大bug！！(重写原生Notification会导致掉消息)
     //因为无法监听H5的Notification的点击事件，改成使用系统级别的Notification
     new MenuHandler().create();
@@ -164,40 +164,56 @@ class Injector {
     return value;
   }
 
-  setNotificationCallback(callback){
+  setNotificationClickCallback(clickcallback){
     const OldNotify = window.Notification;
     const newNotify = function(title,opt){
-      callback(title, opt);
-      return false
-      //return OldNotify(title, opt)
+      let tmp = new OldNotify(title, opt)
+      tmp.onclick=clickcallback
+      Object.defineProperty(tmp, 'onclick', {
+          set: () => {
+              return clickcallback;
+          }
+      });
+      return tmp
     }
-    newNotify.requestPermission = OldNotify.requestPermission.bind(OldNotify);
     Object.defineProperty(newNotify, 'permission', {
         get: () => {
             return OldNotify.permission;
+        }
+    });
+    Object.defineProperty(newNotify, 'maxActions', {
+        get: () => {
+            return OldNotify.maxActions;
+        }
+    });
+    Object.defineProperty(newNotify, 'requestPermission', {
+        get: () => {
+            return OldNotify.requestPermission;
         }
     });
     window.Notification = newNotify;
   }
 
   initNotification(){
-    this.setNotificationCallback(function(title,opt){
-      let ename = 'msg'+ new Date().getTime()
-      ipcRenderer.on(ename,function(){
-        //渲染层捕捉到通知的点击事件
-        document.querySelectorAll('.tab_item')[0].children[0].click()
-        //主界面移动到聊天页
-        for(let i=0;i<document.querySelectorAll('.nickname_text').length;i++){
-          //从上到下遍历聊天列表寻找发送者
-          let item = document.querySelectorAll('.nickname_text')[i]
-          if(item.innerHTML.replace(/<img(.*?)>/,'') === title){
-            item.parentNode.parentNode.parentNode.click()
-            break;
-          }
-        }
-        ipcRenderer.removeAllListeners(ename)
-      })
-      ipcRenderer.send('new-message', {title,opt,ename});
+    this.setNotificationClickCallback(function(event){
+      // let ename = 'msg'+ new Date().getTime()
+      // ipcRenderer.on(ename,function(){
+      //   //渲染层捕捉到通知的点击事件
+      //   ipcRenderer.removeAllListeners(ename)
+      // })
+      // ipcRenderer.send('new-message', {title,opt,ename});
+      //document.querySelectorAll('.tab_item')[0].children[0].click()
+      //主界面移动到聊天页
+      //for(let i=0;i<document.querySelectorAll('.nickname_text').length;i++){
+        //从上到下遍历聊天列表寻找发送者
+        //let item = document.querySelectorAll('.nickname_text')[i]
+      // for(let item of document.querySelectorAll('.nickname_text')){
+      //   if(item.innerHTML.replace(/<img(.*?)>/,'') === event.target.title){
+      //     item.parentNode.parentNode.parentNode.click()
+      //     break;
+      //   }
+      // }
+      ipcRenderer.send('click-notification');
     })
   }
 
