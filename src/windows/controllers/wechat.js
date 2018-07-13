@@ -82,26 +82,18 @@ class WeChatWindow {
       this.wechatWindow.webContents.send('show-wechat-window');
     }
     this.wechatWindow.show();
-    this.wechatWindow.focus();
-    this.isShown = true;
   }
 
   hide() {
     this.wechatWindow.hide();
-    this.wechatWindow.webContents.send('hide-wechat-window');
-    this.isShown = false;
   }
 
   minimize(){
     this.wechatWindow.minimize();
-    this.wechatWindow.webContents.send('hide-wechat-window');
-    this.isShown = false;
   }
 
   restore(){
-    this.isShown = true;
-    this.registerLocalShortcut();
-    this.wechatWindow.webContents.send('show-wechat-window');
+    this.wechatWindow.restore();
   }
 
   setFullScreen(flag){
@@ -188,6 +180,14 @@ class WeChatWindow {
     this.wechatWindow.on('show', () => {
       this.isShown = true;
       this.registerLocalShortcut();
+      this.wechatWindow.webContents.send('show-wechat-window');
+      this.wechatWindow.focus();
+    });
+
+    this.wechatWindow.on('hide', () => {
+      this.wechatWindow.webContents.send('hide-wechat-window');
+      this.isShown = false;
+      this.unregisterLocalShortCut();
     });
 
     this.wechatWindow.on('minimize', () => {
@@ -197,7 +197,10 @@ class WeChatWindow {
     });
 
     this.wechatWindow.on('restore', () => {
-      this.restore()
+      this.isShown = true;
+      this.registerLocalShortcut();
+      this.wechatWindow.webContents.send('show-wechat-window');
+      this.wechatWindow.focus();
     });
 
     this.wechatWindow.on('resize',(event) => {
