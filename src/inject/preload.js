@@ -29,9 +29,6 @@ class Injector {
     this.initIPC();
     //webFrame.setZoomLevelLimits(1, 1);
     //不知道为什么webFrame.setZoomLevelLimits未定义
-    if(AppConfig.readSettings('click-notification') === 'on'){
-      this.initNotification()
-    }
     // 重大bug！！(重写原生Notification会导致掉消息)
     //因为无法监听H5的Notification的点击事件，改成使用系统级别的Notification
     new MenuHandler().create();
@@ -53,6 +50,13 @@ class Injector {
           });
         },
         ]).run(['$rootScope', ($rootScope) => {
+
+          if(AppConfig.readSettings('click-notification') === 'on'){
+            $rootScope.$on('root:notification:click', () => {
+              ipcRenderer.send('click-notification');
+            });
+          }
+
           ipcRenderer.send('wx-rendered', MMCgi.isLogin);
 
           $rootScope.$on('newLoginPage', () => {
@@ -164,60 +168,6 @@ class Injector {
     return value;
   }
 
-  setNotificationClickCallback(clickcallback){
-    const OldNotify = window.Notification;
-    const newNotify = function(title,opt){
-      let tmp = new OldNotify(title, opt)
-      tmp.onclick=clickcallback
-      Object.defineProperty(tmp, 'onclick', {
-          set: () => {
-              return clickcallback;
-          }
-      });
-      return tmp
-    }
-    Object.defineProperty(newNotify, 'permission', {
-        get: () => {
-            return OldNotify.permission;
-        }
-    });
-    Object.defineProperty(newNotify, 'maxActions', {
-        get: () => {
-            return OldNotify.maxActions;
-        }
-    });
-    Object.defineProperty(newNotify, 'requestPermission', {
-        get: () => {
-            return OldNotify.requestPermission;
-        }
-    });
-    window.Notification = newNotify;
-  }
-
-  initNotification(){
-    this.setNotificationClickCallback(function(event){
-      // let ename = 'msg'+ new Date().getTime()
-      // ipcRenderer.on(ename,function(){
-      //   //渲染层捕捉到通知的点击事件
-      //   ipcRenderer.removeAllListeners(ename)
-      // })
-      // ipcRenderer.send('new-message', {title,opt,ename});
-      //document.querySelectorAll('.tab_item')[0].children[0].click()
-      //主界面移动到聊天页
-      //for(let i=0;i<document.querySelectorAll('.nickname_text').length;i++){
-        //从上到下遍历聊天列表寻找发送者
-        //let item = document.querySelectorAll('.nickname_text')[i]
-      // for(let item of document.querySelectorAll('.nickname_text')){
-      //   if(item.innerHTML.replace(/<img(.*?)>/,'') === event.target.title){
-      //     item.parentNode.parentNode.parentNode.click()
-      //     break;
-      //   }
-      // }
-      ipcRenderer.send('click-notification');
-    })
-  }
-
-
   initSeteditArea(){//初始化缩放输入文本域事件
     let startY;
     let startBox_ftY
@@ -253,13 +203,21 @@ class Injector {
     //clear currentUser to receive reddot of new messages from the current chat user
     ipcRenderer.on('hide-wechat-window', () => {
       this.lastUser = angular.element('#chatArea').scope().currentUser;
-      angular.element('.chat_list').scope().itemClick("");
+      if(this.lastUser){
+        try{
+          angular.element('.chat_list').scope().itemClick('2233')
+          angular.element('.chat_list').scope().itemClick("");
+        }
+        catch(e){
+          //蜜汁bug 不先点一下别的就会报错
+        }
+      }
     });
     // recover to the last chat user
     ipcRenderer.on('show-wechat-window', () => {
-      if (this.lastUser != null) {
-        angular.element('.chat_list').scope().itemClick(this.lastUser);
-      }
+      // if (this.lastUser) {
+      //   angular.element('.chat_list').scope().itemClick(this.lastUser);
+      // }
     });
   }
 }

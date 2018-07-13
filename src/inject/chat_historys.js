@@ -183,6 +183,7 @@ class ChatHistorys{
   }
 
   getHistory(user){
+    if(user==='2233') return;
     try{
       const scope = angular.element('#chatArea').scope();
       if(!this.readAllChats){
