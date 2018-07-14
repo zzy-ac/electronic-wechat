@@ -203,6 +203,18 @@ class WeChatWindow {
       this.wechatWindow.focus();
     });
 
+    // this.wechatWindow.on('focus', () => {
+    //   this.isShown = true;
+    //   this.registerLocalShortcut();
+    //   this.wechatWindow.webContents.send('show-wechat-window');
+    // });
+    //
+    // this.wechatWindow.on('blur', () => {
+    //   this.isShown = false;
+    //   this.wechatWindow.webContents.send('hide-wechat-window');
+    //   this.unregisterLocalShortCut();
+    // });
+
     this.wechatWindow.on('resize',(event) => {
       if(this.isLogged){
         this.debounce(
