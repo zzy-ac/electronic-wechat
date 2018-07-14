@@ -55,7 +55,7 @@ class SettingsWindow {
     }
     this.settingsWindow.show();
     this.isShown = true;
-    this.settingsWindow.toggleDevTools();
+    //this.settingsWindow.toggleDevTools();
   }
 
   hide() {
