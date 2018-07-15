@@ -1,6 +1,6 @@
 'use strict';
 
-const { ipcRenderer, webFrame } = require('electron');
+const { ipcRenderer, webFrame ,clipboard} = require('electron');
 const MenuHandler = require('../handlers/menu');
 const ShareMenu = require('./share_menu');
 const MentionMenu = require('./mention_menu');
@@ -84,6 +84,7 @@ class Injector {
       }
       this.ChatHistorys = new ChatHistorys();
       this.ChatHistorys.init()
+      this.initcopy()
       this.initSeteditArea();
       MentionMenu.init();
       BadgeCount.init();
@@ -197,6 +198,21 @@ class Injector {
         AppConfig.saveSettings('chat-area-offset-y',parseInt(angular.element('#chatArea>.chat_bd')[0].style.marginBottom))
       }
     })
+  }
+
+  initcopy(){
+    angular.element('#contextMenu').scope().$on('app:contextMenu:show', () => {
+      setTimeout(()=>{//进入下一个事件循环
+        for(let i in angular.element('.dropdown_menu>li')){
+          if(angular.element('.dropdown_menu>li:eq('+i+')').scope().item.copyCallBack){
+            angular.element('.dropdown_menu>li:eq('+i+')')[0].onclick=function(){
+              clipboard.writeText($.Range.current().range.commonAncestorContainer.data)
+            }
+            break
+          }
+        }
+      })
+    });
   }
 
   initIPC() {
