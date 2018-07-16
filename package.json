@@ -27,9 +27,9 @@
     "Web"
   ],
   "author": {
-    "name": "kooritea",
-    "originalauthor": "Zhongyi Tong",
-    "email": "e@gmail.com"
+    "name":"kooritea",
+    "originalauthor":"Zhongyi Tong",
+    "email":"e@gmail.com"
   },
   "license": "MIT",
   "bugs": {
@@ -47,8 +47,8 @@
     "pinyin": "^2.8.0"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.3",
     "electron": "^2.0.0",
+    "babel-eslint": "^8.2.3",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.2.0",

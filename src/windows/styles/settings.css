@@ -128,3 +128,11 @@ select option{
   height: 20px;
   line-height: 20px;
 }
+
+input{
+  padding: 5px;
+	border:0;
+	border-bottom: 1px solid #97c9eb;
+  background-color: transparent;
+  outline: none;
+}
