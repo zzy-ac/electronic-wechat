@@ -10,7 +10,10 @@ class ChatHistorys{
 
   init(){
     this.initIndexDB()
+    //打开indexedDB
+    //读取里面的所有历史消息，以NickName作为键存放在全局变量AllChatHistorys里面
     this.initEvent()
+    //初始化滚动条事件
   }
 
   async initIndexDB(){
@@ -124,6 +127,8 @@ class ChatHistorys{
     };
   }
 
+
+  //监听message:add:success事件，截取聊天记录的灰调函数
   saveHistory(msg){//保存聊天记录到indexDB
     if(!msg.Content){
       return
@@ -144,7 +149,7 @@ class ChatHistorys{
     }
     setTimeout(()=>{
       msg.MMStatus=2
-      if(msg.sendByLocal||msg.FromUserName===this.selfUserName){
+      if(msg.sendByLocal||msg.FromUserName===this.selfUserName){//自己发送的消息（包括手机上发送的）
         msg.NickName = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].NickName
         msg.PYQuanPin = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].PYQuanPin
         msg.RemarkPYQuanPin = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].RemarkPYQuanPin
