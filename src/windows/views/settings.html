@@ -139,7 +139,7 @@
         </li>
       </ul>
     </section>
-    <!-- <section>
+    <section>
       <ul>
         <li class="menu-title">
           <h3 id="app-instance-title">是否允许开启多个实例</h3>
@@ -148,13 +148,13 @@
           <h4 id="app-instance-desc">多个实例可以同时登录不同帐号</h4>
         </li>
         <li class="menu-button">
-          <select id="app-instance-select">
+          <select id="app-instance-select"  onchange="changefun('instance')">
             <option value="on">On</option>
             <option value="off">Off</option>
           </select>
         </li>
       </ul>
-    </section> -->
+    </section>
     <section>
       <ul>
         <li class="menu-title">
@@ -197,7 +197,7 @@
     const lan = AppConfig.readSettings('language');
     const recall = AppConfig.readSettings('prevent-recall');
     const notification = AppConfig.readSettings('click-notification');
-    //const instance = AppConfig.readSettings('multi-instance');
+    const instance = AppConfig.readSettings('multi-instance');
     const trayColor = AppConfig.readSettings('tray-color');
     const frame = AppConfig.readSettings('frame');
     const close = AppConfig.readSettings('close');
@@ -208,7 +208,7 @@
     const lanSelect = $('app-language-select');
     const recallSelect = $('app-recall-select');
     const notificationSelect = $('app-notification-select');
-    //const instanceSelect = $('app-instance-select');
+    const instanceSelect = $('app-instance-select');
     const trayColorSelect = $('app-tray-select');
     const frameSelect = $('app-frame-select');
     const closeSelect = $('app-close-select');
@@ -264,6 +264,9 @@
         case 'notification':
           AppConfig.saveSettings('click-notification', notificationSelect.value)
           break
+        case 'instance':
+          AppConfig.saveSettings('multi-instance', instanceSelect.value)
+          break
         case 'frame':
           AppConfig.saveSettings('frame', frameSelect.value)
           break
@@ -293,7 +296,7 @@
       $('app-language-select').value = lan;
       $('app-recall-select').value = recall;
       $('app-notification-select').value = notification;
-      //$('app-instance-select').value = instance;
+      $('app-instance-select').value = instance;
       $('app-tray-select').value = trayColor;
       $('app-frame-select').value = frame;
       $('app-close-select').value = close;
@@ -318,8 +321,8 @@
       $('app-update-desc').innerHTML = Common.updateDesc;
       $('app-proxy-title').innerHTML = Common.proxyTitle;
       $('app-proxy-desc').innerHTML = Common.proxyDesc;
-      //$('app-instance-title').innerHTML = Common.instanceTitle;
-      //$('app-instance-desc').innerHTML = Common.instanceDesc;
+      $('app-instance-title').innerHTML = Common.instanceTitle;
+      $('app-instance-desc').innerHTML = Common.instanceDesc;
       $('app-icon-title').innerHTML = Common.iconTitle;
       $('app-icon-desc').innerHTML = Common.iconDesc;
       $('app-tray-title').innerHTML = Common.trayTitle;

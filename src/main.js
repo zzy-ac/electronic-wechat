@@ -34,22 +34,19 @@ class ElectronicWeChat {
   }
 
   checkInstance() {
-    //不检查是否多实例
-    return true
-    // app.makeSingleInstance这个方法有问题，暂时不会打开多实例检查功能
-    // if (AppConfig.readSettings('multi-instance') === 'on') return true;
-    // return !app.makeSingleInstance((commandLine, workingDirectory) => {
-    //   if(this.splashWindow && this.splashWindow.isShown){
-    //     this.splashWindow.show();
-    //     return
-    //   }
-    //   if(this.wechatWindow){
-    //     this.wechatWindow.show();
-    //   }
-    //   if(this.settingsWindow && this.settingsWindow.isShown){
-    //     this.settingsWindow.show();
-    //   }
-    // });
+    if (AppConfig.readSettings('multi-instance') === 'on') return true;
+    return !app.makeSingleInstance((commandLine, workingDirectory) => {
+      if(this.splashWindow && this.splashWindow.isShown){
+        this.splashWindow.show();
+        return
+      }
+      if(this.wechatWindow){
+        this.wechatWindow.show();
+      }
+      if(this.settingsWindow && this.settingsWindow.isShown){
+        this.settingsWindow.show();
+      }
+    });
   }
 
   initSetting(){
