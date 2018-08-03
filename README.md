@@ -84,7 +84,7 @@
 
     (2)直接连接：无视系统代理直接连接
 
-    (3)设置代理：格式\[\<proxy-scheme\>\:\/\/\]\<proxy-host\>\[:\<proxy-port\>\]
+    (3)设置代理：格式[<proxy-scheme>://]<proxy-host>[:<proxy-port>]
 
       理论支持协议：socks5(测试通过)、socks4(未测试)、http(未测试)
 
@@ -110,7 +110,7 @@
 
 --- v2.1.4 ---
 
->28、历史消息记录,主要参考了@iamcc的[思路](https://github.com/geeeeeeeeek/electronic-wechat/pull/159/commits/9abbe6e177d4f02aae6529136e4d48b3ef6a2c36)
+>28、历史消息记录,主要参考了 @iamcc 的[思路](https://github.com/geeeeeeeeek/electronic-wechat/pull/159/commits/9abbe6e177d4f02aae6529136e4d48b3ef6a2c36)
 
 >29、艾特的时候显示群名片，PS：这个是暴力艾特，对方并不会收到提醒(手动笑哭)
 
@@ -134,13 +134,13 @@
 
 #### 已知BUG
 
-> 消息框右键的复制是是失效的
+> 消息框右键的复制无法复制链接
 
 > 提示更新的弹框不能显示微信图标
 
 > 播放视频的时候不能暂停
 
-> 无法显示表情商店的表情（这是微信api的问题了，基本无解）
+> 历史消息无法右键
 
 <br>
 <br>
@@ -148,9 +148,7 @@
 
 #### todo
 
-> 修复右键复制失效的问题
-
-> 右键头像@对方，群@选择时显示群名片
+> 快速艾特
 
 > 临时关闭群通知
 
