@@ -209,8 +209,10 @@ class WeChatWindow {
     });
 
     this.wechatWindow.on('blur', () => {
-      this.isShown = false;
-      this.wechatWindow.webContents.send('hide-wechat-window');
+      if(AppConfig.readSettings('blur') === 'on'){
+        this.isShown = false;
+        this.wechatWindow.webContents.send('hide-wechat-window');
+      }
     });
 
     this.wechatWindow.on('resize',(event) => {

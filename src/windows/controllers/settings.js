@@ -44,8 +44,10 @@ class SettingsWindow {
       this.settingsWindow = null;
       this.isShown = false;
     });
+    // debug
     // this.settingsWindow.once('ready-to-show', () => {
     //   this.settingsWindow.show();
+    //   this.settingsWindow.toggleDevTools();
     // });
   }
 
@@ -55,7 +57,6 @@ class SettingsWindow {
     }
     this.settingsWindow.show();
     this.isShown = true;
-    //this.settingsWindow.toggleDevTools();
   }
 
   hide() {

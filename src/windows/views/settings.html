@@ -18,7 +18,7 @@
     <div class="top-bar-middle">
       <ul class="title-list">
         <li>
-          <h1>Electronic Wechat V2.1.6</h1></li>
+          <h1>Electronic Wechat V2.1.7</h1></li>
         <li>
           <h1 style="font-size:95%;">Powered by Electron V<span id="top-title-electron-ver">process.versions.electron</span></h1></li>
       </ul>
@@ -184,6 +184,22 @@
         </li>
       </ul>
     </section>
+    <section>
+      <ul>
+        <li class="menu-title">
+          <h3 id="app-blur-title">失焦处理</h3>
+        </li>
+        <li class="menu-desc">
+          <h4 id="app-blur-desc">在失去焦点的时候是否进入挂起状态</h4>
+        </li>
+        <li class="menu-button">
+          <select id="app-blur-select"  onchange="changefun('blur')">
+            <option value="on">On</option>
+            <option value="off">Off</option>
+          </select>
+        </li>
+      </ul>
+    </section>
   </div>
 
   <script>
@@ -204,6 +220,7 @@
     const update = AppConfig.readSettings('update');
     const proxy = AppConfig.readSettings('proxy');
     const proxyURl = AppConfig.readSettings('proxy-url');
+    const blur = AppConfig.readSettings('blur');
 
     const lanSelect = $('app-language-select');
     const recallSelect = $('app-recall-select');
@@ -215,6 +232,7 @@
     const updateSelect = $('app-update-select');
     const proxySelect = $('app-proxy-select');
     const proxyInput = $('app-proxy-input');
+    const blurSelect = $('app-blur-select');
 
     function $(id) {
       return document.getElementById(id);
@@ -289,6 +307,9 @@
             $('app-proxy-input').style.display='none'
           }
           break
+        case 'blur':
+          AppConfig.saveSettings('blur', blurSelect.value)
+          break
       }
     }
 
@@ -304,6 +325,7 @@
       $('app-proxy-select').value = proxy;
       $('app-proxy-input').value = proxyURl;
       $('app-proxy-input').style.display = (proxy==='setProxy')?'block':'none'
+      $('app-blur-select').value = blur;
     }
 
     function setLocale() {
@@ -329,6 +351,8 @@
       $('app-tray-desc').innerHTML = Common.trayDesc;
       $('upgrade-btn').innerHTML = Common.UPGRADE;
       $('feedback-btn').innerHTML = Common.FEEDBACK;
+      $('app-blur-title').innerHTML = Common.blurTitle;
+      $('app-blur-desc').innerHTML = Common.blurDesc;
     }
 
     function setProxy(){

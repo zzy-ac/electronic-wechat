@@ -88,6 +88,8 @@ Common.trayTitle = 'Tray Icon color (Black/White)';
 Common.trayDesc = 'Select a color to match your desktop theme';
 Common.proxyTitle = 'Set Proxy'
 Common.proxyDesc = 'Select Proxy Mode'
+Common.blurTitle = 'Blur Processing'
+Common.blurDesc = 'Whether to go into suspended state when blur'
 
 Common.UPGRADE = 'UPGRADE';
 Common.FEEDBACK = 'FEEDBACK';
