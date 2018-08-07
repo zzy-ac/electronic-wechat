@@ -75,7 +75,7 @@ class UpdateHandler {
         description: data.body,
       };
       const versionRegex = /^(v|V)[0-9]+\.[0-9]+\.*[0-9]*$/;
-      if (versionRegex.test(fetched.version) && fetched.version > version && !fetched.is_prerelease) {
+      if (versionRegex.test(fetched.version) && this.compareVersion(fetched.version,version) && !fetched.is_prerelease) {
         res(fetched);
       } else {
         rej(Common.UPDATE_ERROR_LATEST(version));
@@ -84,6 +84,17 @@ class UpdateHandler {
     catch(e){
       rej(Common.UPDATE_ERROR_UNKNOWN);
     }
+  }
+
+  compareVersion (v1,v2) {
+   v1 = v1.match(/v(.*)?\.(.*)?\.(.*)?/)
+   v2 = v2.match(/v(.*)?\.(.*)?\.(.*)?/)
+   for (let i = 1;i < 4;i++) {
+     if(v1[i] > v2[i]){
+       return true
+     }
+   }
+   return false
   }
 }
 
