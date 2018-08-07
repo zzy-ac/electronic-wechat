@@ -122,6 +122,9 @@ CSSInjector.commonCSS = `
       height: 100%;
       overflow: hidden;
     }
+    .login_box .refresh_qrcode_mask{
+      -webkit-app-region: no-drag;
+    }
     div.lang, div.copyright {
       display: none !important
     }
