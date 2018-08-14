@@ -96,6 +96,7 @@ class ChatHistorys{
 
     target.addEventListener('scroll',()=>{
       this.debounce(()=>{
+        if(angular.element('#chatArea').scope().currentUser == '2233') return
         if(target.scrollTop===0){
           if(!this.lockScroll&&angular.element('#chatArea').scope()){
             this.lockscroll=true
@@ -110,11 +111,9 @@ class ChatHistorys{
     })
     window.onmousewheel = (event)=>{
       this.debounce(()=>{
-        if(target.scrollHeight>target.clientHeight){
-          return
-        }
+        if(target.scrollHeight>target.clientHeight || !angular.element('#chatArea').scope().currentUser) return
         if(event.clientX>angular.element('.panel')[0].scrollWidth&&event.clientY<angular.element('.box_hd')[0].scrollHeight+angular.element('#chatArea>.box_bd')[0].scrollHeight&&event.deltaY<0){
-            if(!this.lockScroll&&angular.element('#chatArea').scope()){
+            if(!this.lockScroll&&angular.element('#chatArea').scope() !== '2233'){
               this.lockscroll=true
               loadHisStatus.innerHTML="加载中"
               loadHisStatus.style.top='20px'

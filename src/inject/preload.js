@@ -233,6 +233,7 @@ class Injector {
     ipcRenderer.on('show-wechat-window', () => {
       // if (this.lastUser) {
       //   angular.element('.chat_list').scope().itemClick(this.lastUser);
+      //   this.lastUser = ''
       // }
     });
   }
