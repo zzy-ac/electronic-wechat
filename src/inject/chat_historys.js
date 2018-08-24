@@ -109,6 +109,14 @@ class ChatHistorys{
         }
       },500)
     })
+
+    let $chat_box = angular.element('#chatArea')
+    let $getHistory = document.createElement("p");
+    $getHistory.innerHTML="加载历史记录"
+    $getHistory.onclick=() => {
+      this.getHistory(angular.element('#chatArea').scope().currentUser)
+    }
+    // $chat_box.insertBefore($getHistory,angular.element('.chat_bd')[0])
     window.onmousewheel = (event)=>{
       this.debounce(()=>{
         if(target.scrollHeight>target.clientHeight || !angular.element('#chatArea').scope().currentUser) return
@@ -148,10 +156,19 @@ class ChatHistorys{
     }
     setTimeout(()=>{
       msg.MMStatus=2
+      // msg.MMDigestTime=ChatHistorys.timestampToTime(msg.MMDisplayTime)
+      msg.MMTime=ChatHistorys.timestampToTime(msg.MMDisplayTime)
       if(msg.sendByLocal||msg.FromUserName===this.selfUserName){//自己发送的消息（包括手机上发送的）
-        msg.NickName = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].NickName
-        msg.PYQuanPin = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].PYQuanPin
-        msg.RemarkPYQuanPin = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].RemarkPYQuanPin
+        if(msg.ToUserName === 'filehelper'){
+          msg.NickName = 'filehelper'
+          msg.PYQuanPin ='filehelper'
+          msg.RemarkPYQuanPin ='filehelper'
+        }
+        else{
+          msg.NickName = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].NickName
+          msg.PYQuanPin = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].PYQuanPin
+          msg.RemarkPYQuanPin = msg.FromUserName==='filehelper'?'filehelper':window._contacts[msg.ToUserName].RemarkPYQuanPin
+        }
       }
       else{
         msg.NickName = msg.ToUserName==='filehelper'?'filehelper':window._contacts[msg.FromUserName].NickName
@@ -346,6 +363,17 @@ class ChatHistorys{
       set: () => {},
     });
   }
+
+  static timestampToTime(timestamp) {
+        let date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        let Y = date.getFullYear() + '-';
+        let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        let D = date.getDate() + ' ';
+        let h = date.getHours() + ':';
+        let m = date.getMinutes() + ':';
+        let s = date.getSeconds();
+        return Y+M+D+h+m+s;
+    }
 
   debounce(func){//防抖
     clearTimeout(this.timer)
