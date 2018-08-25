@@ -222,6 +222,12 @@ CSSInjector.commonCSS = `
       .chat_item.active {
         border-left: 2px solid #02b300 !important
       }
+      .action .desc {
+        display: none;
+      }
+      .action .btn_send {
+        width: 30px;
+      }
     }
   `;
 
