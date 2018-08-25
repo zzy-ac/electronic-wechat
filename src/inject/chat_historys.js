@@ -157,7 +157,9 @@ class ChatHistorys{
     setTimeout(()=>{
       msg.MMStatus=2
       // msg.MMDigestTime=ChatHistorys.timestampToTime(msg.MMDisplayTime)
-      msg.MMTime=ChatHistorys.timestampToTime(msg.MMDisplayTime)
+      if (msg.MMTime) {
+        msg.MMTime=ChatHistorys.timestampToTime(msg.MMDisplayTime)
+      }
       if(msg.sendByLocal||msg.FromUserName===this.selfUserName){//自己发送的消息（包括手机上发送的）
         if(msg.ToUserName === 'filehelper'){
           msg.NickName = 'filehelper'
