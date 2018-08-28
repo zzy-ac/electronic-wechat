@@ -85,6 +85,7 @@ class Injector {
       this.ChatHistorys = new ChatHistorys();
       this.ChatHistorys.init()
       this.initcopy()
+      this.initvideo()
       this.initSeteditArea();
       MentionMenu.init();
       BadgeCount.init();
@@ -201,16 +202,45 @@ class Injector {
   }
 
   initcopy(){
-    angular.element('#contextMenu').scope().$on('app:contextMenu:show', () => {
+    angular.element('#contextMenu').scope().$on('app:contextMenu:show', (ngevent,event) => {
       setTimeout(()=>{//进入下一个事件循环
-        for(let i in angular.element('.dropdown_menu>li')){
+        let menuList = angular.element('.dropdown_menu>li')
+        if (menuList.length === 0 ) return
+        for(let i=0;i < menuList.length;i++){
           if(angular.element('.dropdown_menu>li:eq('+i+')').scope().item.copyCallBack){
             angular.element('.dropdown_menu>li:eq('+i+')')[0].onclick=function(){
-              clipboard.writeText($.Range.current().range.commonAncestorContainer.data)
+              clipboard.writeText(event.target.innerText)
             }
             break
           }
         }
+      })
+    });
+  }
+
+  initvideo(){
+    angular.element('#contextMenu').scope().$on('ngDialog.opened', (ngevent,event) => {
+      setTimeout(()=>{//进入下一个事件循环
+        let $video
+        let setEvent = function(){
+          if(event[0].children[1].children[0].children.length){
+            $video = event[0].children[1].children[0].children[1]
+            $video.onclick = function(){
+              if($video.paused){
+                $video.play()
+              }
+              else{
+                $video.pause()
+              }
+            }
+          }
+          else{
+            setTimeout(()=>{
+              setEvent()
+            },100)
+          }
+        }
+        setEvent()
       })
     });
   }
