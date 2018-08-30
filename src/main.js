@@ -64,7 +64,7 @@ class ElectronicWeChat {
       AppConfig.saveSettings('proxy',AppConfig.readSettings('proxy')||'on')
       AppConfig.saveSettings('proxy-url',AppConfig.readSettings('proxy-url')||'socks5://127.0.0.1:1080')
       AppConfig.saveSettings('chat-area-offset-y',AppConfig.readSettings('chat-area-offset-y')||'0')
-      AppConfig.saveSettings('blur',AppConfig.readSettings('blur')||'on')
+      AppConfig.saveSettings('blur',AppConfig.readSettings('blur')||'off')
     }
   }
 

@@ -261,10 +261,10 @@ class Injector {
     });
     // recover to the last chat user
     ipcRenderer.on('show-wechat-window', () => {
-      // if (this.lastUser) {
-      //   angular.element('.chat_list').scope().itemClick(this.lastUser);
-      //   this.lastUser = ''
-      // }
+      if (this.lastUser && angular.element('#chatArea').scope().currentUser === '2233') {
+        angular.element('.chat_list').scope().itemClick(this.lastUser);
+        this.lastUser = ''
+      }
     });
   }
 }
