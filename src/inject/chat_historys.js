@@ -94,34 +94,16 @@ class ChatHistorys{
     loadHisStatus.id="loadHisStatus"
     angular.element('#chatArea .scroll-wrapper')[0].appendChild(loadHisStatus)
 
-    target.addEventListener('scroll',()=>{
-      this.debounce(()=>{
-        if(angular.element('#chatArea').scope().currentUser == '2233') return
-        if(target.scrollTop===0){
-          if(!this.lockScroll&&angular.element('#chatArea').scope()){
-            this.lockscroll=true
-            loadHisStatus.innerHTML="加载中"
-            loadHisStatus.style.top='20px'
-            setTimeout(()=>{
-                this.getHistory(angular.element('#chatArea').scope().currentUser)
-            })
-          }
-        }
-      },500)
-    })
-
-    let $chat_box = angular.element('#chatArea')
     let $getHistory = document.createElement("p");
     $getHistory.innerHTML="加载历史记录"
     $getHistory.onclick=() => {
       this.getHistory(angular.element('#chatArea').scope().currentUser)
     }
-    // $chat_box.insertBefore($getHistory,angular.element('.chat_bd')[0])
-    window.onmousewheel = (event)=>{
+    target.onmousewheel = (event)=>{
       this.debounce(()=>{
-        if(target.scrollHeight>target.clientHeight || !angular.element('#chatArea').scope().currentUser) return
-        if(event.clientX>angular.element('.panel')[0].scrollWidth&&event.clientY<angular.element('.box_hd')[0].scrollHeight+angular.element('#chatArea>.box_bd')[0].scrollHeight&&event.deltaY<0){
-            if(!this.lockScroll&&angular.element('#chatArea').scope() !== '2233'){
+        if(angular.element('#chatArea').scope().currentUser === '2233') return
+        if(target.scrollTop === 0 && event.deltaY<0){
+            if(!this.lockScroll){
               this.lockscroll=true
               loadHisStatus.innerHTML="加载中"
               loadHisStatus.style.top='20px'
