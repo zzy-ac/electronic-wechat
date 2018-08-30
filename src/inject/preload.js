@@ -260,7 +260,7 @@ class Injector {
     //clear currentUser to receive reddot of new messages from the current chat user
     ipcRenderer.on('hide-wechat-window', () => {
       this.lastUser = angular.element('#chatArea').scope().currentUser;
-      if(this.lastUser !== '2233'){
+      if(this.lastUser && this.lastUser !== '2233'){
         try{
           angular.element('.chat_list').scope().itemClick('2233')
           angular.element('.chat_list').scope().itemClick("");
@@ -272,7 +272,7 @@ class Injector {
     });
     // recover to the last chat user
     ipcRenderer.on('show-wechat-window', () => {
-      if (this.lastUser !== '2233' && angular.element('#chatArea').scope().currentUser === '2233') {
+      if (this.lastUser && this.lastUser !== '2233' && angular.element('#chatArea').scope().currentUser === '2233') {
         angular.element('.chat_list').scope().itemClick(this.lastUser);
         this.lastUser = ''
       }
