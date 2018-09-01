@@ -168,6 +168,7 @@ class WeChatWindow {
       //   this.close();
       // }
       this.close();
+      e.preventDefault();
     });
 
     this.wechatWindow.on('page-title-updated', (ev) => {
