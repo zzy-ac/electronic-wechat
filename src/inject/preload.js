@@ -87,7 +87,7 @@ class Injector {
       this.initcopy()
       this.initvideo()
       this.initSeteditArea();
-      // this.initdrag()
+      // this.initdrag() // 拖动文件聚焦对话窗
       MentionMenu.init();
       BadgeCount.init();
     };
@@ -226,6 +226,7 @@ class Injector {
         let setEvent = function(){
           if(event[0].children[1].children[0].children.length){
             $video = event[0].children[1].children[0].children[1]
+            if(!$video) return
             $video.onclick = function(){
               if($video.paused){
                 $video.play()

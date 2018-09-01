@@ -279,7 +279,7 @@ class ChatHistorys{
         scope.chatContent.unshift(his[i]);
         chatsObj.get++
       }
-      if(chatsObj.chats.length!==chatsObj.get+1){
+      if(chatsObj.chats.length!==chatsObj.get){
         loadHisStatus.innerHTML="获取成功"
       }
       else{
