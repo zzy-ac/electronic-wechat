@@ -90,7 +90,7 @@ class UpdateHandler {
    v1 = v1.match(/v(.*)?\.(.*)?\.(.*)?/)
    v2 = v2.match(/v(.*)?\.(.*)?\.(.*)?/)
    for (let i = 1;i < 4;i++) {
-     if(v1[i] > v2[i]){
+     if(parseInt(v1[i]) > parseInt(v2[i])){
        return true
      }
    }
