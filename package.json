@@ -1,6 +1,6 @@
 {
   "name": "electronic-wechat",
-  "version": "2.1.9",
+  "version": "2.1.10",
   "description": "An Electron application for WeChat",
   "main": "src/main.js",
   "scripts": {
