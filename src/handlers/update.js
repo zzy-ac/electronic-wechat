@@ -93,6 +93,9 @@ class UpdateHandler {
      if(parseInt(v1[i]) > parseInt(v2[i])){
        return true
      }
+     if (parseInt(v1[i]) < parseInt(v2[i])) {
+       return false
+     }
    }
    return false
   }
