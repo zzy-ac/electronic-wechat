@@ -143,6 +143,7 @@ class ChatHistorys{
         msg.MMTime=ChatHistorys.timestampToTime(msg.MMDisplayTime)
       }
       if(msg.sendByLocal||msg.FromUserName===this.selfUserName){//自己发送的消息（包括手机上发送的）
+        msg.sendByLocal = true
         if(msg.ToUserName === 'filehelper'){
           msg.NickName = 'filehelper'
           msg.PYQuanPin ='filehelper'
