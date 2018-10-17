@@ -200,6 +200,22 @@
         </li>
       </ul>
     </section>
+    <section>
+      <ul>
+        <li class="menu-title">
+          <h3 id="app-hide-notification-body-title">隐藏通知中的主要内容</h3>
+        </li>
+        <li class="menu-desc">
+          <h4 id="app-hide-notification-body-desc">不显示桌面通知的内容但不关闭通知</h4>
+        </li>
+        <li class="menu-button">
+          <select id="app-hide-notification-body-select"  onchange="changefun('hide-notification-body')">
+            <option value="on">On</option>
+            <option value="off">Off</option>
+          </select>
+        </li>
+      </ul>
+    </section>
   </div>
 
   <script>
@@ -221,6 +237,7 @@
     const proxy = AppConfig.readSettings('proxy');
     const proxyURl = AppConfig.readSettings('proxy-url');
     const blur = AppConfig.readSettings('blur');
+    const hideNotificationBody = AppConfig.readSettings('hide-notification-body');
 
     const lanSelect = $('app-language-select');
     const recallSelect = $('app-recall-select');
@@ -233,6 +250,7 @@
     const proxySelect = $('app-proxy-select');
     const proxyInput = $('app-proxy-input');
     const blurSelect = $('app-blur-select');
+    const hideNotificationBodySelect = $('app-hide-notification-body-select');
 
     function $(id) {
       return document.getElementById(id);
@@ -310,6 +328,9 @@
         case 'blur':
           AppConfig.saveSettings('blur', blurSelect.value)
           break
+        case 'hide-notification-body':
+          AppConfig.saveSettings('hide-notification-body', hideNotificationBodySelect.value)
+          break
       }
     }
 
@@ -326,6 +347,7 @@
       $('app-proxy-input').value = proxyURl;
       $('app-proxy-input').style.display = (proxy==='setProxy')?'block':'none'
       $('app-blur-select').value = blur;
+      $('app-hide-notification-body-select').value = hideNotificationBody;
     }
 
     function setLocale() {
@@ -353,6 +375,8 @@
       $('feedback-btn').innerHTML = Common.FEEDBACK;
       $('app-blur-title').innerHTML = Common.blurTitle;
       $('app-blur-desc').innerHTML = Common.blurDesc;
+      $('app-hide-notification-body-title').innerHTML = Common.hideNotificationBodyTitle;
+      $('app-hide-notification-body-desc').innerHTML = Common.hideNotificationBodyDesc;
     }
 
     function setProxy(){

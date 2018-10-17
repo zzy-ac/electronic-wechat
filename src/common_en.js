@@ -62,6 +62,7 @@ Common.MENTION_MENU_WIDTH = 120;
 Common.MENTION_MENU_OPTION_HEIGHT = 30;
 Common.MENTION_MENU_OPTION_DEFAULT_NUM = 4;
 Common.MENTION_MENU_HINT_TEXT = 'Mention:';
+Common.HIDE_NOTIFICATION_BODY = 'Have been hidden';
 
 Common.MESSAGE_PREVENT_RECALL = (name) => {
   return `Blocked ${name} a message recall.`
@@ -90,6 +91,8 @@ Common.proxyTitle = 'Set Proxy'
 Common.proxyDesc = 'Select Proxy Mode'
 Common.blurTitle = 'Blur Processing'
 Common.blurDesc = 'Whether to go into suspended state when blur'
+Common.hideNotificationBodyTitle = 'Hide notification body'
+Common.hideNotificationBodyDesc = 'Does not display desktop notifications but does not close notifications'
 
 Common.UPGRADE = 'UPGRADE';
 Common.FEEDBACK = 'FEEDBACK';

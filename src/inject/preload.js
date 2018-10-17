@@ -23,7 +23,7 @@ class Injector {
     //     wcl(content)
     //   }
     // }
-    // this.initNotification();
+    this.initNotification();
     this.initInjectBundle();
     this.initAngularInjection();
     this.lastUser = null
@@ -256,28 +256,30 @@ class Injector {
     })
   }
 
-  // initNotification(){
-  //   const oldNotification = window.Notification
-  //   const newNotification = function(title,opt){
-  //     if (AppConfig.readSettings('hide-notification-body') === 'on') {
-  //       if(/username=@@/.test(opt.icon)){
-  //         // 群聊
-  //         let info = opt.body.match(/^(.*?):(.*?)$/)
-  //         opt.body = info[1] + ':已隐藏'
-  //       }
-  //       else {
-  //         opt.body = "已隐藏"
-  //       }
-  //     }
-  //     return new oldNotification(title,opt)
-  //   }
-  //   Object.defineProperty(newNotification, 'permission', {
-  //       get: () => {
-  //           return oldNotification.permission;
-  //       }
-  //   })
-  //   window.Notification = newNotification
-  // }
+  initNotification(){
+    const oldNotification = window.Notification
+    const newNotification = function(title,opt){
+      console.log(Common.HIDE_NOTIFICATION_BODY)
+      if (AppConfig.readSettings('hide-notification-body') === 'on') {
+        if(/username=@@/.test(opt.icon)){
+          // 群聊
+          let info = opt.body.match(/^(.*?):(.*?)$/)
+          console.log(Common.HIDE_NOTIFICATION_BODY)
+          opt.body = info[1] + ':' + Common.HIDE_NOTIFICATION_BODY
+        }
+        else {
+          opt.body = Common.HIDE_NOTIFICATION_BODY
+        }
+      }
+      return new oldNotification(title,opt)
+    }
+    Object.defineProperty(newNotification, 'permission', {
+        get: () => {
+            return oldNotification.permission;
+        }
+    })
+    window.Notification = newNotification
+  }
 
   initIPC() {
     //clear currentUser to receive reddot of new messages from the current chat user

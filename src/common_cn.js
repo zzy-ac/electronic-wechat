@@ -62,8 +62,8 @@ Common.MENTION_MENU_OFFSET_Y = 45;
 Common.MENTION_MENU_WIDTH = 120;
 Common.MENTION_MENU_OPTION_HEIGHT = 30;
 Common.MENTION_MENU_OPTION_DEFAULT_NUM = 4;
-
 Common.MENTION_MENU_HINT_TEXT = '选择回复的人:';
+Common.HIDE_NOTIFICATION_BODY = '已隐藏';
 
 Common.MESSAGE_PREVENT_RECALL = (name) => {
   return `阻止了 \"${name}\" 的一次撤回`
