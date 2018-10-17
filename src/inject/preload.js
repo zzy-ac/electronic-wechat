@@ -23,14 +23,13 @@ class Injector {
     //     wcl(content)
     //   }
     // }
+    // this.initNotification();
     this.initInjectBundle();
     this.initAngularInjection();
     this.lastUser = null
     this.initIPC();
     //webFrame.setZoomLevelLimits(1, 1);
     //不知道为什么webFrame.setZoomLevelLimits未定义
-    // 重大bug！！(重写原生Notification会导致掉消息)
-    //因为无法监听H5的Notification的点击事件，改成使用系统级别的Notification
     new MenuHandler().create();
   }
 
@@ -131,8 +130,8 @@ class Injector {
         case constants.MSGTYPE_EMOTICON:
           if(/&lt;msg&gt;&lt;emoji fromusername =/.test(msg.Content)){
             //非商店表情
-            Injector.lock(msg, 'MMDigest', '[Emoticon]');
-            Injector.lock(msg, 'MsgType', constants.MSGTYPE_EMOTICON);
+            // Injector.lock(msg, 'MMDigest', '[Emoticon]');
+            // Injector.lock(msg, 'MsgType', constants.MSGTYPE_EMOTICON);
             if (msg.ImgHeight >= Common.EMOJI_MAXIUM_SIZE) {
               Injector.lock(msg, 'MMImgStyle', { height: `${Common.EMOJI_MAXIUM_SIZE}px`, width: 'initial' });
             } else if (msg.ImgWidth >= Common.EMOJI_MAXIUM_SIZE) {
@@ -256,6 +255,29 @@ class Injector {
       }
     })
   }
+
+  // initNotification(){
+  //   const oldNotification = window.Notification
+  //   const newNotification = function(title,opt){
+  //     if (AppConfig.readSettings('hide-notification-body') === 'on') {
+  //       if(/username=@@/.test(opt.icon)){
+  //         // 群聊
+  //         let info = opt.body.match(/^(.*?):(.*?)$/)
+  //         opt.body = info[1] + ':已隐藏'
+  //       }
+  //       else {
+  //         opt.body = "已隐藏"
+  //       }
+  //     }
+  //     return new oldNotification(title,opt)
+  //   }
+  //   Object.defineProperty(newNotification, 'permission', {
+  //       get: () => {
+  //           return oldNotification.permission;
+  //       }
+  //   })
+  //   window.Notification = newNotification
+  // }
 
   initIPC() {
     //clear currentUser to receive reddot of new messages from the current chat user
