@@ -259,17 +259,17 @@ class Injector {
   initNotification(){
     const oldNotification = window.Notification
     const newNotification = function(title,opt){
-      console.log(Common.HIDE_NOTIFICATION_BODY)
       if (AppConfig.readSettings('hide-notification-body') === 'on') {
         if(/username=@@/.test(opt.icon)){
           // 群聊
           let info = opt.body.match(/^(.*?):(.*?)$/)
-          console.log(Common.HIDE_NOTIFICATION_BODY)
-          opt.body = info[1] + ':' + Common.HIDE_NOTIFICATION_BODY
+          // opt.body = info[1] + ':' + Common.HIDE_NOTIFICATION_BODY
+          title = title + ' > ' + info[1]
         }
         else {
-          opt.body = Common.HIDE_NOTIFICATION_BODY
+          // opt.body = Common.HIDE_NOTIFICATION_BODY
         }
+        opt.body = ''
       }
       return new oldNotification(title,opt)
     }
