@@ -302,6 +302,13 @@ class Injector {
         this.lastUser = ''
       }
     });
+
+    ipcRenderer.on('loginout', () => {
+      angular.element('.opt').scope().toggleSystemMenu()
+      setTimeout(()=>{
+        angular.element('.dropdown_menu').scope().loginout()
+      })
+    });
   }
 }
 

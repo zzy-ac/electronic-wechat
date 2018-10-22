@@ -101,13 +101,27 @@ class WeChatWindow {
   }
 
   close(){
-    if(AppConfig.readSettings('close') === 'on'){
-      this.isShown = false
-      this.hide()
+    this.isShown = false
+    this.hide()
+    if(AppConfig.readSettings('close') !== 'on'){
+      this.exit()
     }
-    else{
+  }
+
+  exit(){
+    this.hide()
+    if(this.isLogged){
+      this.wechatWindow.webContents.send('loginout');
+    }
+    if(!this.isLogged){
       app.exit(0)
+      return
     }
+    setInterval(()=>{
+      if(!this.isLogged){
+        app.exit(0)
+      }
+    },1000)
   }
 
   connectWeChat() {
@@ -227,6 +241,10 @@ class WeChatWindow {
         )
       }
     })
+
+    this.wechatWindow.on('exit', () => {
+      this.exit()
+    });
   }
 
   registerLocalShortcut() {

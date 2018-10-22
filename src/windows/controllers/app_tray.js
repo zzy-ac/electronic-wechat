@@ -51,7 +51,7 @@ class AppTray {
       const contextMenu = Menu.buildFromTemplate([
         { label: Common.TRAY.show, icon:path.join(__dirname, `../../../assets/tray_icon.png`), click: () => this.hideSplashAndShowWeChat() },
         { label: Common.TRAY.pref, icon:path.join(__dirname, `../../../assets/tray_settings_${this.trayColor}.png`), click: () => this.showSettings()},
-        { label: Common.TRAY.exit, icon:path.join(__dirname, `../../../assets/tray_exit_${this.trayColor}.png`), click: () => app.exit(0) },
+        { label: Common.TRAY.exit, icon:path.join(__dirname, `../../../assets/tray_exit_${this.trayColor}.png`), click: () => this.appExit() },
       ]);
       this.tray.setContextMenu(contextMenu);
     }
@@ -69,6 +69,9 @@ class AppTray {
   showSettings() {
     this.settingsWindow.show()
   }
+  appExit() {
+    this.wechatWindow.exit();
+  }
   refreshIcon() {
     this.trayColor = AppConfig.readSettings('tray-color');
     this.trayIcon = nativeImage.createFromPath(path.join(assetsPath, `tray_${this.trayColor}.png`));
@@ -81,7 +84,7 @@ class AppTray {
     const contextMenu = Menu.buildFromTemplate([
       { label: Common.TRAY.show, icon:path.join(__dirname, `../../../assets/tray_icon.png`), click: () => this.hideSplashAndShowWeChat() },
       { label: Common.TRAY.pref, icon:path.join(__dirname, `../../../assets/tray_settings_${this.trayColor}.png`), click: () => this.showSettings()},
-      { label: Common.TRAY.exit, icon:path.join(__dirname, `../../../assets/tray_exit_${this.trayColor}.png`), click: () => app.exit(0) },
+      { label: Common.TRAY.exit, icon:path.join(__dirname, `../../../assets/tray_exit_${this.trayColor}.png`), click: () => this.appExit() },
     ]);
     this.tray.setContextMenu(contextMenu);
   }

@@ -259,7 +259,7 @@ class MenuHandler {
   }
 
   static _quitApp() {
-    app.exit(0);
+    ipcRenderer.send('exit');
   }
 
   static _reload() {
