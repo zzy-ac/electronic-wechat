@@ -43,7 +43,9 @@ class WeChatWindow {
       this.show();
       this.loginState.current = isLogged;
     }
-    this.wechatWindow.center();
+    if(!isLogged){
+      this.wechatWindow.center()
+    }
   }
 
   createWindow() {
