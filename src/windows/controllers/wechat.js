@@ -196,7 +196,7 @@ class WeChatWindow {
 
     this.wechatWindow.on('show', () => {
       this.isShown = true;
-      this.registerLocalShortcut();
+      // this.registerLocalShortcut();
       this.wechatWindow.webContents.send('show-wechat-window');
       this.wechatWindow.focus();
     });
@@ -204,18 +204,16 @@ class WeChatWindow {
     this.wechatWindow.on('hide', () => {
       this.wechatWindow.webContents.send('hide-wechat-window');
       this.isShown = false;
-      this.unregisterLocalShortCut();
     });
 
     this.wechatWindow.on('minimize', () => {
       this.isShown = false;
       this.wechatWindow.webContents.send('hide-wechat-window');
-      this.unregisterLocalShortCut();
     });
 
     this.wechatWindow.on('restore', () => {
       this.isShown = true;
-      this.registerLocalShortcut();
+      // this.registerLocalShortcut();
       this.wechatWindow.webContents.send('show-wechat-window');
       this.wechatWindow.focus();
     });
@@ -249,21 +247,17 @@ class WeChatWindow {
     });
   }
 
-  registerLocalShortcut() {
-    electronLocalShortcut.register(this.wechatWindow, 'CommandOrControl+H', () => {
-      this.minimize();
-    });
-  }
-
   unregisterLocalShortCut() {//注销快捷键
     electronLocalShortcut.unregisterAll(this.wechatWindow);
   }
 
   initWechatWindowShortcut() {
-    this.registerLocalShortcut();
     globalShortcut.register('CommandOrControl+Alt+W', () => {
       this.show()
     })
+    electronLocalShortcut.register(this.wechatWindow, 'CommandOrControl+H', () => {
+      this.minimize();
+    });
   }
 
   debounce(func){//防抖

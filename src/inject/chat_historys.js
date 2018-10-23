@@ -24,7 +24,6 @@ class ChatHistorys{
       }, 1000);
       return
     }
-    console.log('初始化IndexDB')
     this.selfUserName = angular.element('.header').scope().account.UserName
     this.DBName = 'Uin'+angular.element('.header').scope().account.Uin
     this.myIDB = await easyIDB({name:this.DBName,ver:1},[
@@ -56,7 +55,6 @@ class ChatHistorys{
 
   initData(){
     //把所有历史信息读取到内存中
-    console.log('获取所有历史记录')
     try{
       this.myIDB.DB.tmp=false
       if(!this.myIDB.DB.name){
