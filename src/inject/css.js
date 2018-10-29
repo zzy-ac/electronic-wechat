@@ -101,6 +101,9 @@ CSSInjector.commonCSS = `
       -webkit-user-select: initial;
       cursor: initial !important;
     }
+    .js_message_plain{
+      user-select: text;
+    }
     html, body {
       width: 100%;
       height: 100%;
