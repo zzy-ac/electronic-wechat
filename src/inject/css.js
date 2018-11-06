@@ -195,7 +195,7 @@ CSSInjector.commonCSS = `
       -webkit-app-region: no-drag;
     }
     .bubble_cont a{
-      user-select: all;
+      user-select: none;
     }
     .box_ft>.content{
       height: calc(100% - 90px);
