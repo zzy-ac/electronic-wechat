@@ -61,8 +61,11 @@ class Injector {
           $rootScope.$on('newLoginPage', () => {
             ipcRenderer.send('user-logged', '');
           });
-          $rootScope.$on("message:add:success", function(e, msg){
-            self.ChatHistorys.saveHistory(msg);
+          $rootScope.$on("message:add:success", function(e, originMsg){
+            self.ChatHistorys.saveHistory({type:'add',originMsg});
+          });
+          $rootScope.$on("root:msgSend:success", function(e, originMsg){
+            self.ChatHistorys.saveHistory({type:'loaclsend',originMsg});
           });
           $rootScope.shareMenu = ShareMenu.inject;
           $rootScope.mentionMenu = MentionMenu.inject;

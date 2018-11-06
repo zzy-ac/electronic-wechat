@@ -116,7 +116,10 @@ class ChatHistorys{
 
 
   //监听message:add:success事件，截取聊天记录的灰调函数
-  saveHistory(msg){//保存聊天记录到indexDB
+  saveHistory({type,originMsg}){//保存聊天记录到indexDB
+    if(originMsg.sendByLocal&&type === 'add') return // 本地发送的消息等发送成功事件再保存
+    let msg = new Object(originMsg)
+    ChatHistorys.lock(msg, 'MMCancelUploadFileFunc', '');
     if(!msg.Content){
       return
     }
@@ -136,7 +139,6 @@ class ChatHistorys{
     }
     setTimeout(()=>{
       msg.MMStatus=2
-      // msg.MMDigestTime=ChatHistorys.timestampToTime(msg.MMDisplayTime)
       if (msg.MMTime) {
         msg.MMTime=ChatHistorys.timestampToTime(msg.MMDisplayTime)
       }
