@@ -160,8 +160,11 @@ class WeChatWindow {
       if (process.platform === 'darwin') {
         this.wechatWindow.webContents.insertCSS(CSSInjector.osxCSS);
       }
+      
+      if(AppConfig.readSettings('css') === 'on'){
+        this.wechatWindow.webContents.send('setCss', AppConfig.readSettings('css-content'));
+      }
 
-      this.wechatWindow.webContents.send('setCss', AppConfig.readSettings('css-content'));
 
       if (AppConfig.readSettings('update') === 'on') {
         new UpdateHandler().checkForUpdate(`v${app.getVersion()}`, true);
