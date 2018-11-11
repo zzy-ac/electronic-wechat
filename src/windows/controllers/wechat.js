@@ -6,7 +6,7 @@
 
 const path = require('path');
 const isXfce = require('is-xfce');
-const { app, shell, BrowserWindow , globalShortcut} = require('electron');
+const { app, shell, BrowserWindow , globalShortcut , ipcMain} = require('electron');
 const electronLocalShortcut = require('electron-localshortcut');
 
 const AppConfig = require('../../configuration');
@@ -161,6 +161,8 @@ class WeChatWindow {
         this.wechatWindow.webContents.insertCSS(CSSInjector.osxCSS);
       }
 
+      this.wechatWindow.webContents.send('setCss', AppConfig.readSettings('css-content'));
+
       if (AppConfig.readSettings('update') === 'on') {
         new UpdateHandler().checkForUpdate(`v${app.getVersion()}`, true);
       }
@@ -177,6 +179,10 @@ class WeChatWindow {
   }
 
   initWindowEvents() {
+    ipcMain.on('refreshCss', (e,css) => {
+      this.wechatWindow.webContents.send('setCss', css);
+    });
+
     this.wechatWindow.on('close', (e) => {
       // if (this.wechatWindow.isVisible()) {
       //   this.unregisterLocalShortCut();

@@ -312,6 +312,15 @@ class Injector {
         angular.element('.dropdown_menu').scope().loginout()
       })
     });
+
+    ipcRenderer.on('setCss', (e,css) => {
+      if(!document.getElementById('userCss')){
+        let style = document.createElement("style")
+        style.id = 'userCss'
+        document.head.appendChild(style)
+      }
+      document.getElementById('userCss').innerHTML = css
+    });
   }
 }
 

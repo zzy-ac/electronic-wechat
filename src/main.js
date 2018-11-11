@@ -39,7 +39,7 @@ class ElectronicWeChat {
   }
 
   initSetting(){
-    if (!AppConfig.readSettings('hide-notification-body')) {
+    if (!AppConfig.readSettings('css')) {
       AppConfig.saveSettings('language', AppConfig.readSettings('language')||'zh-CN');
       AppConfig.saveSettings('prevent-recall', AppConfig.readSettings('prevent-recall')||'on');
       AppConfig.saveSettings('icon', AppConfig.readSettings('icon')||'black');
@@ -55,6 +55,8 @@ class ElectronicWeChat {
       AppConfig.saveSettings('chat-area-offset-y',AppConfig.readSettings('chat-area-offset-y')||'0')
       AppConfig.saveSettings('blur',AppConfig.readSettings('blur')||'off')
       AppConfig.saveSettings('hide-notification-body',AppConfig.readSettings('hide-notification-body')||'off')
+      AppConfig.saveSettings('css',AppConfig.readSettings('css')||'on')
+      AppConfig.saveSettings('css-content',AppConfig.readSettings('css-content')||'')
     }
   }
 

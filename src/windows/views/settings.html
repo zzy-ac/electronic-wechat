@@ -216,6 +216,23 @@
         </li>
       </ul>
     </section>
+    <section>
+      <ul>
+        <li class="menu-title">
+          <h3 id="app-css-title">自定义CSS</h3>
+        </li>
+        <li class="menu-desc">
+          <h4 id="app-css-desc">自定义微信的样式</h4>
+        </li>
+        <li class="menu-button">
+          <select class="" id="app-css-select" onchange="changefun('css')">
+            <option value="on">On</option>
+            <option value="off">Off</option>
+          </select>
+          <textarea oninput="setCss()" id="app-css-input" type="text"></textarea>
+        </li>
+      </ul>
+    </section>
   </div>
 
   <script>
@@ -236,6 +253,8 @@
     const update = AppConfig.readSettings('update');
     const proxy = AppConfig.readSettings('proxy');
     const proxyURl = AppConfig.readSettings('proxy-url');
+    const css = AppConfig.readSettings('css');
+    const cssContent = AppConfig.readSettings('css-content');
     const blur = AppConfig.readSettings('blur');
     const hideNotificationBody = AppConfig.readSettings('hide-notification-body');
 
@@ -249,6 +268,8 @@
     const updateSelect = $('app-update-select');
     const proxySelect = $('app-proxy-select');
     const proxyInput = $('app-proxy-input');
+    const CSSSelect = $('app-css-select');
+    const CSSInput = $('app-css-input');
     const blurSelect = $('app-blur-select');
     const hideNotificationBodySelect = $('app-hide-notification-body-select');
 
@@ -331,6 +352,17 @@
         case 'hide-notification-body':
           AppConfig.saveSettings('hide-notification-body', hideNotificationBodySelect.value)
           break
+        case 'css':
+          AppConfig.saveSettings('css', CSSSelect.value)
+          if(CSSSelect.value=='on'){
+            $('app-css-input').style.display='block'
+            ipcRenderer.send('refreshCss', $('app-css-input').value)
+          }
+          else{
+            $('app-css-input').style.display='none'
+            ipcRenderer.send('refreshCss', '')
+          }
+          break
       }
     }
 
@@ -346,6 +378,9 @@
       $('app-proxy-select').value = proxy;
       $('app-proxy-input').value = proxyURl;
       $('app-proxy-input').style.display = (proxy==='setProxy')?'block':'none'
+      $('app-css-select').value = css;
+      $('app-css-input').value = cssContent?cssContent:'';
+      $('app-css-input').style.display = (css==='on')?'block':'none'
       $('app-blur-select').value = blur;
       $('app-hide-notification-body-select').value = hideNotificationBody;
     }
@@ -365,6 +400,8 @@
       $('app-update-desc').innerHTML = Common.updateDesc;
       $('app-proxy-title').innerHTML = Common.proxyTitle;
       $('app-proxy-desc').innerHTML = Common.proxyDesc;
+      $('app-css-title').innerHTML = Common.cssTitle;
+      $('app-css-desc').innerHTML = Common.cssDesc;
       $('app-instance-title').innerHTML = Common.instanceTitle;
       $('app-instance-desc').innerHTML = Common.instanceDesc;
       $('app-icon-title').innerHTML = Common.iconTitle;
@@ -382,6 +419,15 @@
     function setProxy(){
       debounce(()=>{
         AppConfig.saveSettings('proxy-url', $('app-proxy-input').value)
+      },500)
+    }
+
+    function setCss(){
+      debounce(()=>{
+        AppConfig.saveSettings('css-content', $('app-css-input').value)
+        if(CSSSelect.value === 'on'){
+          ipcRenderer.send('refreshCss', $('app-css-input').value)
+        }
       },500)
     }
 

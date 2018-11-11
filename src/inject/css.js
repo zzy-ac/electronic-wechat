@@ -51,8 +51,8 @@ CSSInjector.commonCSS = `
     div.download_entry{
       display:none;
     }
-    div.title_wrap{
-      z-index:1000!important;
+    div.box_hd .title_wrap{
+      z-index:1000;
     }
     div.box_hd {
         -webkit-app-region: drag;
@@ -60,8 +60,8 @@ CSSInjector.commonCSS = `
     div.box_hd .ext{
       -webkit-app-region: no-drag;
     }
-    .nav_view{
-      top:166px!important;
+    div.panel.give_me .nav_view{
+      top:166px;
     }
     div.title.poi {
         -webkit-app-region: no-drag;
@@ -71,20 +71,20 @@ CSSInjector.commonCSS = `
         padding-top:30px;
     }
     div.main {
-      height: 100% !important;
-      min-height: 0 !important;
-      padding-top: 0 !important;
+      height: 100%;
+      min-height: 0;
+      padding-top: 0;
     }
     div.main_inner {
-      max-width: none !important;
-      min-width: 0 !important;
-      border-radius:0!important;
+      max-width: none;
+      min-width: 0;
+      border-radius:0;
     }
     div.message_empty {
       margin-top: 50px;
     }
     div.img_preview_container div.img_opr_container {
-      bottom: 50px !important;
+      bottom: 50px;
     }
     p.copyright {
       display: none !important
