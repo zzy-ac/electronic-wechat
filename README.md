@@ -176,7 +176,7 @@
 
 --- v2.2.2 ---
 
->53、自定义CSS
+>53、自定义CSS [样例](https://github.com/kooritea/electronic-wechat/blob/master/CSSSAMPLE.md)
 
 >54、支持使用ctrl+滑轮 缩放调整
 
