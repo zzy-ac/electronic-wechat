@@ -39,7 +39,7 @@ class ElectronicWeChat {
   }
 
   initSetting(){
-    if (!AppConfig.readSettings('css')) {
+    if (!AppConfig.readSettings('zoom')) {
       AppConfig.saveSettings('language', AppConfig.readSettings('language')||'zh-CN');
       AppConfig.saveSettings('prevent-recall', AppConfig.readSettings('prevent-recall')||'on');
       AppConfig.saveSettings('icon', AppConfig.readSettings('icon')||'black');
