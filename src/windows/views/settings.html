@@ -233,6 +233,21 @@
         </li>
       </ul>
     </section>
+    <section>
+      <ul>
+        <li class="menu-title">
+          <h3 id="app-zoom-title">界面缩放比例</h3>
+        </li>
+        <li class="menu-desc">
+          <h4 id="app-zoom-desc">使用ctrl+滑轮在主窗体进行缩放</h4>
+        </li>
+        <li class="menu-button">
+          <div class="button"  onclick="changefun('zoom')">
+            RESET
+          </div>
+        </li>
+      </ul>
+    </section>
   </div>
 
   <script>
@@ -363,6 +378,9 @@
             ipcRenderer.send('refreshCss', '')
           }
           break
+        case 'zoom':
+          AppConfig.saveSettings('zoom', 1)
+          ipcRenderer.send('refreshZoom')
       }
     }
 
@@ -402,6 +420,8 @@
       $('app-proxy-desc').innerHTML = Common.proxyDesc;
       $('app-css-title').innerHTML = Common.cssTitle;
       $('app-css-desc').innerHTML = Common.cssDesc;
+      $('app-zoom-title').innerHTML = Common.zoomTitle;
+      $('app-zoom-desc').innerHTML = Common.zoomDesc;
       $('app-instance-title').innerHTML = Common.instanceTitle;
       $('app-instance-desc').innerHTML = Common.instanceDesc;
       $('app-icon-title').innerHTML = Common.iconTitle;

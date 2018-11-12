@@ -160,7 +160,7 @@ class WeChatWindow {
       if (process.platform === 'darwin') {
         this.wechatWindow.webContents.insertCSS(CSSInjector.osxCSS);
       }
-      
+
       if(AppConfig.readSettings('css') === 'on'){
         this.wechatWindow.webContents.send('setCss', AppConfig.readSettings('css-content'));
       }
@@ -184,6 +184,10 @@ class WeChatWindow {
   initWindowEvents() {
     ipcMain.on('refreshCss', (e,css) => {
       this.wechatWindow.webContents.send('setCss', css);
+    });
+
+    ipcMain.on('refreshZoom', () => {
+      this.wechatWindow.webContents.send('refreshZoom');
     });
 
     this.wechatWindow.on('close', (e) => {

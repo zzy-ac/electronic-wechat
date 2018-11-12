@@ -26,6 +26,7 @@ class Injector {
     this.initNotification();
     this.initInjectBundle();
     this.initAngularInjection();
+    this.initSetZoom();
     this.lastUser = null
     this.initIPC();
     //webFrame.setZoomLevelLimits(1, 1);
@@ -284,6 +285,22 @@ class Injector {
     window.Notification = newNotification
   }
 
+  initSetZoom(){
+    webFrame.setZoomFactor(AppConfig.readSettings('zoom')?AppConfig.readSettings('zoom'):1)
+    document.addEventListener('mousewheel',function(e){
+      if(e.ctrlKey){
+        let zoom = webFrame.getZoomFactor()
+        if(e.deltaY > 0){
+          webFrame.setZoomFactor(zoom - 0.1)
+          AppConfig.saveSettings('zoom',zoom - 0.1)
+        } else {
+          webFrame.setZoomFactor(zoom + 0.1)
+          AppConfig.saveSettings('zoom',zoom + 0.1)
+        }
+      }
+    })
+  }
+
   initIPC() {
     //clear currentUser to receive reddot of new messages from the current chat user
     ipcRenderer.on('hide-wechat-window', () => {
@@ -320,6 +337,10 @@ class Injector {
         document.head.appendChild(style)
       }
       document.getElementById('userCss').innerHTML = css
+    });
+
+    ipcRenderer.on('refreshZoom', (e,css) => {
+      webFrame.setZoomFactor(1)
     });
   }
 }

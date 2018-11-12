@@ -57,6 +57,7 @@ class ElectronicWeChat {
       AppConfig.saveSettings('hide-notification-body',AppConfig.readSettings('hide-notification-body')||'off')
       AppConfig.saveSettings('css',AppConfig.readSettings('css')||'on')
       AppConfig.saveSettings('css-content',AppConfig.readSettings('css-content')||'')
+      AppConfig.saveSettings('zoom',AppConfig.readSettings('zoom')||'1')
     }
   }
 
