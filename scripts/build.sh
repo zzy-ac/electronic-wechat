@@ -27,7 +27,7 @@ fi
 
 ignore_list="dist|scripts|\.idea|.*\.md|.*\.yml|node_modules/nodejieba|install"
 
-electron-packager . "${APP_NAME}" --platform=$PLATFORM --arch=$ARCH --electronVersion=3.0.6 --app-version=2.2.1 --asar --icon=assets/icon.icns --overwrite --out=./dist --ignore=${ignore_list}
+electron-packager . "${APP_NAME}" --platform=$PLATFORM --arch=$ARCH --electronVersion=3.0.8 --app-version=2.2.1 --asar --icon=assets/icon.icns --overwrite --out=./dist --ignore=${ignore_list}
 
 if [ $? -eq 0 ]; then
   echo -e "$(tput setaf 2)Packaging for $PLATFORM $ARCH succeeded.$(tput sgr0)\n"
