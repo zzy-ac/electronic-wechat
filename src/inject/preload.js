@@ -51,11 +51,13 @@ class Injector {
         },
         ]).run(['$rootScope', ($rootScope) => {
 
-          if(AppConfig.readSettings('click-notification') === 'on'){
-            $rootScope.$on('root:notification:click', () => {
+
+          $rootScope.$on('root:notification:click', () => {
+            if(AppConfig.readSettings('click-notification') === 'on'){
               ipcRenderer.send('click-notification');
-            });
-          }
+            }
+          });
+
 
           ipcRenderer.send('wx-rendered', MMCgi.isLogin);
 
