@@ -60,6 +60,7 @@ class WeChatWindow {
       titleBarStyle: 'hidden-inset',
       webPreferences: {
         javascript: true,
+        zoomFactor:AppConfig.readSettings('zoom')?AppConfig.readSettings('zoom'):1,
         plugins: true,
         nodeIntegration: false,
         webSecurity: false,

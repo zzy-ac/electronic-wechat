@@ -288,7 +288,6 @@ class Injector {
   }
 
   initSetZoom(){
-    webFrame.setZoomFactor(AppConfig.readSettings('zoom')?AppConfig.readSettings('zoom'):1)
     document.addEventListener('mousewheel',function(e){
       if(e.ctrlKey){
         let zoom = webFrame.getZoomFactor()
