@@ -448,7 +448,7 @@
         if(CSSSelect.value === 'on'){
           ipcRenderer.send('refreshCss', $('app-css-input').value)
         }
-      },500)
+      },100)
     }
 
     function feedback() {
