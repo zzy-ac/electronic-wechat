@@ -232,6 +232,7 @@ class Injector {
           if(event[0].children[1].children[0].children.length){
             $video = event[0].children[1].children[0].children[1]
             if(!$video) return
+            $video.setAttribute("controls","controls")
             $video.onclick = function(){
               if($video.paused){
                 $video.play()
