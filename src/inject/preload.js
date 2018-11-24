@@ -215,7 +215,11 @@ class Injector {
         for(let i=0;i < menuList.length;i++){
           if(angular.element('.dropdown_menu>li:eq('+i+')').scope().item.copyCallBack){
             angular.element('.dropdown_menu>li:eq('+i+')')[0].onclick=function(){
-              clipboard.writeText(event.target.innerText)
+              if(window.getSelection().type === 'Range'){
+                clipboard.writeText(event.target.innerText.substr(Math.min(window.getSelection().baseOffset,window.getSelection().focusOffset),Math.abs(window.getSelection().baseOffset - window.getSelection().focusOffset)))
+              } else {
+                clipboard.writeText(event.target.innerText)
+              }
             }
             break
           }
