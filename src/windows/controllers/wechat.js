@@ -190,6 +190,10 @@ class WeChatWindow {
       this.wechatWindow.webContents.send('refreshZoom');
     });
 
+    ipcMain.on('clearHistory', () => {
+      this.wechatWindow.webContents.send('clearHistory');
+    });
+
     this.wechatWindow.on('close', (e) => {
       // if (this.wechatWindow.isVisible()) {
       //   this.unregisterLocalShortCut();

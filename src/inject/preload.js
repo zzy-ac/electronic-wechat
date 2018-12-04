@@ -27,7 +27,7 @@ class Injector {
     this.initInjectBundle();
     this.initAngularInjection();
     this.initSetZoom();
-    this.lastUser = null
+    // this.lastUser = null
     this.initIPC();
     //webFrame.setZoomLevelLimits(1, 1);
     //不知道为什么webFrame.setZoomLevelLimits未定义
@@ -64,12 +64,16 @@ class Injector {
           $rootScope.$on('newLoginPage', () => {
             ipcRenderer.send('user-logged', '');
           });
-          $rootScope.$on("message:add:success", function(e, originMsg){
-            self.ChatHistorys.saveHistory({type:'add',originMsg});
-          });
-          $rootScope.$on("root:msgSend:success", function(e, originMsg){
-            self.ChatHistorys.saveHistory({type:'loaclsend',originMsg});
-          });
+
+          if(AppConfig.readSettings('history') === 'on'){
+            $rootScope.$on("message:add:success", function(e, originMsg){
+              self.ChatHistorys.saveHistory({type:'add',originMsg});
+            });
+            $rootScope.$on("root:msgSend:success", function(e, originMsg){
+              self.ChatHistorys.saveHistory({type:'loaclsend',originMsg});
+            });
+          }
+
           $rootScope.shareMenu = ShareMenu.inject;
           $rootScope.mentionMenu = MentionMenu.inject;
         }]);
@@ -87,8 +91,10 @@ class Injector {
       if(AppConfig.readSettings('frame') === 'on'){
         MiniFrame.init();
       }
-      this.ChatHistorys = new ChatHistorys();
-      this.ChatHistorys.init()
+      if(AppConfig.readSettings('history') === 'on'){
+        this.ChatHistorys = new ChatHistorys();
+        this.ChatHistorys.init()
+      }
       this.initcopy()
       this.initvideo()
       this.initSeteditArea();
@@ -348,6 +354,10 @@ class Injector {
 
     ipcRenderer.on('refreshZoom', (e,css) => {
       webFrame.setZoomFactor(1)
+    });
+
+    ipcRenderer.on('clearHistory', (e,css) => {
+      this.ChatHistorys.clearHistory()
     });
   }
 }

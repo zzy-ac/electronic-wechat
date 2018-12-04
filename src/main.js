@@ -39,7 +39,7 @@ class ElectronicWeChat {
   }
 
   initSetting(){
-    if (!AppConfig.readSettings('zoom')) {
+    if (!AppConfig.readSettings('history')) {
       AppConfig.saveSettings('language', AppConfig.readSettings('language')||'zh-CN');
       AppConfig.saveSettings('prevent-recall', AppConfig.readSettings('prevent-recall')||'on');
       AppConfig.saveSettings('icon', AppConfig.readSettings('icon')||'black');
@@ -58,6 +58,7 @@ class ElectronicWeChat {
       AppConfig.saveSettings('css',AppConfig.readSettings('css')||'on')
       AppConfig.saveSettings('css-content',AppConfig.readSettings('css-content')||'')
       AppConfig.saveSettings('zoom',AppConfig.readSettings('zoom')||1.0)
+      AppConfig.saveSettings('history',AppConfig.readSettings('history')|| 'on')
     }
   }
 

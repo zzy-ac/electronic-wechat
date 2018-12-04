@@ -136,7 +136,7 @@ input{
   background-color: transparent;
   outline: none;
 }
-#app-css-input{
+.exinput{
   margin-top: 20px;
 }
 textarea{
@@ -152,5 +152,8 @@ textarea{
   text-align: center;
   line-height: 30px;
   background-color: #97c9eb;
-  cursor: pointer;
+  cursor: pointer!important;
+}
+.button:hover{
+  background-color: #fcd3f3;
 }

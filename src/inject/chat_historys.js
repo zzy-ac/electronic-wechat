@@ -298,6 +298,12 @@ class ChatHistorys{
     },1000)
   }
 
+  clearHistory(){
+    this.myIDB.clearStore('history',function(){
+      alert('清除成功')
+    })
+  }
+
   // getHistory(user){//PYQuanPin,RemarkPYQuanPin
   //   try{
   //     if(!user){

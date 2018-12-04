@@ -87,7 +87,7 @@ Common.iconTitle = 'File Path (In Development)';
 Common.iconDesc = 'Set a default file path';
 Common.trayTitle = 'Tray Icon color (Black/White)';
 Common.trayDesc = 'Select a color to match your desktop theme';
-Common.proxyTitle = 'Set Proxy'
+Common.proxyTitle = 'Set Proxy(Need to Restart)'
 Common.proxyDesc = 'Select Proxy Mode'
 Common.cssTitle = 'The custom CSS'
 Common.cssDesc = 'Customize the style of the wechat'
@@ -97,6 +97,8 @@ Common.blurTitle = 'Blur Processing'
 Common.blurDesc = 'Whether to go into suspended state when blur'
 Common.hideNotificationBodyTitle = 'Hide notification body'
 Common.hideNotificationBodyDesc = 'Does not display desktop notifications but does not close notifications'
+Common.historyTitle = 'Chat History'
+Common.historyDesc = 'Keep Chat History(Need to Restart)'
 
 Common.UPGRADE = 'UPGRADE';
 Common.FEEDBACK = 'FEEDBACK';

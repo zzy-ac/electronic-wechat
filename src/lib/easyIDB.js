@@ -17,6 +17,7 @@ async function easyIDBMain(name,newIndex){
     del,
     edit,
     deleteDatabase,
+		clearStore,
     lock:false
   }
 }
@@ -201,6 +202,14 @@ async function openDB(name,newIndexs){//name有两个传入方式 1:直接传入
       reslove(event.target.result)
     }
   }))
+}
+
+function clearStore(storeName,callback){
+	this.DB.transaction(storeName, "readwrite").objectStore(storeName).clear().onsuccess = function(){
+		if(typeof callback === 'function'){
+			callback()
+		}
+	}
 }
 
 function deleteDatabase(){

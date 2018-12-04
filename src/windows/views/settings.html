@@ -229,7 +229,9 @@
             <option value="on">On</option>
             <option value="off">Off</option>
           </select>
-          <textarea oninput="setCss()" id="app-css-input" type="text"></textarea>
+        </li>
+        <li class="menu-button">
+          <textarea oninput="setCss()" id='app-css-input' class="exinput" type="text"></textarea>
         </li>
       </ul>
     </section>
@@ -242,8 +244,29 @@
           <h4 id="app-zoom-desc">使用ctrl+滑轮在主窗体进行缩放</h4>
         </li>
         <li class="menu-button">
-          <div class="button"  onclick="changefun('zoom')">
+          <div class="button" onclick="changefun('zoom')">
             RESET
+          </div>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <ul>
+        <li class="menu-title">
+          <h3 id="app-history-title">聊天记录</h3>
+        </li>
+        <li class="menu-desc">
+          <h4 id="app-history-desc">保存聊天记录(重启微信生效)</h4>
+        </li>
+        <li class="menu-button">
+          <select class="" id="app-history-select" onchange="changefun('history')">
+            <option value="on">On</option>
+            <option value="off">Off</option>
+          </select>
+        </li>
+        <li class="menu-button" id="historyexinput">
+          <div class="button exinput" onclick="ClearAllHistory()">
+            ClearAll
           </div>
         </li>
       </ul>
@@ -257,6 +280,10 @@
       shell,
       ipcRenderer
     } = require('electron');
+
+    function $(id) {
+      return document.getElementById(id);
+    }
 
     const lan = AppConfig.readSettings('language');
     const recall = AppConfig.readSettings('prevent-recall');
@@ -272,6 +299,7 @@
     const cssContent = AppConfig.readSettings('css-content');
     const blur = AppConfig.readSettings('blur');
     const hideNotificationBody = AppConfig.readSettings('hide-notification-body');
+    const history = AppConfig.readSettings('history');
 
     const lanSelect = $('app-language-select');
     const recallSelect = $('app-recall-select');
@@ -287,13 +315,14 @@
     const CSSInput = $('app-css-input');
     const blurSelect = $('app-blur-select');
     const hideNotificationBodySelect = $('app-hide-notification-body-select');
-
-    function $(id) {
-      return document.getElementById(id);
-    }
+    const historySelect = $('app-history-select');
 
     if(process.platform === 'darwin') {
       $('process.platform').style.display = 'none';
+    }
+
+    if(history === 'off'){
+      $('historyexinput').style.display = 'none'
     }
 
     $('top-title-electron-ver').innerText = process.versions.electron;
@@ -381,6 +410,8 @@
         case 'zoom':
           AppConfig.saveSettings('zoom', 1)
           ipcRenderer.send('refreshZoom')
+        case 'history':
+          AppConfig.saveSettings('history', historySelect.value)
       }
     }
 
@@ -401,6 +432,7 @@
       $('app-css-input').style.display = (css==='on')?'block':'none'
       $('app-blur-select').value = blur;
       $('app-hide-notification-body-select').value = hideNotificationBody;
+      $('app-history-select').value = history;
     }
 
     function setLocale() {
@@ -434,6 +466,8 @@
       $('app-blur-desc').innerHTML = Common.blurDesc;
       $('app-hide-notification-body-title').innerHTML = Common.hideNotificationBodyTitle;
       $('app-hide-notification-body-desc').innerHTML = Common.hideNotificationBodyDesc;
+      $('app-history-title').innerHTML = Common.historyTitle;
+      $('app-history-desc').innerHTML = Common.historyDesc;
     }
 
     function setProxy(){
@@ -461,6 +495,10 @@
 
     function KeyDownFn(evt) {
       if (evt.keyCode == 73 && evt.ctrlKey && evt.shiftKey) evt.preventDefault();
+    }
+
+    function ClearAllHistory(){
+      ipcRenderer.send('clearHistory')
     }
 
     function debounce(func){//防抖
