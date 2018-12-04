@@ -174,7 +174,7 @@
 
 >52、修复无法下载历史记录中的文件问题
 
---- v2.2.2 ---
+--- v2.3.0 ---
 
 >53、自定义CSS [样例](https://github.com/kooritea/electronic-wechat/blob/master/CSSSAMPLE.md)
 
