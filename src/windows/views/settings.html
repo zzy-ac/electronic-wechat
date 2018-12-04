@@ -203,16 +203,31 @@
     <section>
       <ul>
         <li class="menu-title">
-          <h3 id="app-hide-notification-body-title">隐藏通知中的主要内容</h3>
+          <h3 id="app-select-notification-body-title">通知</h3>
         </li>
         <li class="menu-desc">
-          <h4 id="app-hide-notification-body-desc">不显示桌面通知的内容但不关闭通知</h4>
+          <h4 id="app-select-notification-body-desc">选择通知显示的信息</h4>
         </li>
         <li class="menu-button">
-          <select id="app-hide-notification-body-select"  onchange="changefun('hide-notification-body')">
+          <select id="app-select-notification-body-select"  onchange="changefun('select-notification-body')">
             <option value="on">On</option>
             <option value="off">Off</option>
           </select>
+        </li>
+        <li class="menu-button" id="app-select-notification-body-select-ex">
+          选择要显示的内容
+          <div class="checkbox">
+            <input type="checkbox" id="app-select-notification-body-select-ex-head" name="head" value="head" onchange="changefun('select-notification-body-ex')" /><label for="app-select-notification-body-select-ex-head">头像</label>
+          </div>
+          <div class="checkbox">
+            <input type="checkbox" id="app-select-notification-body-select-ex-name" name="name" value="name" onchange="changefun('select-notification-body-ex')" /><label for="app-select-notification-body-select-ex-name">名称</label>
+          </div>
+          <div class="checkbox">
+            <input type="checkbox" id="app-select-notification-body-select-ex-teamName" name="teamName" value="teamName" onchange="changefun('select-notification-body-ex')" /><label for="app-select-notification-body-select-ex-teamName">群名称</label>
+          </div>
+          <div class="checkbox">
+            <input type="checkbox" id="app-select-notification-body-select-ex-body" name="body" value="body" onchange="changefun('select-notification-body-ex')" /><label for="app-select-notification-body-select-ex-body">内容</label>
+          </div>
         </li>
       </ul>
     </section>
@@ -264,7 +279,7 @@
             <option value="off">Off</option>
           </select>
         </li>
-        <li class="menu-button" id="historyexinput">
+        <li class="menu-button" id="app-history-exinput">
           <div class="button exinput" onclick="ClearAllHistory()">
             ClearAll
           </div>
@@ -298,7 +313,8 @@
     const css = AppConfig.readSettings('css');
     const cssContent = AppConfig.readSettings('css-content');
     const blur = AppConfig.readSettings('blur');
-    const hideNotificationBody = AppConfig.readSettings('hide-notification-body');
+    const selectNotificationBody = AppConfig.readSettings('select-notification-body');
+    const selectNotificationBodyEx = AppConfig.readSettings('select-notification-body-ex');
     const history = AppConfig.readSettings('history');
 
     const lanSelect = $('app-language-select');
@@ -314,15 +330,12 @@
     const CSSSelect = $('app-css-select');
     const CSSInput = $('app-css-input');
     const blurSelect = $('app-blur-select');
-    const hideNotificationBodySelect = $('app-hide-notification-body-select');
+    const selectNotificationBodySelect = $('app-select-notification-body-select');
+    const selectNotificationBodyCheckBoxs = $('app-select-notification-body-select-ex')
     const historySelect = $('app-history-select');
 
     if(process.platform === 'darwin') {
       $('process.platform').style.display = 'none';
-    }
-
-    if(history === 'off'){
-      $('historyexinput').style.display = 'none'
     }
 
     $('top-title-electron-ver').innerText = process.versions.electron;
@@ -393,8 +406,11 @@
         case 'blur':
           AppConfig.saveSettings('blur', blurSelect.value)
           break
-        case 'hide-notification-body':
-          AppConfig.saveSettings('hide-notification-body', hideNotificationBodySelect.value)
+        case 'select-notification-body':
+          AppConfig.saveSettings('select-notification-body', selectNotificationBodySelect.value)
+          break
+        case 'select-notification-body-ex':
+          AppConfig.saveSettings('select-notification-body-ex', getNotificationInfo())
           break
         case 'css':
           AppConfig.saveSettings('css', CSSSelect.value)
@@ -431,8 +447,13 @@
       $('app-css-input').value = cssContent?cssContent:'';
       $('app-css-input').style.display = (css==='on')?'block':'none'
       $('app-blur-select').value = blur;
-      $('app-hide-notification-body-select').value = hideNotificationBody;
+      $('app-select-notification-body-select').value = selectNotificationBody;
+      $('app-select-notification-body-select-ex-head').checked = selectNotificationBodyEx.includes('head')
+      $('app-select-notification-body-select-ex-name').checked = selectNotificationBodyEx.includes('name')
+      $('app-select-notification-body-select-ex-teamName').checked = selectNotificationBodyEx.includes('teamName')
+      $('app-select-notification-body-select-ex-body').checked = selectNotificationBodyEx.includes('body')
       $('app-history-select').value = history;
+      $('app-history-exinput').style.display = (history==='on')?'block':'none'
     }
 
     function setLocale() {
@@ -464,8 +485,8 @@
       $('feedback-btn').innerHTML = Common.FEEDBACK;
       $('app-blur-title').innerHTML = Common.blurTitle;
       $('app-blur-desc').innerHTML = Common.blurDesc;
-      $('app-hide-notification-body-title').innerHTML = Common.hideNotificationBodyTitle;
-      $('app-hide-notification-body-desc').innerHTML = Common.hideNotificationBodyDesc;
+      $('app-select-notification-body-title').innerHTML = Common.selectNotificationBodyTitle;
+      $('app-select-notification-body-desc').innerHTML = Common.selectNotificationBodyDesc;
       $('app-history-title').innerHTML = Common.historyTitle;
       $('app-history-desc').innerHTML = Common.historyDesc;
     }
@@ -485,6 +506,17 @@
       },100)
     }
 
+    function getNotificationInfo(){
+      let inputs = selectNotificationBodyCheckBoxs.getElementsByTagName('input')
+      let result = []
+      for(let item of inputs){
+        if(item.checked){
+          result.push(item.name)
+        }
+      }
+      return result
+    }
+
     function feedback() {
       shell.openExternal(Common.GITHUB_ISSUES);
     }
@@ -498,7 +530,9 @@
     }
 
     function ClearAllHistory(){
-      ipcRenderer.send('clearHistory')
+      if(confirm(Common.clearHistoryConfirm)){
+        ipcRenderer.send('clearHistory')
+      }
     }
 
     function debounce(func){//防抖

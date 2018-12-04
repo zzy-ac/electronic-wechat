@@ -95,10 +95,11 @@ Common.zoomTitle = 'set scaling'
 Common.zoomDesc = 'use ctrl+mouse wheel on wechat window'
 Common.blurTitle = 'Blur Processing'
 Common.blurDesc = 'Whether to go into suspended state when blur'
-Common.hideNotificationBodyTitle = 'Hide notification body'
-Common.hideNotificationBodyDesc = 'Does not display desktop notifications but does not close notifications'
+Common.selectNotificationBodyTitle = 'notification'
+Common.selectNotificationBodyDesc = 'filter notification info'
 Common.historyTitle = 'Chat History'
 Common.historyDesc = 'Keep Chat History(Need to Restart)'
+Common.clearHistoryConfirm = 'Make sure to clear all chat history'
 
 Common.UPGRADE = 'UPGRADE';
 Common.FEEDBACK = 'FEEDBACK';

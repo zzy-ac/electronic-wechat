@@ -70,6 +70,8 @@ Common.MESSAGE_PREVENT_RECALL = (name) => {
 }
 Common.EMOJI_MAXIUM_SIZE = 120;
 
+Common.clearHistoryConfirm = '确定要清除所有聊天记录？'
+
 Common.MENU = {
   about: '关于 Electronic Wechat',
   service: '服务',

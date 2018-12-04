@@ -39,7 +39,7 @@ class ElectronicWeChat {
   }
 
   initSetting(){
-    if (!AppConfig.readSettings('history')) {
+    if (!AppConfig.readSettings('select-notification-body-ex')) {
       AppConfig.saveSettings('language', AppConfig.readSettings('language')||'zh-CN');
       AppConfig.saveSettings('prevent-recall', AppConfig.readSettings('prevent-recall')||'on');
       AppConfig.saveSettings('icon', AppConfig.readSettings('icon')||'black');
@@ -54,11 +54,12 @@ class ElectronicWeChat {
       AppConfig.saveSettings('proxy-url',AppConfig.readSettings('proxy-url')||'socks5://127.0.0.1:1080')
       AppConfig.saveSettings('chat-area-offset-y',AppConfig.readSettings('chat-area-offset-y')||'0')
       AppConfig.saveSettings('blur',AppConfig.readSettings('blur')||'off')
-      AppConfig.saveSettings('hide-notification-body',AppConfig.readSettings('hide-notification-body')||'off')
       AppConfig.saveSettings('css',AppConfig.readSettings('css')||'on')
       AppConfig.saveSettings('css-content',AppConfig.readSettings('css-content')||'')
       AppConfig.saveSettings('zoom',AppConfig.readSettings('zoom')||1.0)
       AppConfig.saveSettings('history',AppConfig.readSettings('history')|| 'on')
+      AppConfig.saveSettings('select-notification-body',AppConfig.readSettings('select-notification-body')||'off')
+      AppConfig.saveSettings('select-notification-body-ex',AppConfig.readSettings('select-notification-body-ex')|| [])
     }
   }
 
