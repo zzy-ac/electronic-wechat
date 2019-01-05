@@ -197,6 +197,12 @@ CSSInjector.commonCSS = `
     .bubble_cont a{
       user-select: text;
     }
+    .bubble_cont .video img{
+      max-width: 200px;
+      max-height: 300px;
+      height: auto!important;
+      width: auto!important;
+    }
     .box_ft>.content{
       height: calc(100% - 90px);
     }
