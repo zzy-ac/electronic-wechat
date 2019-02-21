@@ -1,6 +1,6 @@
 {
   "name": "electronic-wechat",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "An Electron application for WeChat",
   "main": "src/main.js",
   "scripts": {
@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
-    "electron": "3.0.8",
+    "electron": "4.0.5",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.2.0",

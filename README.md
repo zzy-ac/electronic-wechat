@@ -188,6 +188,12 @@
 
 >59、自由选择在桌面通知上显示的内容
 
+--- v2.3.1 ---
+
+>60、跟随官方更改消息对象结构
+
+>61、electron 4.0.5
+
 <br>
 <br>
 <br>
@@ -226,7 +232,7 @@
 或者参考[issues19](https://github.com/kooritea/electronic-wechat/issues/19)
 
 
-以下是原文
+# 以下是原仓库的Readme
 
 
 
