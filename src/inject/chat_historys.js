@@ -119,7 +119,7 @@ class ChatHistorys{
   saveHistory({type,originMsg}){//保存聊天记录到indexDB
     if(originMsg.sendByLocal&&type === 'add') return // 本地发送的消息等发送成功事件再保存
     let msg = new Object(originMsg)
-    ChatHistorys.lock(msg, 'MMCancelUploadFileFunc', '');
+    //ChatHistorys.lock(msg, 'MMCancelUploadFileFunc', '');
     if(!msg.Content){
       return
     }
