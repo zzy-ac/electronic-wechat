@@ -140,14 +140,16 @@ class Injector {
         //   msg.Content = EmojiParser.emojiToImage(msg.Content);
         //   break;
         case constants.MSGTYPE_EMOTICON:
-          if(/&lt;msg&gt;&lt;emoji fromusername =/.test(msg.Content)){
+          if(/&lt;msg&gt;&lt;emoji fromusername/.test(msg.Content)){
             //非商店表情
             // Injector.lock(msg, 'MMDigest', '[Emoticon]');
             // Injector.lock(msg, 'MsgType', constants.MSGTYPE_EMOTICON);
-            if (msg.ImgHeight >= Common.EMOJI_MAXIUM_SIZE) {
-              Injector.lock(msg, 'MMImgStyle', { height: `${Common.EMOJI_MAXIUM_SIZE}px`, width: 'initial' });
-            } else if (msg.ImgWidth >= Common.EMOJI_MAXIUM_SIZE) {
-              Injector.lock(msg, 'MMImgStyle', { width: `${Common.EMOJI_MAXIUM_SIZE}px`, height: 'initial' });
+            if(msg.ImgHeight >= Common.EMOJI_MAXIUM_SIZE){
+              Injector.lock(msg, 'MMImgStyle', { height: `${Common.EMOJI_MAXIUM_SIZE}px`, width: 'auto' });
+            } else if(msg.ImgWidth >= Common.EMOJI_MAXIUM_SIZE){
+              Injector.lock(msg, 'MMImgStyle', { height: 'auto', width: `${Common.EMOJI_MAXIUM_SIZE}px` });
+            } else{
+              Injector.lock(msg, 'MMImgStyle', { height: msg.ImgHeight, width: 'auto' });
             }
           }
           break;
