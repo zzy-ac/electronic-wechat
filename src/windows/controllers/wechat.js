@@ -6,7 +6,7 @@
 
 const path = require('path');
 const isXfce = require('is-xfce');
-const { app, shell, BrowserWindow , globalShortcut , ipcMain} = require('electron');
+const { app, shell, BrowserWindow , globalShortcut , ipcMain, Notification} = require('electron');
 const electronLocalShortcut = require('electron-localshortcut');
 
 const AppConfig = require('../../configuration');
@@ -265,16 +265,30 @@ class WeChatWindow {
   }
 
   unregisterLocalShortCut() {//注销快捷键
-    electronLocalShortcut.unregisterAll(this.wechatWindow);
+    try{
+      electronLocalShortcut.unregisterAll(this.wechatWindow);
+    }catch(e){
+      //　快捷键解绑失败
+    }
+    
   }
 
   initWechatWindowShortcut() {
-    globalShortcut.register('CommandOrControl+Alt+W', () => {
-      this.show()
-    })
-    electronLocalShortcut.register(this.wechatWindow, 'CommandOrControl+H', () => {
-      this.minimize();
-    });
+    try{
+      globalShortcut.register('CommandOrControl+Alt+W', () => {
+        this.show()
+      })
+      electronLocalShortcut.register(this.wechatWindow, 'CommandOrControl+H', () => {
+        this.minimize();
+      });
+    }catch(e){
+      //　快捷键绑定失败
+      (new Notification({
+        title:"electronic-wechat",
+        body: "快捷键绑定失败",
+        icon:path.join(__dirname, '../assets/icon.png')
+      })).show()
+    }
   }
 
   debounce(func){//防抖

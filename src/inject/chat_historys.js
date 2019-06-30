@@ -178,7 +178,7 @@ class ChatHistorys{
         delete msg.$$hashKey
       }
       this.myIDB.push('history',msg)
-    })
+    },500)
   }
 
   restoreChatContent(user) {
