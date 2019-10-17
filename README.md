@@ -6,6 +6,12 @@
 
 **Mac OS X 和 Linux 下更好用的微信客户端. 更多功能, 更少bug. 使用[Electron](https://github.com/atom/electron)构建.**
 
+# 停止维护
+> 可能大家都发现了,网页微信正在用肉眼可见的速度砍掉各种功能,越来越多的用户包括我的两个账号也没办法登录网页微信版了,所以也没有动力继续维护了  
+> 大家可以尝试使用[winetricks-zh](https://github.com/hillwoodroc/winetricks-zh)安装wine-wechat,虽然会有点例如黑影等小问题,总体来说体验已经比刚开始的时候好了不少  
+> 感谢大家这段时间的支持
+
+
 ## 该分支针对使用Dock的ubuntu进行改造
 
 ### 测试环境 ubuntu 18.04 gnome 3.28.2
