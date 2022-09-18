@@ -5,7 +5,7 @@
 'use strict';
 
 const path = require('path');
-const { app, Menu, nativeImage, Tray, ipcMain } = require('electron');
+const { Menu, nativeImage, Tray, ipcMain } = require('electron');
 
 const AppConfig = require('../../configuration');
 
@@ -13,7 +13,7 @@ const assetsPath = path.join(__dirname, '../../../assets');
 
 const Common = require('../../common');;
 
-class AppTray {
+class AppTray { 
   constructor(splashWindow, wechatWindow, settingsWindow) {
     this.splashWindow = splashWindow;
     this.wechatWindow = wechatWindow;
@@ -63,7 +63,11 @@ class AppTray {
   }
 
   hideSplashAndShowWeChat() {
-    if (this.splashWindow.isShown) return;
+    if (this.splashWindow.isShown){
+      this.splashWindow.hide();
+      this.wechatWindow.show();
+      return;
+    };
     this.wechatWindow.show();
   }
   showSettings() {
