@@ -38,6 +38,6 @@ if [ $PLATFORM = "darwin" ]; then
     echo "$(tput setaf 3)App copied to /Applications. You can open Electronic WeChat there or from Spotlight.$(tput sgr0)"
 fi
 
-cp ./electronic-wechat.desktop ./dist/electronic-wechat-linux-x64/
-mkdir ./dist/electronic-wechat-linux-x64/assets
-cp ./assets/icon.png ./dist/electronic-wechat-linux-x64/assets/icon.png
+cp ./electronic-wechat.desktop ./dist/electronic-wechat-linux-$ARCH/
+mkdir ./dist/electronic-wechat-linux-$ARCH/assets
+cp ./assets/icon.png ./dist/electronic-wechat-linux-$ARCH/assets/icon.png

@@ -11,6 +11,7 @@
     "build:linux32": "./scripts/build.sh linux ia32",
     "build:linux": "./scripts/build.sh linux x64",
     "build:linux64": "./scripts/build.sh linux x64",
+    "build:linuxarm64": "./scripts/build.sh linux arm64",
     "build:win": ".\\scripts\\build-win32.bat win32 ia32",
     "build:win32": ".\\scripts\\build-win32.bat win32 ia32",
     "build:win64": ".\\scripts\\build-win32.bat win32 x64"
