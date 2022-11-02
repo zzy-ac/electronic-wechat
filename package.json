@@ -1,6 +1,6 @@
 {
   "name": "electronic-wechat",
-  "version": "2.3.1-fix",
+  "version": "2.3.2",
   "description": "An Electron application for WeChat",
   "main": "src/main.js",
   "scripts": {
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kooritea/wechat-electron.git",
+    "url": "https://github.com/Riceneeder/electronic-wechat.git",
     "originalurl": "https://github.com/geeeeeeeeek/wechat-electron.git"
   },
   "keywords": [
@@ -28,16 +28,16 @@
     "Web"
   ],
   "author": {
-    "name": "kooritea",
+    "name": "Riceneeder",
     "originalauthor": "Zhongyi Tong",
-    "email": "e@gmail.com"
+    "email": "845541909@qq.com"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kooritea/wechat-electron/issues",
+    "url": "https://github.com/Riceneeder/electronic-wechat/issues",
     "originalurl": "https://github.com/geeeeeeeeek/wechat-electron/issues"
   },
-  "homepage": "https://github.com/kooritea/wechat-electron/",
+  "homepage": "https://github.com/Riceneeder/electronic-wechat/",
   "originalhomepage": "https://github.com/geeeeeeeeek/wechat-electron/",
   "dependencies": {
     "electron-localshortcut": "^3.1.0",
