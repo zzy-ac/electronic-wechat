@@ -52,8 +52,8 @@ jobs:
         run: |
           mkdir artifacts
           ls
-          electron-installer-debian --src dist/electronic-wechat-x64/ --dest dist/installers/ --arch amd64
-          electron-installer-debian --src dist/electronic-wechat-arm64/ --dest dist/installers/ --arch arm64
+          electron-installer-debian --src dist/electronic-wechat-linux-x64/ --dest dist/installers/ --arch amd64
+          electron-installer-debian --src dist/electronic-wechat-linux-arm64/ --dest dist/installers/ --arch arm64
           mv dist/installers/*.deb artifacts || true
       # tar -cvf electronic-wechat-linux-arm64.tar dist/electronic-wechat-linux-arm64/
       # tar -cvf electronic-wechat-linux-x64.tar dist/electronic-wechat-linux-x64/
