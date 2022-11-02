@@ -38,6 +38,7 @@ jobs:
       # step3: npm install
       - name: npm install
         run: |
+          npm install -g electron-installer-debian
           npm install
       # step4: build app
       - name: build Ubuntu app
@@ -51,9 +52,12 @@ jobs:
         run: |
           mkdir artifacts
           ls
-          tar -cvf electronic-wechat-linux-arm64.tar dist/electronic-wechat-linux-arm64/
-          tar -cvf electronic-wechat-linux-x64.tar dist/electronic-wechat-linux-x64/
-          mv *.tar artifacts || true
+          electron-installer-debian --src dist/electronic-wechat-x64/ --dest dist/installers/ --arch amd64
+          electron-installer-debian --src dist/electronic-wechat-arm64/ --dest dist/installers/ --arch arm64
+          mv dist/installers/*.deb artifacts || true
+      # tar -cvf electronic-wechat-linux-arm64.tar dist/electronic-wechat-linux-arm64/
+      # tar -cvf electronic-wechat-linux-x64.tar dist/electronic-wechat-linux-x64/
+      # mv *.tar artifacts || true
       # step6: upload artifacts
       - name: upload artifacts
         uses: actions/upload-artifact@v2
