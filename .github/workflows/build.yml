@@ -53,7 +53,7 @@ jobs:
           ls
           tar -cvf electronic-wechat-linux-arm64.tar dist/electronic-wechat-linux-arm64/
           tar -cvf electronic-wechat-linux-x64.tar dist/electronic-wechat-linux-x64/
-          mv dist/*.tar artifacts || true
+          mv *.tar artifacts || true
       # step6: upload artifacts
       - name: upload artifacts
         uses: actions/upload-artifact@v2
