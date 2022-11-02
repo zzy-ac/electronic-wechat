@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-10.15, ubuntu-18.04]
+        os: [ubuntu-18.04]
 
     # create steps
     steps:
@@ -39,24 +39,13 @@ jobs:
       - name: npm install
         run: |
           npm install
-      # step4: build app for mac/win
-      - name: build mac app
-        if: matrix.os == 'macos-10.15'
-        run: |
-          npm run build:osx
+      # step4: build app
       - name: build Ubuntu app
         if: matrix.os == 'ubuntu-18.04'
         run: |
           npm run build:linuxarm64
           npm run build:linux
       # step5: cleanup artifacts in dist_electron
-      - name: cleanup artifacts for macosZ
-        if: matrix.os == 'macos-10.15'
-        run: |
-          mkdir artifacts
-          ls
-          tar -cvf Electronic-WeChat-darwin-x64.tar dist/Electronic\ WeChat.app/
-          mv dist/Electronic-WeChat-darwin-x64.tar artifacts || true
       - name: cleanup artifacts for Ubuntu
         if: matrix.os == 'ubuntu-18.04'
         run: |
