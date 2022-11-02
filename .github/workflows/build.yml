@@ -54,14 +54,14 @@ jobs:
         if: matrix.os == 'macos-10.15'
         run: |
           mkdir artifacts
-          tar -cvf Electronic-WeChat-darwin-x64.tar /release/Electronic\ WeChat.app/
+          tar -cvf Electronic-WeChat-darwin-x64.tar release/Electronic\ WeChat.app/
           mv release/Electronic-WeChat-darwin-x64.tar artifacts || true
       - name: cleanup artifacts for Ubuntu
         if: matrix.os == 'ubuntu-18.04'
         run: |
           mkdir artifacts
-          tar -cvf electronic-wechat-linux-arm64.tar /release/electronic-wechat-linux-arm64/
-          tar -cvf electronic-wechat-linux-x64.tar /release/electronic-wechat-linux-x64/
+          tar -cvf electronic-wechat-linux-arm64.tar release/electronic-wechat-linux-arm64/
+          tar -cvf electronic-wechat-linux-x64.tar release/electronic-wechat-linux-x64/
           mv release/*.tar artifacts || true
       # step6: upload artifacts
       - name: upload artifacts
