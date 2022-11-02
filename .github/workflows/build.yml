@@ -1,7 +1,7 @@
 # main.yml
 
 # Workflow's name
-name: Build Electron App For Win/Mac
+name: Build
 
 # Workflow's trigger
 on:
