@@ -291,11 +291,13 @@ class WeChatWindow {
   initWechatWindowShortcut() {
     try{
       globalShortcut.register('CommandOrControl+Alt+W', () => {
-        this.show()
+        if (this.wechatWindow.isVisible()) {
+          this.hide();
+        }
+        else {
+          this.show();
+        }
       })
-      electronLocalShortcut.register(this.wechatWindow, 'CommandOrControl+H', () => {
-        this.minimize();
-      });
     }catch(e){
       //　快捷键绑定失败
       (new Notification({
