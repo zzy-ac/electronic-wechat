@@ -12,4 +12,10 @@
 
 * [X] 利用UOS请求头修复了登陆问题
 
+## Arch 用户
+
+[https://aur.archlinux.org/electronic-wechat-uos-bin]() 感谢@[Kimiblock](/Kimiblock)
+
+---
+
 > 事物繁忙，PR welcome！
