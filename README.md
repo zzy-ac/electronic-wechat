@@ -14,7 +14,7 @@
 
 ## Arch 用户
 
-[https://aur.archlinux.org/electronic-wechat-uos-bin]() 感谢@[Kimiblock](/Kimiblock)
+[https://aur.archlinux.org/electronic-wechat-uos-bin]() 感谢@[Kimiblock](https://github.com/Kimiblock)
 
 ---
 
