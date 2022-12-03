@@ -6,7 +6,7 @@
 
 > 本仓库fork自：[https://github.com/kooritea/electronic-wechat](https://github.com/kooritea/electronic-wechat)
 >
-> 原仓库：[https://github.com/geeeeeeeeek/wechat-electron](https://github.com/geeeeeeeeek/wechat-electro)
+> 原仓库：[https://github.com/geeeeeeeeek/wechat-electron](https://github.com/geeeeeeeeek/wechat-electron)
 
 # What`s new?
 
@@ -14,7 +14,7 @@
 
 ## Arch 用户
 
-[https://aur.archlinux.org/electronic-wechat-uos-bin](https://aur.archlinux.org/electronic-wechat-uos-bin) 感谢[@Kimiblock](https://github.com/Kimiblock)
+[https://aur.archlinux.org/packages/electronic-wechat-uos-bin](https://aur.archlinux.org/packages/electronic-wechat-uos-bin) 感谢[@Kimiblock](https://github.com/Kimiblock)
 
 ---
 
