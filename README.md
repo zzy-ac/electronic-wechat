@@ -4,9 +4,9 @@
 
 **Mac OS X 和 Linux 下更好用的微信客户端. 更多功能, 更少bug. 使用[Electron](https://github.com/atom/electron)构建.**
 
-> 本仓库fork自：[https://github.com/kooritea/electronic-wechat]()
+> 本仓库fork自：[https://github.com/kooritea/electronic-wechat](https://github.com/kooritea/electronic-wechat)
 >
-> 原仓库：[https://github.com/geeeeeeeeek/wechat-electron]()
+> 原仓库：[https://github.com/geeeeeeeeek/wechat-electron](https://github.com/geeeeeeeeek/wechat-electro)
 
 # What`s new?
 
@@ -14,7 +14,7 @@
 
 ## Arch 用户
 
-[https://aur.archlinux.org/electronic-wechat-uos-bin]() 感谢[@Kimiblock](https://github.com/Kimiblock)
+[https://aur.archlinux.org/electronic-wechat-uos-bin](https://aur.archlinux.org/electronic-wechat-uos-bin) 感谢[@Kimiblock](https://github.com/Kimiblock)
 
 ---
 
