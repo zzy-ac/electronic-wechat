@@ -18,7 +18,7 @@
 
 ## 星火用户
 
-<a href="spk://store/chat/electronic-wechat">
+<a href="https://spk.yzzi.icu/?spk=spk://store/chat/electronic-wechat" target="_blank">
 <img alt="Get it on Spark Store" src="https://download.gankun.cn.ma/api/raw/?path=/%E5%85%B6%E4%BB%96/getitonSparkStore.png" width="165" height="64" />
 </a>
 
