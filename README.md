@@ -16,6 +16,12 @@
 
 [https://aur.archlinux.org/packages/electronic-wechat-uos-bin](https://aur.archlinux.org/packages/electronic-wechat-uos-bin) 感谢[@Kimiblock](https://github.com/Kimiblock)
 
+## 星火用户
+
+<a href="spk://store/chat/electronic-wechat">
+<img alt="Get it on Spark Store" src="https://download.gankun.cn.ma/api/raw/?path=/%E5%85%B6%E4%BB%96/getitonSparkStore.png" width="165" height="64" />
+</a>
+
 ---
 
 > 事物繁忙，PR welcome！
