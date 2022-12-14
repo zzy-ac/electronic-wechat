@@ -30,6 +30,10 @@ class SettingsWindow {
       alwaysOnTop: true,
       icon: 'assets/icon.png',
       titleBarStyle: 'hidden',
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+        enableRemoteModule: true,
       },
     });
 
