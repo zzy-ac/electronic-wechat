@@ -26,7 +26,7 @@ class WeChatWindow {
       ]
     },
       (details, callback) => {
-        callback((details.url.indexOf('&target=t') > -1) ? {} : { redirectURL: 'https://wx.qq.com/?&lang=zh_CN&target=t' })
+        callback((details.url.indexOf('&target=t') > -1) ? {} : { redirectURL: 'https://wx2.qq.com/?lang=zh_CN' })
       }
     )
     this.isLogged = false;
