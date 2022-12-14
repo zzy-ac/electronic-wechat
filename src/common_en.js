@@ -35,7 +35,7 @@ Common.USER_AGENT = {
   darwin: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.1 Safari/537.36',
 };
 
-Common.WEB_WECHAT = 'https://wx.qq.com/?&lang=en_US&target=t';
+Common.WEB_WECHAT = 'https://wx2.qq.com/?lang=zh_CN';
 Common.GITHUB = 'https://github.com/geeeeeeeeek/electronic-wechat';
 Common.FORKER_GITHUB = 'https://github.com/kooritea/electronic-wechat'
 Common.GITHUB_RELEASES = 'https://github.com/geeeeeeeeek/electronic-wechat/releases';
