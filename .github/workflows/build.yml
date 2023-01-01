@@ -5,6 +5,8 @@ name: Build
 
 # Workflow's trigger
 on:
+  watch:
+    types: [started]
   push:
     tags:
       - 'v*.*.*'
