@@ -46,7 +46,7 @@ jobs:
       - name: build Ubuntu app
         if: matrix.os == 'ubuntu-18.04'
         run: |
-          npm run build:linuxamd64
+
           npm run build:linux
       # step5: cleanup artifacts in dist_electron
       - name: cleanup artifacts for Ubuntu
