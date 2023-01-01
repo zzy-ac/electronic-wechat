@@ -6,7 +6,7 @@
 
 const path = require('path');
 const isXfce = require('is-xfce');
-const { app, shell, BrowserWindow , globalShortcut , ipcMain, Notification, session} = require('electron');
+const { app, shell, BrowserWindow , globalShortcut , ipcMain, Notification} = require('electron');
 const electronLocalShortcut = require('electron-localshortcut');
 
 const AppConfig = require('../../configuration');
@@ -19,16 +19,6 @@ const Common = require('../../common');;
 
 class WeChatWindow {
   constructor() {
-    session.defaultSession.webRequest.onBeforeRequest({
-      urls: [
-        'https://wx.qq.com/?&lang*',
-        'https://wx2.qq.com/?&lang*'
-      ]
-    },
-      (details, callback) => {
-        callback((details.url.indexOf('&target=t') > -1) ? {} : { redirectURL: 'https://wx2.qq.com/?lang=zh_CN' })
-      }
-    )
     this.isLogged = false;
     this.isShown = false;
     this.loginState = { NULL: -2, WAITING: -1, YES: 1, NO: 0 };
@@ -286,13 +276,11 @@ class WeChatWindow {
   initWechatWindowShortcut() {
     try{
       globalShortcut.register('CommandOrControl+Alt+W', () => {
-        if (this.wechatWindow.isVisible()) {
-          this.hide();
-        }
-        else {
-          this.show();
-        }
+        this.show()
       })
+      electronLocalShortcut.register(this.wechatWindow, 'CommandOrControl+H', () => {
+        this.minimize();
+      });
     }catch(e){
       //　快捷键绑定失败
       (new Notification({

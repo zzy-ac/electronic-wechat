@@ -8,5 +8,3 @@ node_modules
 
 *.sublime-project
 *.sublime-workspace
-yarn*
-package-lock.json
