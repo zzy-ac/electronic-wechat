@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
-    "electron": "^20.1.4",
+    "electron": "^6.1.12",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.2.0",
