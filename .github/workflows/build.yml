@@ -5,6 +5,8 @@ name: Build
 
 # Workflow's trigger
 on:
+  watch:
+    types: [started]
   push:
     tags:
       - 'v*.*.*'
@@ -44,7 +46,7 @@ jobs:
       - name: build Ubuntu app
         if: matrix.os == 'ubuntu-18.04'
         run: |
-          npm run build:linuxarm64
+
           npm run build:linux
       # step5: cleanup artifacts in dist_electron
       - name: cleanup artifacts for Ubuntu
@@ -53,7 +55,7 @@ jobs:
           mkdir artifacts
           ls
           electron-installer-debian --src dist/electronic-wechat-linux-x64/ --dest dist/installers/ --arch amd64
-          electron-installer-debian --src dist/electronic-wechat-linux-arm64/ --dest dist/installers/ --arch arm64
+          # electron-installer-debian --src dist/electronic-wechat-linux-arm64/ --dest dist/installers/ --arch arm64
           mv dist/installers/*.deb artifacts || true
       # tar -cvf electronic-wechat-linux-arm64.tar dist/electronic-wechat-linux-arm64/
       # tar -cvf electronic-wechat-linux-x64.tar dist/electronic-wechat-linux-x64/
